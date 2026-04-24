@@ -218,7 +218,7 @@ const related = allProjects
 
 <style>
   .case-hero {
-    padding: 9rem 0 3rem;
+    padding: clamp(6.5rem, 12vw, 9rem) 0 clamp(2rem, 4vw, 3rem);
     background:
       radial-gradient(circle at 90% 10%, rgba(234, 170, 66, 0.14), transparent 45%),
       var(--paper);
@@ -338,7 +338,8 @@ const related = allProjects
   }
 
   @media (max-width: 480px) {
-    .gallery { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+    .gallery { grid-template-columns: 1fr; gap: 0.75rem; }
+    .gallery__item { aspect-ratio: 4/5; }
   }
 
   /* Lightbox */

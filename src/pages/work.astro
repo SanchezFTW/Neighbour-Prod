@@ -120,6 +120,24 @@ const projects = allProjects
     border-bottom: 1px solid var(--rule);
   }
 
+  @media (max-width: 560px) {
+    .filter-bar {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      margin-left: calc(var(--pad) * -1);
+      margin-right: calc(var(--pad) * -1);
+      padding-left: var(--pad);
+      padding-right: var(--pad);
+      padding-bottom: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .filter-bar::-webkit-scrollbar { display: none; }
+    .filter-chip { flex: 0 0 auto; }
+  }
+
   .filter-chip {
     font-family: inherit;
     font-size: 0.875rem;
