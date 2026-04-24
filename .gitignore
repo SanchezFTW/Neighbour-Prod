@@ -22,3 +22,10 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# client asset originals — keep local only, don't ship to GitHub
+assets/**/source/
+# Affinity / Photoshop masters
+*.afdesign
+*.psd
+*.psb
