@@ -1,0 +1,159 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = "Neighbour is a husband-and-wife creative studio working in photo, video, brand strategy, and website development. We help mission-driven brands tell the truth about who they are, and who they're for.",
+  ogImage = "/images/logos/Neighbour Productions Color.png"
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, 'https://neighbourprod.com');
+const siteTitle = "Neighbour — A creative studio for people and businesses with something real to say.";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+
+    <title>{title === 'Home' ? siteTitle : `${title} — Neighbour`}</title>
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/images/logos/Neighbour Circle Logo.svg" />
+    <link rel="icon" type="image/png" href="/images/logos/Neighbour Circle Logo.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title === 'Home' ? siteTitle : `${title} — Neighbour`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="Neighbour Productions" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title === 'Home' ? siteTitle : `${title} — Neighbour`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <ClientRouter fallback="swap" />
+  </head>
+  <body>
+    <div id="loading-screen" class="loading-screen" aria-hidden="true" transition:persist>
+      <img
+        class="loading-screen__logo"
+        src="/images/logos/Neighbour Logo Color.png"
+        alt=""
+      />
+    </div>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <Header />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+
+    <style is:global>
+      .loading-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--paper);
+        opacity: 1;
+        transition: opacity 1.2s ease;
+        pointer-events: none;
+      }
+
+      .loading-screen__logo {
+        width: min(60vw, 360px);
+        height: auto;
+        opacity: 0;
+        transform: scale(0.96);
+        animation: loader-fade-in 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        animation-delay: 0.15s;
+      }
+
+      .loading-screen.is-hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      @keyframes loader-fade-in {
+        from { opacity: 0; transform: scale(0.96); }
+        to { opacity: 1; transform: scale(1); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .loading-screen__logo { animation: none; opacity: 1; }
+      }
+    </style>
+
+    <script>
+      const MIN_LOADER_MS = 1800;
+      const loaderStart = performance.now();
+
+      function hideLoader(immediate = false) {
+        const loader = document.getElementById('loading-screen');
+        if (!loader) return;
+        if (loader.classList.contains('is-hidden')) return;
+        if (immediate) {
+          loader.classList.add('is-hidden');
+          return;
+        }
+        const elapsed = performance.now() - loaderStart;
+        const wait = Math.max(0, MIN_LOADER_MS - elapsed);
+        window.setTimeout(() => loader.classList.add('is-hidden'), wait);
+      }
+
+      if (document.readyState === 'complete') {
+        hideLoader();
+      } else {
+        window.addEventListener('load', () => hideLoader(), { once: true });
+      }
+
+      // Safety net: if something delays `load` (slow image, stalled request)
+      // never leave the user stuck behind the splash.
+      window.setTimeout(() => hideLoader(true), 5000);
+
+      // Client-side navigation: the persisted loader must never reappear.
+      document.addEventListener('astro:after-swap', () => hideLoader(true));
+      document.addEventListener('astro:page-load', () => hideLoader(true));
+    </script>
+
+    <script>
+      function initScrollReveals() {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      }
+
+      initScrollReveals();
+      document.addEventListener('astro:page-load', initScrollReveals);
+    </script>
+  </body>
+</html>

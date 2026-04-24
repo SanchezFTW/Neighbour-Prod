@@ -1,0 +1,360 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const services = [
+  {
+    id: 'photography',
+    num: '01',
+    name: 'Photography',
+    body: 'Portraits that look like the person, not the pose. Campaign images that hold up past the scroll. Editorial and lifestyle work for brands who\u2019d rather feel real than look polished.',
+    goodFor: 'brand libraries, campaign launches, team and founder portraits, product and lifestyle, editorial features.',
+    color: 'honey',
+    preview: {
+      title: '[Project title]',
+      meta: 'Photography',
+      href: '/work',
+    },
+  },
+  {
+    id: 'video-film',
+    num: '02',
+    name: 'Video & Film',
+    body: 'Brand films, commercials, and documentary-style storytelling. Jared\u2019s background is in commercial and film work, so expect a cinematic eye \u2014 and a producer who\u2019s actually thinking about how this plays on a homepage, a phone, and a boardroom screen.',
+    goodFor: 'brand anthems, fundraising films, campaign spots, founder stories, documentary series.',
+    color: 'teal',
+    preview: {
+      title: '[Project title]',
+      meta: 'Video & Film',
+      href: '/work',
+    },
+  },
+  {
+    id: 'brand-strategy',
+    num: '03',
+    name: 'Brand Strategy',
+    body: 'Before you need a logo, you need to know who you are. Abigail leads our strategy work \u2014 positioning, messaging, brand personality, audience definition \u2014 the foundation everything else gets built on.',
+    goodFor: 'new brands, rebrands, mission-driven orgs getting clearer about their voice, teams who keep saying \u201cwe know what we want, we just can\u2019t explain it.\u201d',
+    color: 'lavender',
+    preview: {
+      title: '[Project title]',
+      meta: 'Brand Strategy',
+      href: '/work',
+    },
+  },
+  {
+    id: 'website-development',
+    num: '04',
+    name: 'Website Development',
+    body: 'Sites that match the brand we (or you) just built. Clean, fast, easy to update, and built to actually convert the people you\u2019re trying to reach \u2014 not just look good on a design award site.',
+    goodFor: 'nonprofits rebuilding their digital home, brands launching, studios and service businesses who need a site that does more than exist.',
+    color: 'sage',
+    preview: {
+      title: '[Project title]',
+      meta: 'Website Development',
+      href: '/work',
+    },
+  },
+];
+---
+
+<BaseLayout
+  title="Services"
+  description="Photo, Video, Brand Strategy, and Website Development. Take one. Take all four. Most of our best projects start with a conversation, not a checklist."
+>
+
+  <!-- ========== HERO ========== -->
+  <section class="svc-hero film-grain">
+    <div class="container svc-hero__inner">
+      <h1 class="reveal text-balance">Four things we do well.</h1>
+      <p class="lede reveal reveal--delay-1">
+        Take one. Take all four. Most of our best projects start with a conversation, not a checklist.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== SERVICES ========== -->
+  {services.map((s) => (
+    <section id={s.id} class:list={['section', 'svc-block', `svc-block--${s.color}`]}>
+      <div class="container svc-block__grid">
+        <aside class="svc-block__aside reveal">
+          <span class="svc-block__num">{s.num}</span>
+          <h2 class="svc-block__name text-balance">{s.name}</h2>
+          <span class:list={['svc-block__bar', `svc-block__bar--${s.color}`]} aria-hidden="true"></span>
+        </aside>
+
+        <div class="svc-block__cards">
+          <article class="svc-card reveal reveal--delay-1">
+            <h3 class="svc-card__label">Overview</h3>
+            <p class="svc-card__body">{s.body}</p>
+          </article>
+
+          <article class:list={['svc-card', 'svc-card--good', `svc-card--${s.color}`]}>
+            <h3 class="svc-card__label">Good for</h3>
+            <p class="svc-card__body">{s.goodFor}</p>
+          </article>
+
+          <a href={s.preview.href} class="svc-preview reveal reveal--delay-2" aria-label={`See recent ${s.name.toLowerCase()} work`}>
+            <div class:list={['svc-preview__thumb', `svc-preview__thumb--${s.color}`]} aria-hidden="true">
+              <span class="svc-preview__thumb-label">Recent work</span>
+            </div>
+            <div class="svc-preview__meta">
+              <span class="svc-preview__kind">{s.preview.meta}</span>
+              <span class="svc-preview__title">{s.preview.title}</span>
+              <span class="svc-preview__link">See project <span class="arrow">&rarr;</span></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- ========== THROUGH-LINE ========== -->
+  <section class="section section--cream">
+    <div class="container--narrow">
+      <div class="section__head reveal">
+        <span class="eyebrow">Through-line</span>
+        <h2 class="text-balance">The through-line.</h2>
+        <span class="bar"></span>
+      </div>
+      <div class="prose reveal reveal--delay-1">
+        <p>Whatever you hire us for, we&rsquo;re asking the same question underneath: <em>how do we get your truth to the people who need it?</em> That&rsquo;s the filter we run every creative decision through. It&rsquo;s why our work tends to age well.</p>
+      </div>
+      <div class="reveal reveal--delay-2" style="margin-top: 2rem;">
+        <a href="/contact" class="btn btn--solid">Tell us what you&rsquo;re working on</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .svc-hero {
+    padding: clamp(7rem, 14vw, 10rem) 0 clamp(3rem, 6vw, 5rem);
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(234, 170, 66, 0.2) 0%, transparent 55%),
+      var(--paper);
+  }
+
+  .svc-hero__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 820px;
+  }
+
+  .svc-hero h1 { font-size: clamp(2.5rem, 6vw, 4.25rem); }
+
+  .svc-block {
+    padding: clamp(3.5rem, 7vw, 6rem) 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .svc-block:first-of-type { border-top: 0; }
+
+  .svc-block__grid {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .svc-block__aside {
+    position: sticky;
+    top: 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .svc-block__num {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+  }
+
+  .svc-block__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--lavender-deep);
+    margin: 0;
+  }
+
+  .svc-block__bar {
+    display: inline-block;
+    width: 64px;
+    height: 4px;
+    border-radius: 4px;
+  }
+
+  .svc-block__bar--honey    { background: var(--honey); }
+  .svc-block__bar--teal     { background: var(--teal); }
+  .svc-block__bar--lavender { background: var(--lavender); }
+  .svc-block__bar--sage     { background: var(--sage); }
+
+  .svc-block__cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .svc-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
+  }
+
+  .svc-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .svc-card:first-child,
+  .svc-card--good {
+    grid-column: span 2;
+  }
+
+  .svc-card__label {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--honey-deep);
+    margin-bottom: 0.9rem;
+  }
+
+  .svc-card__body {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .svc-card--good { background: var(--paper-cream); }
+  .svc-card--good.svc-card--teal { background: rgba(85, 156, 173, 0.10); }
+  .svc-card--good.svc-card--lavender { background: rgba(106, 98, 120, 0.10); }
+  .svc-card--good.svc-card--sage { background: var(--sage-soft); }
+
+  /* Preview card */
+  .svc-preview {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 1.25rem;
+    padding: 1rem;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    color: var(--ink);
+    transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease), border-color var(--t-base) var(--ease);
+  }
+
+  .svc-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+    border-color: var(--rule-strong);
+    color: var(--ink);
+  }
+
+  .svc-preview__thumb {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--paper-warm);
+  }
+
+  .svc-preview__thumb--honey {
+    background: linear-gradient(135deg, var(--honey-soft), var(--honey));
+  }
+  .svc-preview__thumb--teal {
+    background: linear-gradient(135deg, #8FC0CB, var(--teal));
+  }
+  .svc-preview__thumb--lavender {
+    background: linear-gradient(135deg, #8A8299, var(--lavender-deep));
+  }
+  .svc-preview__thumb--sage {
+    background: linear-gradient(135deg, var(--sage-soft), var(--sage));
+  }
+
+  .svc-preview__thumb-label {
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(26, 26, 26, 0.55);
+  }
+
+  .svc-preview__thumb--lavender .svc-preview__thumb-label {
+    color: rgba(250, 249, 246, 0.7);
+  }
+
+  .svc-preview__meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.5rem 0.25rem 0;
+  }
+
+  .svc-preview__kind {
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 600;
+  }
+
+  .svc-preview__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--lavender-deep);
+    letter-spacing: -0.01em;
+  }
+
+  .svc-preview__link {
+    margin-top: 0.35rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--teal-deep);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .svc-preview__link .arrow {
+    display: inline-block;
+    transition: transform var(--t-base) var(--ease);
+  }
+
+  .svc-preview:hover .svc-preview__link .arrow { transform: translateX(4px); }
+
+  @media (max-width: 900px) {
+    .svc-block__grid { grid-template-columns: 1fr; }
+    .svc-block__aside { position: static; }
+    .svc-block__cards { grid-template-columns: 1fr; }
+    .svc-card:first-child { grid-column: span 1; }
+    .svc-preview { grid-column: span 1; grid-template-columns: 120px 1fr; }
+  }
+
+  @media (max-width: 520px) {
+    .svc-preview { grid-template-columns: 1fr; }
+    .svc-preview__thumb { aspect-ratio: 16 / 9; }
+  }
+
+  .section__head { margin-bottom: 2rem; max-width: 720px; }
+  .section__head .eyebrow { margin-bottom: 1rem; }
+  .section__head h2 { margin-bottom: 1.25rem; }
+</style>

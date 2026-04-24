@@ -1,0 +1,223 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const filters = [
+  { label: 'All', value: 'all' },
+  { label: 'Photo', value: 'photo' },
+  { label: 'Video', value: 'video' },
+  { label: 'Brand', value: 'brand' },
+  { label: 'Web', value: 'web' },
+];
+
+// Map category strings → filter values used by the chips.
+const categoryToFilter: Record<string, string> = {
+  'Photography': 'photo',
+  'Video': 'video',
+  'Video & Film': 'video',
+  'Branded Content': 'video',
+  'Brand Strategy': 'brand',
+  'Web Design': 'web',
+  'Website Development': 'web',
+};
+
+const allProjects = await getCollection('projects');
+const projects = allProjects
+  .sort((a, b) => a.data.title.localeCompare(b.data.title))
+  .map(p => ({
+    title: p.data.title,
+    category: p.data.category,
+    href: `/projects/${p.id}`,
+    image: p.data.featuredImage ? encodeURI(p.data.featuredImage).replace(/#/g, '%23') : undefined,
+    filter: categoryToFilter[p.data.category] ?? 'all',
+  }));
+---
+
+<BaseLayout
+  title="Work"
+  description="A look at what Neighbour has been making lately — for brands, nonprofits, and the occasional passion project."
+>
+
+  <section class="work-hero">
+    <div class="container work-hero__inner">
+      <h1 class="reveal text-balance">The work.</h1>
+      <p class="lede reveal reveal--delay-1">
+        A look at what we&rsquo;ve been making lately &mdash; for brands, nonprofits, and the occasional passion project.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--filters">
+    <div class="container">
+      <div class="filter-bar reveal" role="tablist" aria-label="Filter by service">
+        {filters.map((f, i) => (
+          <button
+            type="button"
+            class:list={['filter-chip', { 'is-active': i === 0 }]}
+            data-filter={f.value}
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+          >{f.label}</button>
+        ))}
+      </div>
+
+      <div class="work-grid" id="work-grid">
+        {projects.map((p, i) => (
+          <div
+            class:list={['work-grid__item', 'reveal', `reveal--delay-${(i % 4) + 1}`]}
+            data-category={p.filter}
+          >
+            <ProjectCard
+              href={p.href}
+              title={p.title}
+              category={p.category}
+              image={p.image}
+              ratio="4/5"
+            />
+          </div>
+        ))}
+        <p class="work-grid__empty" id="work-grid-empty" hidden>
+          Nothing here yet &mdash; more of this work is on its way.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--lavender cta-band film-grain">
+    <div class="container cta-band__inner reveal">
+      <h2 class="text-balance">Have something in mind?</h2>
+      <p>Tell us about it. We read every inquiry ourselves.</p>
+      <a href="/contact" class="btn btn--solid">Start a project</a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .work-hero {
+    padding: clamp(7rem, 12vw, 10rem) 0 clamp(2rem, 4vw, 3rem);
+    background:
+      radial-gradient(circle at 90% 10%, rgba(234, 170, 66, 0.14), transparent 45%),
+      var(--paper);
+  }
+
+  .work-hero__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 760px;
+  }
+
+  .section--filters { padding-top: clamp(2rem, 5vw, 3rem); }
+
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .filter-chip {
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    padding: 0.5rem 1.1rem;
+    border: 1px solid var(--rule-strong);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-radius: 999px;
+    transition: background var(--t-fast) ease, color var(--t-fast) ease, border-color var(--t-fast) ease;
+  }
+
+  .filter-chip:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .filter-chip.is-active {
+    background: var(--honey);
+    color: var(--ink);
+    border-color: var(--honey);
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  .work-grid :global(.project-card__title) { font-size: 0.9375rem; }
+  .work-grid :global(.project-card__category) { font-size: 0.6875rem; }
+  .work-grid :global(.project-card__caption) { margin-top: 0.75rem; }
+
+  .work-grid__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--ink-mute);
+    font-size: 0.9375rem;
+    padding: 3rem 0;
+  }
+
+  @media (max-width: 1024px) { .work-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 720px) { .work-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
+
+  .cta-band {
+    padding: clamp(5rem, 10vw, 8rem) 0;
+    text-align: center;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(234, 170, 66, 0.15), transparent 50%),
+      var(--lavender-deep);
+  }
+
+  .cta-band__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    max-width: 640px;
+  }
+
+  .cta-band h2 { color: var(--paper); font-size: clamp(1.875rem, 3.6vw, 2.75rem); margin: 0.5rem 0; }
+  .cta-band p { color: rgba(250, 249, 246, 0.82); font-size: 1.0625rem; margin-bottom: 1rem; }
+</style>
+
+<script>
+  function setupFilters() {
+    const chips = document.querySelectorAll<HTMLButtonElement>('.filter-chip');
+    const items = document.querySelectorAll<HTMLElement>('.work-grid__item');
+    const empty = document.getElementById('work-grid-empty');
+    if (!chips.length) return;
+
+    const apply = (filter: string) => {
+      let visible = 0;
+      items.forEach(item => {
+        const match = filter === 'all' || item.dataset.category === filter;
+        item.hidden = !match;
+        if (match) visible++;
+      });
+      if (empty) empty.hidden = visible > 0;
+    };
+
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => {
+          c.classList.remove('is-active');
+          c.setAttribute('aria-selected', 'false');
+        });
+        chip.classList.add('is-active');
+        chip.setAttribute('aria-selected', 'true');
+        apply(chip.dataset.filter ?? 'all');
+      });
+    });
+
+    const initial = document.querySelector<HTMLButtonElement>('.filter-chip.is-active');
+    apply(initial?.dataset.filter ?? 'all');
+  }
+  setupFilters();
+  document.addEventListener('astro:page-load', setupFilters);
+</script>

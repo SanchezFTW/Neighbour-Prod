@@ -1,0 +1,313 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Tell us a bit about your project. We read every inquiry ourselves — usually within a day or two — and if we're a good fit, we'll set up a call."
+>
+
+  <!-- ========== HERO ========== -->
+  <section class="contact-hero film-grain">
+    <div class="container contact-hero__inner">
+      <h1 class="reveal text-balance">Let&rsquo;s talk.</h1>
+      <p class="lede reveal reveal--delay-1">
+        Tell us a bit about your project. We read every inquiry ourselves &mdash; usually within a day or two &mdash; and if we&rsquo;re a good fit, we&rsquo;ll set up a call.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== FORM ========== -->
+  <section class="section contact-form-section">
+    <div class="container contact-layout">
+      <form id="inquiry-form" class="inquiry-form reveal" novalidate>
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" required autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="email">Your email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+
+        <div class="field">
+          <label for="org">Organization <span class="field__opt">(if any)</span></label>
+          <input id="org" name="organization" type="text" autocomplete="organization" />
+        </div>
+
+        <div class="field">
+          <label for="project">What are you working on?</label>
+          <textarea id="project" name="project" rows="5" required placeholder="A short paragraph is plenty."></textarea>
+        </div>
+
+        <fieldset class="field field--group">
+          <legend>What services are you curious about?</legend>
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="services" value="Photo" /> <span>Photo</span></label>
+            <label class="check"><input type="checkbox" name="services" value="Video" /> <span>Video</span></label>
+            <label class="check"><input type="checkbox" name="services" value="Brand Strategy" /> <span>Brand Strategy</span></label>
+            <label class="check"><input type="checkbox" name="services" value="Web" /> <span>Web</span></label>
+            <label class="check"><input type="checkbox" name="services" value="Not sure yet" /> <span>Not sure yet</span></label>
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label for="timeline">Timeline</label>
+          <select id="timeline" name="timeline" required>
+            <option value="" disabled selected>Pick one</option>
+            <option value="ASAP">ASAP</option>
+            <option value="Next 1–3 months">Next 1&ndash;3 months</option>
+            <option value="3–6 months">3&ndash;6 months</option>
+            <option value="Just exploring">Just exploring</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="budget">Budget range <span class="field__opt">(optional)</span></label>
+          <input id="budget" name="budget" type="text" />
+        </div>
+
+        <div class="field">
+          <label for="referral">How&rsquo;d you find us? <span class="field__opt">(optional)</span></label>
+          <input id="referral" name="referral" type="text" />
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn--solid">Send it over</button>
+          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <aside class="next-steps reveal reveal--delay-1" aria-labelledby="next-heading">
+        <h2 id="next-heading">What happens next</h2>
+        <ol class="next-list">
+          <li><span class="next-num">1</span><p>We read your inquiry (actually &mdash; it&rsquo;s just the two of us).</p></li>
+          <li><span class="next-num">2</span><p>If we think we&rsquo;re a fit, we&rsquo;ll reach out to book a call within about a week.</p></li>
+          <li><span class="next-num">3</span><p>If we&rsquo;re not the right fit, we&rsquo;ll tell you that too &mdash; and point you toward someone who might be.</p></li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .contact-hero {
+    padding: clamp(7rem, 14vw, 10rem) 0 clamp(2rem, 4vw, 3rem);
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(234, 170, 66, 0.2) 0%, transparent 55%),
+      var(--paper);
+  }
+
+  .contact-hero__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 780px;
+  }
+
+  .contact-form-section { padding-top: clamp(2rem, 4vw, 3rem); }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  @media (max-width: 860px) {
+    .contact-layout { grid-template-columns: 1fr; }
+  }
+
+  .inquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .field label,
+  .field legend {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--lavender-deep);
+  }
+
+  .field__opt {
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--ink-mute);
+    font-size: 0.75rem;
+  }
+
+  .field input[type="text"],
+  .field input[type="email"],
+  .field textarea,
+  .field select {
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--paper);
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius);
+    transition: border-color var(--t-fast) ease, box-shadow var(--t-fast) ease;
+    width: 100%;
+  }
+
+  .field textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    outline: none;
+    border-color: var(--honey);
+    box-shadow: 0 0 0 3px rgba(234, 170, 66, 0.22);
+  }
+
+  .field--group { border: none; padding: 0; }
+
+  .checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .check {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background var(--t-fast) ease, border-color var(--t-fast) ease, color var(--t-fast) ease;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+
+  .check input { accent-color: var(--honey-deep); }
+
+  .check:hover { border-color: var(--ink); color: var(--ink); }
+
+  .check:has(input:checked) {
+    background: var(--honey);
+    border-color: var(--honey);
+    color: var(--ink);
+  }
+
+  .form-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+
+  .form-status {
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .form-status.is-error { color: #a23a3a; }
+  .form-status.is-success { color: var(--teal-deep); }
+
+  /* What happens next */
+  .next-steps {
+    background: var(--paper-cream);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    position: sticky;
+    top: 7rem;
+  }
+
+  .next-steps h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .next-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .next-list li {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .next-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: var(--honey);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+  }
+
+  .next-list p {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  @media (max-width: 860px) {
+    .next-steps { position: static; }
+  }
+</style>
+
+<script>
+  function setupInquiryForm() {
+    const form = document.getElementById('inquiry-form') as HTMLFormElement | null;
+    const status = document.getElementById('form-status');
+    if (!form || !status) return;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      status.classList.remove('is-error', 'is-success');
+      status.textContent = 'Sending\u2026';
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      // Backend submission will be wired up separately.
+      // eslint-disable-next-line no-console
+      console.log('[inquiry]', data);
+
+      setTimeout(() => {
+        status.classList.add('is-success');
+        status.textContent = 'Thanks \u2014 we\u2019ve got it. We\u2019ll write back soon.';
+        form.reset();
+      }, 400);
+    });
+  }
+
+  setupInquiryForm();
+  document.addEventListener('astro:page-load', setupInquiryForm);
+</script>

@@ -1,0 +1,54 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  caption?: string;
+  ratio?: string;
+}
+
+const { id, title, caption, ratio = '16/9' } = Astro.props;
+
+const src = `https://player.vimeo.com/video/${id}?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479`;
+---
+
+<figure class="vimeo">
+  <div class="vimeo__frame" style={`aspect-ratio: ${ratio};`}>
+    <iframe
+      src={src}
+      title={title}
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      loading="lazy"
+    ></iframe>
+  </div>
+  {caption && <figcaption class="vimeo__caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .vimeo {
+    margin: 0;
+  }
+
+  .vimeo__frame {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  .vimeo__frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .vimeo__caption {
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-mute);
+  }
+</style>

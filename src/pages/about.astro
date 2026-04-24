@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="About"
+  description="Neighbour is Jared and Abigail — a husband-and-wife creative studio. We started this because we believe the best creative work happens when someone actually shows up for you."
+>
+
+  <!-- ========== HERO ========== -->
+  <section class="about-hero film-grain">
+    <div class="container about-hero__inner">
+      <h1 class="reveal text-balance">Hi. We&rsquo;re Jared and Abigail.</h1>
+      <p class="lede reveal reveal--delay-1">
+        We started Neighbour because we believe the best creative work happens when someone actually shows up for you.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== SHORT VERSION ========== -->
+  <section class="section">
+    <div class="container--narrow">
+      <div class="section__head reveal">
+        <span class="eyebrow">Short version</span>
+        <h2 class="text-balance">The short version.</h2>
+        <span class="bar"></span>
+      </div>
+      <div class="prose reveal reveal--delay-1">
+        <p>Jared spent years in commercials and film, learning how to tell a story that lands in thirty seconds or ninety minutes. Abigail is a photographer, director, and brand strategist who thinks about who a story is <em>for</em> before she thinks about how it looks.</p>
+        <p>Somewhere along the way, we figured out that we work better together than apart. So we made it official &mdash; both in life and at work &mdash; and built a studio around the kinds of projects we actually want to do, for the kinds of people we actually want to help.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WHAT WE BELIEVE ========== -->
+  <section class="section section--cream">
+    <div class="container--narrow">
+      <div class="section__head reveal">
+        <span class="eyebrow">What we believe</span>
+        <h2 class="text-balance">What we believe.</h2>
+        <span class="bar"></span>
+      </div>
+
+      <div class="beliefs">
+        <div class="belief reveal reveal--delay-1">
+          <h3>We believe no one is born void.</h3>
+          <p>Every person, every organization, every mission has something real in it worth bringing to the surface. Our job is to help you find it and show it honestly.</p>
+        </div>
+        <div class="belief reveal reveal--delay-2">
+          <h3>We believe in moving forward with honesty.</h3>
+          <p>We&rsquo;re upfront about what things cost, what they&rsquo;re worth, and whether we&rsquo;re the right fit. If our gut says no, we say no. If something isn&rsquo;t serving you, we&rsquo;ll tell you &mdash; even when it&rsquo;s the harder conversation.</p>
+        </div>
+        <div class="belief reveal reveal--delay-3">
+          <h3>We believe ego gets in the way.</h3>
+          <p>We&rsquo;re not here to be the loudest voice in your project. We&rsquo;re here to listen, ask good questions, and make something that outlasts us both.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HOW WE WORK ========== -->
+  <section class="section">
+    <div class="container--narrow">
+      <div class="section__head reveal">
+        <span class="eyebrow">How we work</span>
+        <h2 class="text-balance">How we work.</h2>
+        <span class="bar"></span>
+      </div>
+      <div class="prose reveal reveal--delay-1">
+        <p>We take on a limited number of projects at a time so we can actually be present for the ones we commit to. When you hire us, you get us &mdash; our full attention, start to finish. No account manager, no handoff to a junior, no stranger on the edit.</p>
+        <p>We ask a lot of questions up front. We bring our instincts. We welcome yours. And we keep our word about timelines, budgets, and what we promised you on day one.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="section--lavender cta-band film-grain">
+    <div class="container cta-band__inner reveal">
+      <h2 class="text-balance">Think we might be neighbours?</h2>
+      <div class="btn-group">
+        <a href="/contact" class="btn btn--solid">Start a project</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .about-hero {
+    padding: clamp(7rem, 14vw, 10rem) 0 clamp(3rem, 6vw, 5rem);
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(234, 170, 66, 0.2) 0%, transparent 55%),
+      radial-gradient(circle at 15% 100%, rgba(85, 156, 173, 0.1) 0%, transparent 45%),
+      var(--paper);
+  }
+
+  .about-hero__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 820px;
+  }
+
+  .about-hero h1 { font-size: clamp(2.5rem, 6vw, 4.25rem); }
+
+  .section__head { margin-bottom: 2.5rem; max-width: 720px; }
+  .section__head .eyebrow { margin-bottom: 1rem; }
+  .section__head h2 { margin-bottom: 1.25rem; }
+
+  .beliefs { display: flex; flex-direction: column; }
+
+  .belief {
+    padding: 1.75rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .belief:last-child { border-bottom: 1px solid var(--rule); }
+
+  .belief h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--lavender-deep);
+  }
+
+  .belief p { font-size: 1rem; line-height: 1.75; }
+
+  .cta-band {
+    padding: clamp(5rem, 10vw, 8rem) 0;
+    text-align: center;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(234, 170, 66, 0.15), transparent 50%),
+      var(--lavender-deep);
+  }
+
+  .cta-band__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 640px;
+  }
+
+  .cta-band h2 { color: var(--paper); font-size: clamp(1.875rem, 3.6vw, 2.75rem); }
+</style>
