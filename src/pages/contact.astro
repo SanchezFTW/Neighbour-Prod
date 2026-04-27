@@ -20,10 +20,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- ========== FORM ========== -->
   <section class="section contact-form-section">
     <div class="container contact-layout">
-      <form id="inquiry-form" class="inquiry-form reveal" novalidate>
-        <div class="field">
-          <label for="name">Your name</label>
-          <input id="name" name="name" type="text" required autocomplete="name" />
+      <form id="inquiry-form" class="inquiry-form reveal" data-recipient="info@neighbourprod.com" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="firstName">First name</label>
+            <input id="firstName" name="firstName" type="text" required autocomplete="given-name" />
+          </div>
+
+          <div class="field">
+            <label for="lastName">Last name</label>
+            <input id="lastName" name="lastName" type="text" required autocomplete="family-name" />
+          </div>
         </div>
 
         <div class="field">
@@ -64,13 +71,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <div class="field">
-          <label for="budget">Budget range <span class="field__opt">(optional)</span></label>
-          <input id="budget" name="budget" type="text" />
+          <label for="budget">Budget range</label>
+          <select id="budget" name="budget" required>
+            <option value="" disabled selected>Pick one</option>
+            <option value="Under $5k">Under $5k</option>
+            <option value="$5k–$15k">$5k&ndash;$15k</option>
+            <option value="$15k–$30k">$15k&ndash;$30k</option>
+            <option value="$30k–$60k">$30k&ndash;$60k</option>
+            <option value="$60k+">$60k+</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
         </div>
 
         <div class="field">
-          <label for="referral">How&rsquo;d you find us? <span class="field__opt">(optional)</span></label>
-          <input id="referral" name="referral" type="text" />
+          <label for="referral">How&rsquo;d you find us?</label>
+          <select id="referral" name="referral" required>
+            <option value="" disabled selected>Pick one</option>
+            <option value="Referral">Referral from a friend or colleague</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Google search">Google search</option>
+            <option value="Past project">Saw a past project of ours</option>
+            <option value="Event">At an event</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
 
         <div class="form-actions">
@@ -130,6 +153,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 520px) {
+    .field-row { grid-template-columns: 1fr; }
   }
 
   .field label,
@@ -307,14 +340,34 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       status.classList.remove('is-error', 'is-success');
       status.textContent = 'Sending\u2026';
 
-      const data = Object.fromEntries(new FormData(form).entries());
-      // Backend submission will be wired up separately.
-      // eslint-disable-next-line no-console
-      console.log('[inquiry]', data);
+      const fd = new FormData(form);
+      const services = fd.getAll('services').join(', ') || '\u2014';
+      const firstName = String(fd.get('firstName') || '');
+      const lastName = String(fd.get('lastName') || '');
+      const fullName = `${firstName} ${lastName}`.trim();
+
+      const recipient = form.dataset.recipient || 'info@neighbourprod.com';
+      const subject = `New inquiry from ${fullName}`;
+      const lines = [
+        `Name: ${fullName}`,
+        `Email: ${fd.get('email') || ''}`,
+        `Organization: ${fd.get('organization') || '\u2014'}`,
+        '',
+        'Project:',
+        `${fd.get('project') || ''}`,
+        '',
+        `Services: ${services}`,
+        `Timeline: ${fd.get('timeline') || ''}`,
+        `Budget: ${fd.get('budget') || ''}`,
+        `How they found us: ${fd.get('referral') || ''}`,
+      ];
+      const body = lines.join('\n');
+
+      window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
       setTimeout(() => {
         status.classList.add('is-success');
-        status.textContent = 'Thanks \u2014 we\u2019ve got it. We\u2019ll write back soon.';
+        status.textContent = 'Thanks \u2014 your email client should be opening now. If not, write us at info@neighbourprod.com.';
         form.reset();
       }, 400);
     });
