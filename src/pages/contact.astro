@@ -103,6 +103,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </select>
         </div>
 
+        <fieldset class="field field--group">
+          <legend>Pick a time for your discovery call</legend>
+          <p class="field__hint">Choose a slot below &mdash; this is required so we can hit the ground running on our first call.</p>
+          <div
+            class="calendly-inline-widget"
+            data-url="https://calendly.com/neighbourprod-info/30min?primary_color=c9d11b"
+            style="min-width:320px;height:700px;"
+          ></div>
+          <input id="bookedTime" name="bookedTime" type="hidden" required aria-hidden="true" />
+          <p id="booking-status" class="booking-status" role="status" aria-live="polite">No time selected yet.</p>
+        </fieldset>
+
         <div class="form-actions">
           <button type="submit" class="btn btn--solid">Send it over</button>
           <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
@@ -119,6 +131,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </aside>
     </div>
   </section>
+
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
 </BaseLayout>
 
@@ -266,6 +280,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .form-status.is-error { color: #a23a3a; }
   .form-status.is-success { color: var(--teal-deep); }
 
+  .field__hint {
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    margin: 0 0 0.5rem;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+
+  .booking-status {
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    margin: 0.5rem 0 0;
+  }
+
+  .booking-status.is-booked { color: var(--teal-deep); font-weight: 600; }
+
   /* What happens next */
   .next-steps {
     background: var(--paper-cream);
@@ -331,6 +362,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </style>
 
 <script>
+  function setupCalendlyListener() {
+    if ((window as any).__calendlyBound === true) return;
+    (window as any).__calendlyBound = true;
+
+    window.addEventListener('message', (e: MessageEvent) => {
+      const data = e?.data as { event?: string; payload?: { event?: { uri?: string; start_time?: string } } };
+      if (!data || typeof data.event !== 'string') return;
+      if (!data.event.startsWith('calendly.')) return;
+
+      if (data.event === 'calendly.event_scheduled') {
+        const hidden = document.getElementById('bookedTime') as HTMLInputElement | null;
+        const bookingStatus = document.getElementById('booking-status');
+        const startTime = data.payload?.event?.start_time || data.payload?.event?.uri || 'scheduled';
+        if (hidden) hidden.value = startTime;
+        if (bookingStatus) {
+          bookingStatus.textContent = `Time locked in${data.payload?.event?.start_time ? ': ' + new Date(data.payload.event.start_time).toLocaleString() : ''}.`;
+          bookingStatus.classList.add('is-booked');
+        }
+      }
+    });
+  }
+
   function setupInquiryForm() {
     const form = document.getElementById('inquiry-form') as HTMLFormElement | null;
     const status = document.getElementById('form-status');
@@ -342,6 +395,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      const hidden = document.getElementById('bookedTime') as HTMLInputElement | null;
+      if (!hidden || !hidden.value) {
+        status.classList.remove('is-success');
+        status.classList.add('is-error');
+        status.textContent = 'Please pick a time for the discovery call before sending.';
+        const widget = document.querySelector('.calendly-inline-widget');
+        if (widget) widget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
 
       if (!form.checkValidity()) {
         form.reportValidity();
@@ -389,5 +452,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   setupInquiryForm();
-  document.addEventListener('astro:page-load', setupInquiryForm);
+  setupCalendlyListener();
+  document.addEventListener('astro:page-load', () => {
+    setupInquiryForm();
+    setupCalendlyListener();
+  });
 </script>
