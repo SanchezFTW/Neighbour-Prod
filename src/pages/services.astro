@@ -4,11 +4,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const services = [
   {
     id: 'photography',
-    num: '01',
     name: 'Photography',
     body: 'Portraits that look like the person, not the pose. Campaign images that hold up past the scroll. Editorial and lifestyle work for brands who\u2019d rather feel real than look polished.',
     goodFor: 'brand libraries, campaign launches, team and founder portraits, product and lifestyle, editorial features.',
     color: 'honey',
+    comingSoon: false,
     preview: {
       title: '[Project title]',
       meta: 'Photography',
@@ -17,11 +17,11 @@ const services = [
   },
   {
     id: 'video-film',
-    num: '02',
     name: 'Video & Film',
-    body: 'Brand films, commercials, and documentary-style storytelling. Jared\u2019s background is in commercial and film work, so expect a cinematic eye \u2014 and a producer who\u2019s actually thinking about how this plays on a homepage, a phone, and a boardroom screen.',
+    body: 'Brand films, commercials, and documentary-style storytelling. Jared\u2019s background is in commercial and film work \u2014 so you get a director focused on the story and a producer focused on where it lives. A homepage, a phone, a boardroom. It\u2019ll work in all three.',
     goodFor: 'brand anthems, fundraising films, campaign spots, founder stories, documentary series.',
     color: 'teal',
+    comingSoon: false,
     preview: {
       title: '[Project title]',
       meta: 'Video & Film',
@@ -30,11 +30,11 @@ const services = [
   },
   {
     id: 'brand-strategy',
-    num: '03',
     name: 'Brand Strategy',
     body: 'Before you need a logo, you need to know who you are. Abigail leads our strategy work \u2014 positioning, messaging, brand personality, audience definition \u2014 the foundation everything else gets built on.',
     goodFor: 'new brands, rebrands, mission-driven orgs getting clearer about their voice, teams who keep saying \u201cwe know what we want, we just can\u2019t explain it.\u201d',
     color: 'lavender',
+    comingSoon: true,
     preview: {
       title: '[Project title]',
       meta: 'Brand Strategy',
@@ -43,11 +43,11 @@ const services = [
   },
   {
     id: 'website-development',
-    num: '04',
     name: 'Website Development',
-    body: 'Sites that match the brand we (or you) just built. Clean, fast, easy to update, and built to actually convert the people you\u2019re trying to reach \u2014 not just look good on a design award site.',
+    body: 'Sites that match the brand you just built. Clean, fast, easy to update, and built to actually reach the people you\u2019re for \u2014 not just look good on a design award site.',
     goodFor: 'nonprofits rebuilding their digital home, brands launching, studios and service businesses who need a site that does more than exist.',
     color: 'sage',
+    comingSoon: true,
     preview: {
       title: '[Project title]',
       meta: 'Website Development',
@@ -65,9 +65,9 @@ const services = [
   <!-- ========== HERO ========== -->
   <section class="svc-hero film-grain">
     <div class="container svc-hero__inner">
-      <h1 class="reveal text-balance">Four things we do well.</h1>
+      <h1 class="reveal text-balance">Most of our best projects start with a conversation.</h1>
       <p class="lede reveal reveal--delay-1">
-        Take one. Take all four. Most of our best projects start with a conversation, not a checklist.
+        Not a checklist. Not a package. A real talk about what you need and whether we&rsquo;re the right people to help. Here&rsquo;s what we bring to the table.
       </p>
     </div>
   </section>
@@ -77,7 +77,7 @@ const services = [
     <section id={s.id} class:list={['section', 'svc-block', `svc-block--${s.color}`]}>
       <div class="container svc-block__grid">
         <aside class="svc-block__aside reveal">
-          <span class="svc-block__num">{s.num}</span>
+          {s.comingSoon && <span class="svc-block__coming-soon">Coming soon</span>}
           <h2 class="svc-block__name text-balance">{s.name}</h2>
           <span class:list={['svc-block__bar', `svc-block__bar--${s.color}`]} aria-hidden="true"></span>
         </aside>
@@ -120,7 +120,7 @@ const services = [
         <p>Whatever you hire us for, we&rsquo;re asking the same question underneath: <em>how do we get your truth to the people who need it?</em> That&rsquo;s the filter we run every creative decision through. It&rsquo;s why our work tends to age well.</p>
       </div>
       <div class="reveal reveal--delay-2" style="margin-top: 2rem;">
-        <a href="/contact" class="btn btn--solid">Tell us what you&rsquo;re working on</a>
+        <a href="/contact" class="btn btn--solid">Ready to be neighbours?</a>
       </div>
     </div>
   </section>
@@ -166,12 +166,18 @@ const services = [
     gap: 1rem;
   }
 
-  .svc-block__num {
-    font-family: var(--font-display);
-    font-size: 0.75rem;
+  .svc-block__coming-soon {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
     font-weight: 600;
-    letter-spacing: 0.22em;
-    color: var(--ink-mute);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--lavender);
+    background: rgba(106, 98, 120, 0.12);
+    border: 1px solid rgba(106, 98, 120, 0.25);
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
   }
 
   .svc-block__name {

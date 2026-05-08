@@ -55,16 +55,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <textarea id="project" name="project" rows="5" required placeholder="A short paragraph is plenty."></textarea>
         </div>
 
-        <fieldset class="field field--group">
-          <legend>What services are you curious about?</legend>
-          <div class="checks">
-            <label class="check"><input type="checkbox" name="services" value="Photo" /> <span>Photo</span></label>
-            <label class="check"><input type="checkbox" name="services" value="Video" /> <span>Video</span></label>
-            <label class="check"><input type="checkbox" name="services" value="Brand Strategy" /> <span>Brand Strategy</span></label>
-            <label class="check"><input type="checkbox" name="services" value="Web" /> <span>Web</span></label>
-            <label class="check"><input type="checkbox" name="services" value="Not sure yet" /> <span>Not sure yet</span></label>
-          </div>
-        </fieldset>
+        <div class="field">
+          <label for="projectType">What are you working on?</label>
+          <select id="projectType" name="projectType" required>
+            <option value="" disabled selected>Pick one</option>
+            <option value="Crafting a strategy">Crafting a strategy</option>
+            <option value="Building a new brand">Building a new brand</option>
+            <option value="Launching a campaign">Launching a campaign</option>
+            <option value="Making a new website">Making a new website</option>
+            <option value="Driving sales or traffic">Driving sales or traffic</option>
+            <option value="Something not listed">Something not listed</option>
+          </select>
+        </div>
 
         <div class="field">
           <label for="timeline">Timeline</label>
@@ -84,8 +86,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <option value="Under $5k">Under $5k</option>
             <option value="$5k–$15k">$5k&ndash;$15k</option>
             <option value="$15k–$30k">$15k&ndash;$30k</option>
-            <option value="$30k–$60k">$30k&ndash;$60k</option>
-            <option value="$60k+">$60k+</option>
+            <option value="$30k+">$30k+</option>
             <option value="Not sure yet">Not sure yet</option>
           </select>
         </div>
@@ -229,39 +230,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .field--group { border: none; padding: 0; }
-
-  .checks {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
-  }
-
-  .check {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.55rem 1rem;
-    border: 1px solid var(--rule-strong);
-    border-radius: 999px;
-    font-size: 0.875rem;
-    color: var(--ink-soft);
-    cursor: pointer;
-    transition: background var(--t-fast) ease, border-color var(--t-fast) ease, color var(--t-fast) ease;
-    text-transform: none;
-    letter-spacing: 0;
-    font-weight: 500;
-  }
-
-  .check input { accent-color: var(--honey-deep); }
-
-  .check:hover { border-color: var(--ink); color: var(--ink); }
-
-  .check:has(input:checked) {
-    background: var(--honey);
-    border-color: var(--honey);
-    color: var(--ink);
-  }
 
   .form-actions {
     display: flex;
@@ -419,9 +387,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       const firstName = String(fd.get('firstName') || '');
       const lastName = String(fd.get('lastName') || '');
       const fullName = `${firstName} ${lastName}`.trim();
-      const services = fd.getAll('services').join(', ') || '\u2014';
 
-      fd.set('services', services);
       fd.set('_subject', `New inquiry from ${fullName}`);
       const emailVal = String(fd.get('email') || '');
       if (emailVal) fd.set('_replyto', emailVal);

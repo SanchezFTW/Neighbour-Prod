@@ -40,7 +40,7 @@ const bento = [
 
 import { getCollection } from 'astro:content';
 const allProjects = await getCollection('projects');
-const featuredOrder = ['confluence', 'yarrow', 'brand-strategy'];
+const featuredOrder = ['confluence', 'yarrow'];
 const featured = featuredOrder
   .map(slug => allProjects.find(p => p.id === slug))
   .filter((p): p is NonNullable<typeof p> => Boolean(p) && Boolean(p!.data.featuredImage))
@@ -84,12 +84,13 @@ const featured = featuredOrder
       <div class="manifesto__inner">
         <div class="section__head reveal">
           <span class="eyebrow">Manifesto</span>
-          <h2 class="text-balance">We build bridges between you and the people you&rsquo;re trying to reach.</h2>
+          <h2 class="text-balance">The helpers are usually the last ones to ask for help.</h2>
           <span class="bar"></span>
         </div>
         <div class="prose prose--justify reveal reveal--delay-1">
-          <p>Every brand, every mission, every person has something real in them worth sharing. But &ldquo;real&rdquo; isn&rsquo;t enough on its own &mdash; it has to connect. So we spend as much time thinking about your audience as we do about you. We ask who they are, what they need, and what would actually move them.</p>
-          <p>Then we build the bridge. Through photo, through film, through strategy, through a site that does its job. Whatever gets your truth to the people who need it most.</p>
+          <p>You&rsquo;re running the programs. Writing the grants. Managing the team. And somewhere in the middle of all of it, you need to tell your story &mdash; to funders, to your community, to the people who need what you offer.</p>
+          <p>That&rsquo;s the part we handle.</p>
+          <p>We&rsquo;re a husband-and-wife creative studio. Photo, film, brand strategy, websites. We make sure your work looks as good on the outside as it is on the inside &mdash; so you can get back to the thing you&rsquo;re actually here to do.</p>
         </div>
       </div>
     </div>
@@ -172,28 +173,22 @@ const featured = featuredOrder
     <div class="container why-us__inner">
       <div class="why-us__copy reveal">
         <span class="eyebrow">Why us</span>
-        <h2 class="text-balance">We show up like a good neighbour.</h2>
+        <h2 class="text-balance">We&rsquo;re not going to oversell this.</h2>
         <span class="bar"></span>
         <div class="prose">
-          <p>We listen before we pitch. We ask questions before we quote. We give you our full attention and expertise.</p>
-          <p>We keep it honest. We keep it humble. We trust our gut, we welcome yours, and we&rsquo;re not afraid of the harder conversation when it&rsquo;s the one that actually serves you.</p>
-          <p>That&rsquo;s the whole philosophy: help, don&rsquo;t harm. Grow together. Make something that matters on both sides of the camera.</p>
+          <p>You need someone who shows up, does the work, and doesn&rsquo;t make the process harder than it needs to be. Someone who asks good questions, listens to the answers, and keeps their word.</p>
+          <p>We listen before we pitch. We ask before we quote. We tell you if we&rsquo;re not the right fit, and we mean it when we say we are.</p>
+          <p>That&rsquo;s the whole thing. Help, don&rsquo;t harm. We picked the name Neighbour for a reason &mdash; and we try to earn it every time.</p>
         </div>
       </div>
 
-      <figure class="why-us__quote reveal reveal--delay-2">
-        <blockquote class="why-us__quote-text">
-          &ldquo;I hope you&rsquo;re proud of yourself for the times you&rsquo;ve said &lsquo;yes,&rsquo; when all it meant was extra work for you and was seemingly helpful only to someone else.&rdquo;
-        </blockquote>
-        <figcaption class="why-us__quote-cite">&mdash; Fred Rogers</figcaption>
-      </figure>
     </div>
   </section>
 
   <!-- ========== FINAL CTA ========== -->
   <section class="section--lavender cta-band film-grain">
     <div class="container cta-band__inner reveal">
-      <h2 class="text-balance">Have something in mind?</h2>
+      <h2 class="text-balance">Ready to be neighbours?</h2>
       <p>Tell us about it. We read every inquiry ourselves, and if we&rsquo;re a fit, we&rsquo;ll set up a call within a week.</p>
       <div class="btn-group">
         <a href="/contact" class="btn btn--solid">Fill out an inquiry form</a>
@@ -528,57 +523,10 @@ const featured = featuredOrder
 
   /* ---- Why us ---- */
   .why-us__inner {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 4rem;
-    align-items: center;
+    max-width: 720px;
   }
 
   .why-us__copy .bar { margin-bottom: 1.5rem; }
-
-  .why-us__quote {
-    padding: 2.75rem 2.25rem;
-    background: var(--paper);
-    border: 1px solid var(--rule-strong);
-    border-radius: var(--radius);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    position: relative;
-  }
-
-  .why-us__quote::before {
-    content: '\201C';
-    font-family: var(--font-display);
-    font-size: 4rem;
-    line-height: 0.6;
-    color: var(--honey-deep);
-  }
-
-  .why-us__quote-text {
-    font-family: var(--font-display);
-    font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
-    line-height: 1.55;
-    color: var(--ink);
-    margin: 0;
-    max-width: 36ch;
-  }
-
-  .why-us__quote-cite {
-    font-size: 0.8125rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-  }
-
-  @media (max-width: 820px) {
-    .why-us__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .why-us__quote { padding: 2rem 1.5rem; }
-  }
 
   /* ---- CTA band ---- */
   .cta-band {
