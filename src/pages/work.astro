@@ -114,6 +114,7 @@ const projects = allProjects
   .filter-bar {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 0.5rem;
     margin-bottom: 3rem;
     padding-bottom: 1.5rem;
@@ -165,8 +166,10 @@ const projects = allProjects
 
   .work-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
+    max-width: 960px;
+    margin: 0 auto;
   }
 
   .work-grid :global(.project-card__title) { font-size: 0.9375rem; }
@@ -181,7 +184,6 @@ const projects = allProjects
     padding: 3rem 0;
   }
 
-  @media (max-width: 1024px) { .work-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 720px) { .work-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
 
   .cta-band {

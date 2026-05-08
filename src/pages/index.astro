@@ -11,6 +11,7 @@ const bento = [
     href: '/services#photography',
     color: 'honey',
     size: 'md',
+    image: '/images/projects/confluence/Elly (Web)-10.jpg',
   },
   {
     key: 'video',
@@ -19,6 +20,7 @@ const bento = [
     href: '/services#video-film',
     color: 'teal',
     size: 'md',
+    image: '/images/projects/yarrow/Yarrow BTS Service 1-18.jpg',
   },
   {
     key: 'brand',
@@ -27,6 +29,7 @@ const bento = [
     href: '/services#brand-strategy',
     color: 'lavender',
     size: 'md',
+    image: '/images/projects/confluence/Sam (Web)-3.jpg',
   },
   {
     key: 'web',
@@ -35,12 +38,13 @@ const bento = [
     href: '/services#website-development',
     color: 'sage',
     size: 'md',
+    image: '/images/projects/confluence/Kim (Web)-5.jpg',
   },
 ];
 
 import { getCollection } from 'astro:content';
 const allProjects = await getCollection('projects');
-const featuredOrder = ['confluence', 'yarrow'];
+const featuredOrder = ['confluence'];
 const featured = featuredOrder
   .map(slug => allProjects.find(p => p.id === slug))
   .filter((p): p is NonNullable<typeof p> => Boolean(p) && Boolean(p!.data.featuredImage))
@@ -117,8 +121,8 @@ const featured = featuredOrder
               'reveal',
               `reveal--delay-${(i % 4) + 1}`,
             ]}
+            style={b.image ? `background-image: url('${encodeURI(b.image)}')` : ''}
           >
-            <span class="bento__index">0{i + 1}</span>
             <div class="bento__body">
               <h3 class="bento__title">{b.title}</h3>
               <p class="bento__blurb">{b.blurb}</p>
@@ -371,24 +375,26 @@ const featured = featuredOrder
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 1.75rem;
     border-radius: var(--radius-lg);
-    color: var(--ink);
+    color: var(--paper);
     overflow: hidden;
     isolation: isolate;
     transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
     border: 1px solid var(--rule);
     min-height: 220px;
+    background-size: cover;
+    background-position: center;
   }
 
   .bento__card::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 85% 0%, rgba(255, 255, 255, 0.5), transparent 60%);
     pointer-events: none;
     z-index: 0;
+    transition: opacity var(--t-base) var(--ease);
   }
 
   .bento__card > * { position: relative; z-index: 1; }
@@ -408,33 +414,20 @@ const featured = featuredOrder
 
   .bento__card--wide { grid-column: 1 / -1; }
 
-  .bento__card--honey {
-    background: linear-gradient(150deg, var(--honey-soft) 0%, var(--honey) 100%);
-    color: var(--ink);
+  .bento__card--honey::before {
+    background: linear-gradient(to top, rgba(192, 140, 57, 0.88) 0%, rgba(234, 170, 66, 0.55) 50%, rgba(0,0,0,0.2) 100%);
   }
 
-  .bento__card--teal {
-    background: linear-gradient(150deg, #8FC0CB 0%, var(--teal) 100%);
-    color: var(--ink);
+  .bento__card--teal::before {
+    background: linear-gradient(to top, rgba(42, 100, 115, 0.92) 0%, rgba(85, 156, 173, 0.6) 50%, rgba(0,0,0,0.25) 100%);
   }
 
-  .bento__card--lavender {
-    background: linear-gradient(150deg, #8A8299 0%, var(--lavender-deep) 100%);
-    color: var(--paper);
+  .bento__card--lavender::before {
+    background: linear-gradient(to top, rgba(59, 53, 72, 0.95) 0%, rgba(106, 98, 120, 0.65) 50%, rgba(0,0,0,0.3) 100%);
   }
 
-  .bento__card--sage {
-    background: linear-gradient(150deg, var(--sage-soft) 0%, var(--sage) 100%);
-    color: var(--ink);
-  }
-
-  .bento__index {
-    font-family: var(--font-display);
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    font-weight: 600;
-    opacity: 0.65;
-    align-self: flex-start;
+  .bento__card--sage::before {
+    background: linear-gradient(to top, rgba(60, 100, 70, 0.88) 0%, rgba(85, 136, 100, 0.55) 50%, rgba(0,0,0,0.2) 100%);
   }
 
   .bento__body { margin-top: auto; }
@@ -443,7 +436,7 @@ const featured = featuredOrder
     font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: -0.02em;
-    color: inherit;
+    color: var(--paper);
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
   }
@@ -451,8 +444,7 @@ const featured = featuredOrder
   .bento__card--lg .bento__title { font-size: clamp(1.75rem, 3vw, 2.25rem); }
 
   .bento__blurb {
-    color: inherit;
-    opacity: 0.82;
+    color: rgba(250, 249, 246, 0.88);
     font-size: 0.9375rem;
     line-height: 1.6;
     max-width: 36ch;
@@ -469,8 +461,7 @@ const featured = featuredOrder
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: inherit;
-    opacity: 0.85;
+    color: rgba(250, 249, 246, 0.9);
   }
 
   .bento__cta .arrow { transition: transform var(--t-base) var(--ease); display: inline-block; }

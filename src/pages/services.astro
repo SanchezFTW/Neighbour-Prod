@@ -10,9 +10,10 @@ const services = [
     color: 'honey',
     comingSoon: false,
     preview: {
-      title: '[Project title]',
+      title: 'Confluence Portraits',
       meta: 'Photography',
-      href: '/work',
+      href: '/projects/confluence',
+      image: '/images/projects/confluence/Elly (Web)-10.jpg',
     },
   },
   {
@@ -23,9 +24,10 @@ const services = [
     color: 'teal',
     comingSoon: false,
     preview: {
-      title: '[Project title]',
+      title: 'Yarrow BTS',
       meta: 'Video & Film',
       href: '/work',
+      image: '/images/projects/yarrow/Yarrow BTS Service 1-18.jpg',
     },
   },
   {
@@ -36,9 +38,10 @@ const services = [
     color: 'lavender',
     comingSoon: true,
     preview: {
-      title: '[Project title]',
+      title: 'Coming soon',
       meta: 'Brand Strategy',
       href: '/work',
+      image: null,
     },
   },
   {
@@ -47,11 +50,12 @@ const services = [
     body: 'Sites that match the brand you just built. Clean, fast, easy to update, and built to actually reach the people you\u2019re for \u2014 not just look good on a design award site.',
     goodFor: 'nonprofits rebuilding their digital home, brands launching, studios and service businesses who need a site that does more than exist.',
     color: 'sage',
-    comingSoon: true,
+    comingSoon: false,
     preview: {
-      title: '[Project title]',
+      title: 'Coming soon',
       meta: 'Website Development',
       href: '/work',
+      image: null,
     },
   },
 ];
@@ -95,7 +99,10 @@ const services = [
 
           <a href={s.preview.href} class="svc-preview reveal reveal--delay-2" aria-label={`See recent ${s.name.toLowerCase()} work`}>
             <div class:list={['svc-preview__thumb', `svc-preview__thumb--${s.color}`]} aria-hidden="true">
-              <span class="svc-preview__thumb-label">Recent work</span>
+              {s.preview.image
+                ? <img src={encodeURI(s.preview.image)} alt={s.preview.title} class="svc-preview__thumb-img" />
+                : <span class="svc-preview__thumb-label">Recent work</span>
+              }
             </div>
             <div class="svc-preview__meta">
               <span class="svc-preview__kind">{s.preview.meta}</span>
@@ -291,6 +298,15 @@ const services = [
   }
   .svc-preview__thumb--sage {
     background: linear-gradient(135deg, var(--sage-soft), var(--sage));
+  }
+
+  .svc-preview__thumb-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .svc-preview__thumb-label {

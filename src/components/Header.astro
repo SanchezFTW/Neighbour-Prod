@@ -2,11 +2,11 @@
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
-  { label: 'Home',     href: '/' },
-  { label: 'Work',     href: '/work' },
-  { label: 'Services', href: '/services' },
-  { label: 'About',    href: '/about' },
-  { label: 'Contact',  href: '/contact' },
+  { label: 'Home',     href: '/',         isCta: false },
+  { label: 'About',    href: '/about',    isCta: false },
+  { label: 'Work',     href: '/work',     isCta: false },
+  { label: 'Services', href: '/services', isCta: false },
+  { label: 'Contact',  href: '/contact',  isCta: true  },
 ];
 
 const isHome = currentPath === '/';
@@ -33,7 +33,11 @@ const isHome = currentPath === '/';
           <li>
             <a
               href={link.href}
-              class:list={['header__nav-link', { 'is-active': currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) }]}
+              class:list={[
+                'header__nav-link',
+                { 'is-active': currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) },
+                { 'header__nav-link--cta': link.isCta },
+              ]}
             >
               {link.label}
             </a>
@@ -161,6 +165,23 @@ const isHome = currentPath === '/';
 
   .header__nav-link.is-active { color: var(--lavender-deep); }
 
+  .header__nav-link--cta {
+    background: var(--honey);
+    color: var(--ink) !important;
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: background var(--t-fast) ease, transform var(--t-fast) ease;
+  }
+
+  .header__nav-link--cta::after { display: none; }
+
+  .header__nav-link--cta:hover {
+    background: var(--honey-deep);
+    color: var(--ink) !important;
+    transform: translateY(-1px);
+  }
+
   .header__burger {
     display: none;
     background: none;
@@ -286,6 +307,10 @@ const isHome = currentPath === '/';
 
     .header__nav-link.is-active::after {
       width: 40%;
+    }
+
+    .header__nav-link--cta {
+      padding: 0.6rem 2rem;
     }
   }
 </style>
