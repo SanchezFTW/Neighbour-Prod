@@ -44,7 +44,7 @@ const bento = [
 
 import { getCollection } from 'astro:content';
 const allProjects = await getCollection('projects');
-const featuredOrder = ['confluence'];
+const featuredOrder = ['confluence-website', 'confluence'];
 const featured = featuredOrder
   .map(slug => allProjects.find(p => p.id === slug))
   .filter((p): p is NonNullable<typeof p> => Boolean(p) && Boolean(p!.data.featuredImage))
@@ -72,7 +72,6 @@ const featured = featuredOrder
       <h1 class="hero__headline reveal reveal--delay-1 text-balance">
         A creative studio helping the helpers.
       </h1>
-      <p class="hero__sub reveal reveal--delay-2">For the people who show up for everyone else.</p>
     </div>
 
     <a href="#manifesto" class="hero__scroll reveal reveal--delay-3" aria-label="Scroll to content">
@@ -84,7 +83,7 @@ const featured = featuredOrder
   </section>
 
   <!-- ========== MANIFESTO ========== -->
-  <section id="manifesto" class="section section--cream manifesto">
+  <section id="manifesto" class="section manifesto">
     <div class="container">
       <div class="manifesto__inner">
         <div class="section__head reveal">
@@ -144,7 +143,7 @@ const featured = featuredOrder
   </section>
 
   <!-- ========== WORK TEASER ========== -->
-  <section class="section section--lg section--warm work">
+  <section class="section section--warm work">
     <div class="container">
       <div class="section__head section__head--row reveal">
         <div>
@@ -175,7 +174,7 @@ const featured = featuredOrder
 
   <!-- ========== WHY US ========== -->
   <section class="section section--sage film-grain why-us">
-    <div class="container why-us__inner">
+    <div class="container">
       <div class="why-us__copy reveal">
         <span class="eyebrow">Why us</span>
         <h2 class="text-balance">We show up like a good neighbour.</h2>
@@ -186,20 +185,20 @@ const featured = featuredOrder
         </div>
         <a href="/about" class="link" style="margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.35rem;">Meet us <span class="arrow">&rarr;</span></a>
       </div>
+    </div>
 
-      <div class="why-us__visual reveal reveal--delay-2">
-        <div class="why-us__frame">
-          <img
-            src="/images/bts/bts-wheelchair.jpg"
-            alt="Documentary still: athlete in wheelchair during Neighbour Productions shoot"
-            class="why-us__img"
-            loading="lazy"
-          />
-          <div class="why-us__frame-label" aria-hidden="true">
-            <span class="why-us__frame-dot"></span>
-            Mission-driven storytelling
-          </div>
-        </div>
+    <div class="camera-reel reveal reveal--delay-2" aria-hidden="true">
+      <div class="camera-reel__frame">
+        <img src="/images/bts/camera-reel-1.jpg" alt="" loading="lazy" class="camera-reel__img" />
+      </div>
+      <div class="camera-reel__frame">
+        <img src="/images/bts/camera-reel-2.jpg" alt="" loading="lazy" class="camera-reel__img" />
+      </div>
+      <div class="camera-reel__frame">
+        <img src="/images/bts/camera-reel-3.jpg" alt="" loading="lazy" class="camera-reel__img" />
+      </div>
+      <div class="camera-reel__frame">
+        <img src="/images/bts/camera-reel-4.jpg" alt="" loading="lazy" class="camera-reel__img" />
       </div>
     </div>
   </section>
@@ -347,6 +346,24 @@ const featured = featuredOrder
   }
 
   /* ---- Manifesto ---- */
+  .manifesto {
+    position: relative;
+    background: url('/images/family-photo.jpg') center 35% / cover no-repeat;
+  }
+
+  .manifesto::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(250, 249, 246, 0.86);
+    z-index: 0;
+  }
+
+  .manifesto .container {
+    position: relative;
+    z-index: 1;
+  }
+
   .manifesto__inner {
     max-width: 880px;
     margin: 0;
@@ -534,68 +551,59 @@ const featured = featuredOrder
   }
 
   /* ---- Why us ---- */
-  .why-us__inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: clamp(2.5rem, 6vw, 5rem);
-    max-width: none;
+  .why-us {
+    padding-bottom: 0;
+  }
+
+  .why-us__copy {
+    max-width: 680px;
   }
 
   .why-us__copy .bar { margin-bottom: 1.5rem; }
 
-  .why-us__visual { position: relative; }
-
-  .why-us__frame {
-    position: relative;
-    border-radius: var(--radius-lg);
+  /* ---- Camera reel ---- */
+  .camera-reel {
+    display: flex;
+    width: 100%;
+    margin-top: 3rem;
     overflow: hidden;
-    aspect-ratio: 16 / 10;
-    box-shadow: 0 24px 64px rgba(26, 26, 26, 0.2), 0 4px 16px rgba(26, 26, 26, 0.12);
   }
 
-  .why-us__img {
+  .camera-reel__frame {
+    flex: 1;
+    min-width: 0;
+    line-height: 0;
+    overflow: hidden;
+  }
+
+  .camera-reel__frame:not(:last-child) {
+    border-right: 2px solid var(--sage-soft, #BCD8C1);
+  }
+
+  .camera-reel__img {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
     display: block;
-    filter: contrast(1.04) saturate(0.85);
+    filter: contrast(1.02) saturate(0.9);
+    transition: transform 0.5s ease, filter 0.5s ease;
   }
 
-  .why-us__frame-label {
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(26, 26, 26, 0.72);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(250, 249, 246, 0.15);
-    border-radius: 999px;
-    padding: 0.375rem 0.875rem 0.375rem 0.625rem;
-    font-family: var(--font-sans);
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(250, 249, 246, 0.9);
+  .camera-reel__frame:hover .camera-reel__img {
+    transform: scale(1.03);
+    filter: contrast(1.05) saturate(1);
   }
 
-  .why-us__frame-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--teal);
-    flex-shrink: 0;
-  }
-
-  @media (max-width: 820px) {
-    .why-us__inner {
-      grid-template-columns: 1fr;
+  @media (max-width: 640px) {
+    .camera-reel {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
     }
-    .why-us__frame { aspect-ratio: 16 / 9; }
+    .camera-reel__frame {
+      flex: 0 0 80vw;
+      scroll-snap-align: start;
+    }
   }
 
   /* ---- CTA band ---- */
