@@ -10,10 +10,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- ========== HERO ========== -->
   <section class="about-hero film-grain">
     <div class="container about-hero__inner">
-      <h1 class="reveal text-balance">Hi. We&rsquo;re Jared and Abigail.</h1>
-      <p class="lede reveal reveal--delay-1">
-        We started Neighbour because we believe the best creative work happens when someone actually shows up for you.
-      </p>
+      <div class="about-hero__copy reveal">
+        <span class="eyebrow">About us</span>
+        <h1 class="text-balance">Hi. We&rsquo;re Jared and Abigail.</h1>
+        <p class="lede">
+          We started Neighbour because we believe the best creative work happens when someone actually shows up for you.
+        </p>
+        <a href="/contact" class="btn btn--solid">Work with us</a>
+      </div>
+
+      <div class="about-hero__visual reveal reveal--delay-2">
+        <div class="about-hero__frame">
+          <img
+            src="/images/bts/bts-mountains-peace.jpg"
+            alt="Jared on location in the mountains during a shoot"
+            class="about-hero__img"
+            loading="eager"
+          />
+          <div class="about-hero__monitor-badge" aria-hidden="true">
+            <span class="monitor-badge__dot"></span>
+            On location
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -34,8 +53,48 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
+  <!-- ========== BEHIND THE LENS ========== -->
+  <section class="section section--cream behind-lens">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">The craft</span>
+        <h2 class="text-balance">We go where the story is.</h2>
+        <span class="bar"></span>
+      </div>
+      <div class="behind-lens__grid">
+        <div class="behind-lens__card reveal reveal--delay-1">
+          <img
+            src="/images/bts/bts-mountains-snow.jpg"
+            alt="Production crew hiking to a remote mountain location in winter conditions"
+            class="behind-lens__img"
+            loading="lazy"
+          />
+          <p class="behind-lens__caption">Rocky Mountains — documentary production</p>
+        </div>
+        <div class="behind-lens__card reveal reveal--delay-2">
+          <img
+            src="/images/bts/bts-wheelchair.jpg"
+            alt="Camera monitor frame: athlete in wheelchair during documentary shoot"
+            class="behind-lens__img"
+            loading="lazy"
+          />
+          <p class="behind-lens__caption">Athlete portrait — mission-driven storytelling</p>
+        </div>
+        <div class="behind-lens__card reveal reveal--delay-3">
+          <img
+            src="/images/bts/bts-portrait.jpg"
+            alt="Camera monitor frame: documentary subject in a community space"
+            class="behind-lens__img"
+            loading="lazy"
+          />
+          <p class="behind-lens__caption">Community documentary — portrait session</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== WHAT WE BELIEVE ========== -->
-  <section class="section section--cream">
+  <section class="section">
     <div class="container--narrow">
       <div class="section__head reveal">
         <span class="eyebrow">What we believe</span>
@@ -65,7 +124,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </section>
 
   <!-- ========== HOW WE WORK ========== -->
-  <section class="section">
+  <section class="section section--cream">
     <div class="container--narrow">
       <div class="section__head reveal">
         <span class="eyebrow">How we work</span>
@@ -93,27 +152,160 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+  /* ---- Hero ---- */
   .about-hero {
-    padding: clamp(7rem, 14vw, 10rem) 0 clamp(3rem, 6vw, 5rem);
+    padding: clamp(6rem, 12vw, 9rem) 0 clamp(3rem, 6vw, 5rem);
     background:
-      radial-gradient(ellipse at 50% 0%, rgba(234, 170, 66, 0.2) 0%, transparent 55%),
-      radial-gradient(circle at 15% 100%, rgba(85, 156, 173, 0.1) 0%, transparent 45%),
+      radial-gradient(ellipse at 30% 0%, rgba(234, 170, 66, 0.18) 0%, transparent 55%),
+      radial-gradient(circle at 85% 80%, rgba(85, 156, 173, 0.10) 0%, transparent 45%),
       var(--paper);
+    overflow: hidden;
   }
 
   .about-hero__inner {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    max-width: 820px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(2.5rem, 6vw, 5rem);
   }
 
-  .about-hero h1 { font-size: clamp(2.5rem, 6vw, 4.25rem); }
+  .about-hero__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
 
+  .about-hero__copy .eyebrow { margin-bottom: 0; }
+
+  .about-hero__copy h1 {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    margin: 0;
+  }
+
+  .about-hero__copy .lede {
+    font-size: clamp(1rem, 1.6vw, 1.1875rem);
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 44ch;
+    margin: 0;
+  }
+
+  /* ---- Hero visual frame ---- */
+  .about-hero__visual {
+    position: relative;
+  }
+
+  .about-hero__frame {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    box-shadow: 0 24px 64px rgba(26, 26, 26, 0.18), 0 4px 16px rgba(26, 26, 26, 0.1);
+  }
+
+  .about-hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: contrast(1.05) saturate(0.9);
+  }
+
+  .about-hero__monitor-badge {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(26, 26, 26, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(250, 249, 246, 0.15);
+    border-radius: 999px;
+    padding: 0.375rem 0.875rem 0.375rem 0.625rem;
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(250, 249, 246, 0.9);
+  }
+
+  .monitor-badge__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--honey);
+    animation: badge-pulse 2.4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes badge-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .monitor-badge__dot { animation: none; }
+  }
+
+  @media (max-width: 820px) {
+    .about-hero__inner {
+      grid-template-columns: 1fr;
+    }
+    .about-hero__visual { order: -1; }
+    .about-hero__frame { aspect-ratio: 16 / 9; max-height: 340px; }
+  }
+
+  /* ---- Behind the lens ---- */
+  .behind-lens__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .behind-lens__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .behind-lens__img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    display: block;
+    filter: contrast(1.04) saturate(0.88);
+    transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
+  }
+
+  .behind-lens__card:hover .behind-lens__img {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .behind-lens__caption {
+    font-size: 0.8125rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    font-style: italic;
+    margin: 0;
+    padding-left: 0.25rem;
+  }
+
+  @media (max-width: 820px) {
+    .behind-lens__grid { grid-template-columns: 1fr; gap: 2rem; }
+    .behind-lens__img { aspect-ratio: 16 / 9; }
+  }
+
+  /* ---- Section heads ---- */
   .section__head { margin-bottom: 2.5rem; max-width: 720px; }
   .section__head .eyebrow { margin-bottom: 1rem; }
   .section__head h2 { margin-bottom: 1.25rem; }
 
+  /* ---- Beliefs ---- */
   .beliefs { display: flex; flex-direction: column; }
 
   .belief {
@@ -131,6 +323,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .belief p { font-size: 1rem; line-height: 1.75; }
 
+  /* ---- CTA band ---- */
   .cta-band {
     padding: clamp(5rem, 10vw, 8rem) 0;
     text-align: center;
