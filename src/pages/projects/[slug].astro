@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import VimeoEmbed from '../../components/VimeoEmbed.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -73,6 +74,21 @@ const related = allProjects
       </div>
     </div>
   </section>
+
+  <!-- ========== VIDEO EMBEDS ========== -->
+  {project.data.videoEmbeds && project.data.videoEmbeds.length > 0 && (
+    <section class="section case-videos">
+      <div class="container--narrow">
+        <div class:list={['video-stack', { 'video-stack--multi': project.data.videoEmbeds.length > 1 }]}>
+          {project.data.videoEmbeds.map((v, i) => (
+            <div class:list={['reveal', `reveal--delay-${i + 1}`]}>
+              <VimeoEmbed id={v.id} title={v.title} ratio={v.ratio ?? '16/9'} caption={v.caption} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- ========== GALLERY ========== -->
   {project.data.galleryImages && project.data.galleryImages.length > 0 && (
@@ -294,6 +310,22 @@ const related = allProjects
 
   /* Story */
   .case-story { padding-top: clamp(3rem, 6vw, 5rem); }
+
+  /* Video embeds */
+  .case-videos { padding-top: clamp(2rem, 4vw, 3rem); }
+
+  .video-stack { display: flex; flex-direction: column; gap: 2.5rem; }
+
+  .video-stack--multi {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+    align-items: start;
+  }
+
+  @media (max-width: 640px) {
+    .video-stack--multi { grid-template-columns: 1fr; }
+  }
 
   /* Gallery */
   .gallery {

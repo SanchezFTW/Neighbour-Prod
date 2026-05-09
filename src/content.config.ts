@@ -12,6 +12,12 @@ const projectsCollection = defineCollection({
     featuredImage: z.string().optional(),
     galleryImages: z.array(z.string()).optional(),
     videoEmbedUrl: z.string().optional(),
+    videoEmbeds: z.array(z.object({
+      id: z.string(),
+      title: z.string(),
+      ratio: z.string().optional(),
+      caption: z.string().optional(),
+    })).optional(),
     testimonial: z.object({
       quote: z.string(),
       author: z.string()
