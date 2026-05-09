@@ -166,7 +166,8 @@ const projects = allProjects
 
   .work-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
+    justify-content: center;
     gap: 1.25rem;
     max-width: 960px;
     margin: 0 auto;
@@ -184,7 +185,7 @@ const projects = allProjects
     padding: 3rem 0;
   }
 
-  @media (max-width: 720px) { .work-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
+  @media (max-width: 720px) { .work-grid { gap: 1rem; } }
 
   .cta-band {
     padding: clamp(5rem, 10vw, 8rem) 0;
