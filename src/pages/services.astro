@@ -5,8 +5,12 @@ const services = [
   {
     id: 'photography',
     name: 'Photography',
-    body: 'Portraits that look like the person, not the pose. Campaign images that hold up past the scroll. Editorial and lifestyle work for brands who\u2019d rather feel real than look polished.',
-    goodFor: 'brand libraries, campaign launches, team and founder portraits, product and lifestyle, editorial features.',
+    body: 'Portraits, campaigns, editorial. Images that feel like the people in them — not posed, not performed. Just true. We create space for people to be themselves in front of a camera. The result is work your audience recognizes as real.',
+    goodForItems: [
+      'The people on your website don’t look anything like the people you actually serve',
+      'Your images feel cold when your work is anything but',
+      'You’ve never had photos that truly captured what it feels like to be part of what you do',
+    ],
     color: 'honey',
     comingSoon: false,
     preview: {
@@ -19,8 +23,12 @@ const services = [
   {
     id: 'video-film',
     name: 'Video & Film',
-    body: 'Brand films, commercials, and documentary-style storytelling. Jared\u2019s background is in commercial and film work \u2014 so you get a director focused on the story and a producer focused on where it lives. A homepage, a phone, a boardroom. It\u2019ll work in all three.',
-    goodFor: 'brand anthems, fundraising films, campaign spots, founder stories, documentary series.',
+    body: 'Brand films, documentaries, commercials. The kind of storytelling that earns trust before it asks for anything. We think about pacing, character, and emotional arc — not just shots. Whether we’re in a boardroom or hiking into the backcountry, we go where the story is.',
+    goodForItems: [
+      'You know your story is powerful but can’t figure out how to show it',
+      'You’ve had videos made that inform people but don’t move them',
+      'The impact you create deserves to be felt, not just explained',
+    ],
     color: 'teal',
     comingSoon: false,
     preview: {
@@ -33,8 +41,12 @@ const services = [
   {
     id: 'brand-strategy',
     name: 'Brand Strategy',
-    body: 'Before you need a logo, you need to know who you are. Abigail leads our strategy work \u2014 positioning, messaging, brand personality, audience definition \u2014 the foundation everything else gets built on.',
-    goodFor: 'new brands, rebrands, mission-driven orgs getting clearer about their voice, teams who keep saying \u201cwe know what we want, we just can\u2019t explain it.\u201d',
+    body: 'Who you are, who you’re for, and how to say it in a way that actually reaches them. When your story is clear, the photo, the film, the site — all of it becomes intention instead of guesswork.',
+    goodForItems: [
+      'You say something different depending on who’s asking',
+      'You know your value but lose people before they get it',
+      'You’ve outgrown the words you started with and need new ones',
+    ],
     color: 'lavender',
     comingSoon: true,
     preview: {
@@ -47,8 +59,12 @@ const services = [
   {
     id: 'website-development',
     name: 'Website Development',
-    body: 'Sites that match the brand you just built. Clean, fast, easy to update, and built to actually reach the people you\u2019re for \u2014 not just look good on a design award site.',
-    goodFor: 'nonprofits rebuilding their digital home, brands launching, studios and service businesses who need a site that does more than exist.',
+    body: 'A site that matches your brand — and works as hard as you do. Clean, considered, and built to last longer than a trend cycle.',
+    goodForItems: [
+      'Your site no longer reflects who you’ve become',
+      'People land on your page and don’t know what to do next',
+      'Your brand and your website feel like two different organizations',
+    ],
     color: 'sage',
     comingSoon: false,
     preview: {
@@ -69,9 +85,9 @@ const services = [
   <!-- ========== HERO ========== -->
   <section class="svc-hero film-grain">
     <div class="container svc-hero__inner">
-      <h1 class="reveal text-balance">Most of our best projects start with a conversation.</h1>
+      <h1 class="reveal text-balance">What we make, together.</h1>
       <p class="lede reveal reveal--delay-1">
-        Not a checklist. Not a package. A real talk about what you need and whether we&rsquo;re the right people to help. Here&rsquo;s what we bring to the table.
+        We work across four things. They tend to talk to each other &mdash; but we&rsquo;ll meet you wherever you need to start.
       </p>
     </div>
   </section>
@@ -93,8 +109,12 @@ const services = [
           </article>
 
           <article class:list={['svc-card', 'svc-card--good', `svc-card--${s.color}`]}>
-            <h3 class="svc-card__label">Good for</h3>
-            <p class="svc-card__body">{s.goodFor}</p>
+            <h3 class="svc-card__label">This is for you if&hellip;</h3>
+            <ul class="svc-card__list">
+              {s.goodForItems.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
           </article>
 
           <a href={s.preview.href} class="svc-preview reveal reveal--delay-2" aria-label={`See recent ${s.name.toLowerCase()} work`}>
@@ -115,19 +135,12 @@ const services = [
     </section>
   ))}
 
-  <!-- ========== THROUGH-LINE ========== -->
+  <!-- ========== CLOSING CTA ========== -->
   <section class="section section--cream">
     <div class="container--narrow">
-      <div class="section__head reveal">
-        <span class="eyebrow">Through-line</span>
-        <h2 class="text-balance">The through-line.</h2>
-        <span class="bar"></span>
-      </div>
-      <div class="prose reveal reveal--delay-1">
-        <p>Whatever you hire us for, we&rsquo;re asking the same question underneath: <em>how do we get your truth to the people who need it?</em> That&rsquo;s the filter we run every creative decision through. It&rsquo;s why our work tends to age well.</p>
-      </div>
-      <div class="reveal reveal--delay-2" style="margin-top: 2rem;">
-        <a href="/contact" class="btn btn--solid">Ready to be neighbours?</a>
+      <div class="reveal" style="text-align: center;">
+        <p class="closing-line">Hire us for one. Hire us for all four.</p>
+        <a href="/contact" class="btn btn--solid" style="margin-top: 1.5rem;">Work with us &rarr;</a>
       </div>
     </div>
   </section>
@@ -250,6 +263,35 @@ const services = [
     margin: 0;
   }
 
+  .svc-card__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .svc-card__list li {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .svc-card__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--honey);
+    flex-shrink: 0;
+  }
+
   .svc-card--good { background: var(--paper-cream); }
   .svc-card--good.svc-card--teal { background: rgba(85, 156, 173, 0.10); }
   .svc-card--good.svc-card--lavender { background: rgba(106, 98, 120, 0.10); }
@@ -362,6 +404,16 @@ const services = [
   }
 
   .svc-preview:hover .svc-preview__link .arrow { transform: translateX(4px); }
+
+  /* Closing */
+  .closing-line {
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 2.5vw, 1.875rem);
+    font-weight: 600;
+    color: var(--lavender-deep);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
 
   @media (max-width: 900px) {
     .svc-block__grid { grid-template-columns: 1fr; }

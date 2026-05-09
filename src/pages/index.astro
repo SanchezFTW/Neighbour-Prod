@@ -7,7 +7,7 @@ const bento = [
   {
     key: 'photo',
     title: 'Photo',
-    blurb: 'Portraits, campaigns, editorial, the kind of images that feel like the people in them.',
+    blurb: 'Portraits, campaigns, editorial. Images that feel like the people in them.',
     href: '/services#photography',
     color: 'honey',
     size: 'md',
@@ -16,7 +16,7 @@ const bento = [
   {
     key: 'video',
     title: 'Video',
-    blurb: 'Commercials, brand films, documentary-style storytelling with a cinematic backbone.',
+    blurb: 'Brand films, documentaries, commercials. Storytelling that earns trust before it asks for anything.',
     href: '/services#video-film',
     color: 'teal',
     size: 'md',
@@ -25,7 +25,7 @@ const bento = [
   {
     key: 'brand',
     title: 'Brand Strategy',
-    blurb: 'Figuring out who you are, who you\u2019re for, and what you\u2019re really saying.',
+    blurb: 'Who you are, who you\u2019re for, and how to say it in a way that actually reaches them.',
     href: '/services#brand-strategy',
     color: 'lavender',
     size: 'md',
@@ -34,7 +34,7 @@ const bento = [
   {
     key: 'web',
     title: 'Website Development',
-    blurb: 'Sites that match the brand you just built, not fight it.',
+    blurb: 'A site that matches your mission \u2014 and works as hard as you do.',
     href: '/services#website-development',
     color: 'sage',
     size: 'md',
@@ -72,9 +72,10 @@ const featured = featuredOrder
       <h1 class="hero__headline reveal reveal--delay-1 text-balance">
         A creative studio helping the helpers.
       </h1>
+      <p class="hero__sub reveal reveal--delay-2">For the people who show up for everyone else.</p>
     </div>
 
-    <a href="#manifesto" class="hero__scroll reveal reveal--delay-2" aria-label="Scroll to content">
+    <a href="#manifesto" class="hero__scroll reveal reveal--delay-3" aria-label="Scroll to content">
       <span class="hero__scroll-label">Scroll</span>
       <span class="hero__scroll-mouse" aria-hidden="true">
         <span class="hero__scroll-wheel"></span>
@@ -88,13 +89,13 @@ const featured = featuredOrder
       <div class="manifesto__inner">
         <div class="section__head reveal">
           <span class="eyebrow">Manifesto</span>
-          <h2 class="text-balance">The helpers are usually the last ones to ask for help.</h2>
+          <h2 class="text-balance">You&rsquo;re in the business of showing up for people.</h2>
           <span class="bar"></span>
         </div>
         <div class="prose prose--justify reveal reveal--delay-1">
-          <p>You&rsquo;re running the programs. Writing the grants. Managing the team. And somewhere in the middle of all of it, you need to tell your story &mdash; to funders, to your community, to the people who need what you offer.</p>
-          <p>That&rsquo;s the part we handle.</p>
-          <p>We&rsquo;re a husband-and-wife creative studio. Photo, film, brand strategy, websites. We make sure your work looks as good on the outside as it is on the inside &mdash; so you can get back to the thing you&rsquo;re actually here to do.</p>
+          <p>That takes everything you&rsquo;ve got. We know that.</p>
+          <p>We&rsquo;re here so your story gets the same care you give to everyone else&rsquo;s &mdash; through photo, film, brand strategy, and websites that actually do their job.</p>
+          <p>Because the work you do deserves to be seen.</p>
         </div>
       </div>
     </div>
@@ -177,12 +178,11 @@ const featured = featuredOrder
     <div class="container why-us__inner">
       <div class="why-us__copy reveal">
         <span class="eyebrow">Why us</span>
-        <h2 class="text-balance">We&rsquo;re not going to oversell this.</h2>
+        <h2 class="text-balance">We show up like a good neighbour.</h2>
         <span class="bar"></span>
         <div class="prose">
-          <p>You need someone who shows up, does the work, and doesn&rsquo;t make the process harder than it needs to be. Someone who asks good questions, listens to the answers, and keeps their word.</p>
-          <p>We listen before we pitch. We ask before we quote. We tell you if we&rsquo;re not the right fit, and we mean it when we say we are.</p>
-          <p>That&rsquo;s the whole thing. Help, don&rsquo;t harm. We picked the name Neighbour for a reason &mdash; and we try to earn it every time.</p>
+          <p>We listen before we pitch. We ask about the people you serve before we talk about deliverables. And we stay honest &mdash; about what things cost, what will work, and whether we&rsquo;re the right fit.</p>
+          <p>You focus on your people. We&rsquo;ll handle the rest.</p>
         </div>
         <a href="/about" class="link" style="margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.35rem;">Meet us <span class="arrow">&rarr;</span></a>
       </div>
@@ -207,10 +207,10 @@ const featured = featuredOrder
   <!-- ========== FINAL CTA ========== -->
   <section class="section--lavender cta-band film-grain">
     <div class="container cta-band__inner reveal">
-      <h2 class="text-balance">Ready to be neighbours?</h2>
-      <p>Tell us about it. We read every inquiry ourselves, and if we&rsquo;re a fit, we&rsquo;ll set up a call within a week.</p>
+      <h2 class="text-balance">Tell us about your work.</h2>
+      <p>Not a pitch &mdash; just a conversation. We read every message ourselves.</p>
       <div class="btn-group">
-        <a href="/contact" class="btn btn--solid">Fill out an inquiry form</a>
+        <a href="/contact" class="btn btn--solid">Start the conversation &rarr;</a>
       </div>
     </div>
   </section>
@@ -318,6 +318,15 @@ const featured = featuredOrder
     letter-spacing: -0.01em;
     max-width: 32ch;
     margin: 0;
+  }
+
+  .hero__sub {
+    font-family: var(--font-sans);
+    font-size: clamp(0.9375rem, 1.3vw, 1.0625rem);
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+    letter-spacing: 0.01em;
   }
 
   .hero__lede {

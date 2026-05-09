@@ -12,17 +12,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="container contact-hero__inner">
       <h1 class="reveal text-balance">Let&rsquo;s talk.</h1>
       <p class="lede reveal reveal--delay-1">
-        Tell us a bit about your project. We read every inquiry ourselves &mdash; usually within a day or two &mdash; and if we&rsquo;re a good fit, we&rsquo;ll set up a call.
+        You don&rsquo;t need a polished brief or a clear budget before you reach out. Just tell us what you&rsquo;re working on and where you feel stuck. We&rsquo;ll take it from there.
       </p>
+      <p class="contact-hero__sub reveal reveal--delay-2">We read every message ourselves and respond within a few days.</p>
     </div>
   </section>
 
   <!-- ========== FORM ========== -->
   <section class="section contact-form-section">
     <div class="container contact-layout">
+      <div class="contact-form-col">
+        <div class="form-guidance reveal">
+          <p class="form-guidance__label">A few things that help us show up prepared:</p>
+          <ul class="form-guidance__list">
+            <li>What&rsquo;s your organization and what do you do?</li>
+            <li>What are you trying to make or figure out?</li>
+            <li>Is there a timeline or deadline we should know about?</li>
+          </ul>
+        </div>
+
       <form
         id="inquiry-form"
-        class="inquiry-form reveal"
+        class="inquiry-form reveal reveal--delay-1"
         action="https://formspree.io/f/xwvadbkl"
         method="POST"
         novalidate
@@ -121,6 +132,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
         </div>
       </form>
+      </div>
 
       <aside class="next-steps reveal reveal--delay-1" aria-labelledby="next-heading">
         <h2 id="next-heading">What happens next</h2>
@@ -129,6 +141,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <li><span class="next-num">2</span><p>If we think we&rsquo;re a fit, we&rsquo;ll reach out to book a call within about a week.</p></li>
           <li><span class="next-num">3</span><p>If we&rsquo;re not the right fit, we&rsquo;ll tell you that too &mdash; and point you toward someone who might be.</p></li>
         </ol>
+
+        <div class="not-sure">
+          <p class="not-sure__heading">Not sure if we&rsquo;re the right fit?</p>
+          <p class="not-sure__body">Reach out anyway. The worst that happens is we point you in the right direction.</p>
+        </div>
       </aside>
     </div>
   </section>
@@ -152,6 +169,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     max-width: 780px;
   }
 
+  .contact-hero__sub {
+    font-size: 0.9375rem;
+    color: var(--ink-soft);
+    margin: 0;
+    opacity: 0.85;
+  }
+
   .contact-form-section { padding-top: clamp(2rem, 4vw, 3rem); }
 
   .contact-layout {
@@ -159,6 +183,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     grid-template-columns: 1.4fr 1fr;
     gap: clamp(2.5rem, 5vw, 4rem);
     align-items: start;
+  }
+
+  .contact-form-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   @media (max-width: 860px) {
@@ -309,6 +339,68 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .next-list p {
     font-size: 0.9375rem;
     line-height: 1.65;
+    margin: 0;
+  }
+
+  /* Form guidance */
+  .form-guidance {
+    background: var(--paper-cream);
+    border-left: 3px solid var(--honey);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .form-guidance__label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--lavender-deep);
+    letter-spacing: 0.04em;
+    margin: 0 0 0.75rem;
+  }
+
+  .form-guidance__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-guidance__list li {
+    font-size: 0.9375rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    padding-left: 1.1rem;
+    position: relative;
+  }
+
+  .form-guidance__list li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--honey-deep);
+  }
+
+  /* Not sure CTA */
+  .not-sure {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .not-sure__heading {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--lavender-deep);
+    margin: 0 0 0.4rem;
+  }
+
+  .not-sure__body {
+    font-size: 0.9375rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
     margin: 0;
   }
 
