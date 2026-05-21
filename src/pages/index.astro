@@ -1,14 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
 
-// Bento cards — Photo is the "hero" tile, others fill the grid.
 const bento = [
   {
     key: 'photo',
     title: 'Photo',
     blurb: 'Portraits, campaigns, editorial. Images that feel like the people in them.',
-    href: '/services#photography',
+    href: '#work',
     color: 'honey',
     size: 'md',
     image: '/images/projects/confluence/Elly (Web)-10.jpg',
@@ -17,7 +15,7 @@ const bento = [
     key: 'video',
     title: 'Video',
     blurb: 'Brand films, documentaries, commercials. Storytelling that earns trust before it asks for anything.',
-    href: '/services#video-film',
+    href: '#work',
     color: 'teal',
     size: 'md',
     image: '/images/bts/bts-mountains-snow.jpg',
@@ -25,8 +23,8 @@ const bento = [
   {
     key: 'brand',
     title: 'Brand Strategy',
-    blurb: 'Who you are, who you\u2019re for, and how to say it in a way that actually reaches them.',
-    href: '/services#brand-strategy',
+    blurb: 'Who you are, who you’re for, and how to say it in a way that actually reaches them.',
+    href: '#work',
     color: 'lavender',
     size: 'md',
     image: '/images/projects/confluence/Sam (Web)-3.jpg',
@@ -34,8 +32,8 @@ const bento = [
   {
     key: 'web',
     title: 'Website Development',
-    blurb: 'A site that matches your mission \u2014 and works as hard as you do.',
-    href: '/services#website-development',
+    blurb: 'A site that matches your mission — and works as hard as you do.',
+    href: '#work',
     color: 'sage',
     size: 'md',
     image: '/images/projects/confluence/Kim (Web)-5.jpg',
@@ -44,17 +42,21 @@ const bento = [
 
 import { getCollection } from 'astro:content';
 const allProjects = await getCollection('projects');
-const featuredOrder = ['confluence-website', 'confluence'];
-const featured = featuredOrder
+
+const workOrder = ['confluence', 'confluence-website', 'voh'];
+const work = workOrder
   .map(slug => allProjects.find(p => p.id === slug))
-  .filter((p): p is NonNullable<typeof p> => Boolean(p) && Boolean(p!.data.featuredImage))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p))
   .map(p => ({
     title: p.data.title,
     category: p.data.category,
+    client: p.data.client,
+    description: p.data.description,
     href: `/projects/${p.id}`,
     image: p.data.featuredImage ? encodeURI(p.data.featuredImage).replace(/#/g, '%23') : undefined,
-    ratio: '4/5',
   }));
+
+const workCount = String(work.length).padStart(2, '0');
 ---
 
 <BaseLayout title="Home">
@@ -66,6 +68,9 @@ const featured = featuredOrder
         <img
           src="/images/logos/Neighbour Logo Color.png"
           alt=""
+          fetchpriority="high"
+          loading="eager"
+          decoding="async"
         />
       </div>
 
@@ -101,7 +106,7 @@ const featured = featuredOrder
   </section>
 
   <!-- ========== SERVICES / BENTO ========== -->
-  <section class="section services-bento-section">
+  <section id="services" class="section services-bento-section">
     <div class="container">
       <div class="section__head reveal">
         <span class="eyebrow">Services</span>
@@ -135,81 +140,199 @@ const featured = featuredOrder
       </div>
 
       <p class="services-foot reveal reveal--delay-2">Hire us for one. Hire us for all four. We&rsquo;ll meet you where you are.</p>
-
-      <div class="reveal reveal--delay-3" style="margin-top: 1.5rem;">
-        <a href="/services" class="link">See the services <span class="arrow">&rarr;</span></a>
-      </div>
     </div>
   </section>
 
-  <!-- ========== WORK TEASER ========== -->
-  <section class="section section--warm work">
-    <div class="container">
-      <div class="section__head section__head--row reveal">
-        <div>
-          <span class="eyebrow">Work</span>
-          <h2>Recent work.</h2>
-          <span class="bar"></span>
-        </div>
-        <a href="/work" class="link work__see-all">
-          See all work <span class="arrow">&rarr;</span>
-        </a>
-      </div>
+  <!-- ========== WORK (REF-style grid) ========== -->
+  <section id="work" class="work-grid-section">
+    <div class="work-grid__head reveal">
+      <h2 class="work-grid__headline text-balance">Don&rsquo;t adapt to change. Shape it.</h2>
+    </div>
 
-      <div class="work__grid">
-        {featured.map((p, i) => (
-          <div class:list={['reveal', `reveal--delay-${i + 1}`]}>
-            <ProjectCard
-              href={p.href}
-              title={p.title}
-              category={p.category}
-              image={p.image}
-              ratio={p.ratio}
-            />
+    <div class="work-grid__bar">
+      <span class="work-grid__count">
+        <svg class="work-grid__folder" width="14" height="14" viewBox="0 0 16 16" aria-hidden="true">
+          <path fill="currentColor" d="M1.5 3.5h4l1.5 1.5h7.5v8.5h-13z" stroke="currentColor" stroke-width="1" fill="none" stroke-linejoin="round"/>
+        </svg>
+        ALL WORK [{workCount}]
+      </span>
+
+      <div class="work-grid__views" role="tablist" aria-label="View toggle">
+        <button type="button" class="work-grid__view is-active" data-view="grid" role="tab" aria-selected="true">[GRID]</button>
+        <button type="button" class="work-grid__view" data-view="list" role="tab" aria-selected="false">LIST</button>
+      </div>
+    </div>
+
+    <div class="work-grid" data-view="grid">
+      {work.map((p, i) => (
+        <a
+          href={p.href}
+          class:list={['work-tile', 'reveal', `reveal--delay-${(i % 3) + 1}`]}
+          aria-label={`${p.title} — ${p.category}`}
+        >
+          <div class="work-tile__image">
+            {p.image && <img src={p.image} alt="" loading="lazy" />}
           </div>
-        ))}
-      </div>
+          <div class="work-tile__caption">
+            <div class="work-tile__caption-col work-tile__caption-col--title">
+              <span class="work-tile__client">{p.client}</span>
+            </div>
+            <div class="work-tile__caption-col">
+              <span class="work-tile__sub">{p.description}</span>
+            </div>
+          </div>
+        </a>
+      ))}
     </div>
   </section>
 
-  <!-- ========== WHY US ========== -->
-  <section class="section section--sage film-grain why-us">
-    <div class="container">
-      <div class="why-us__copy reveal">
-        <span class="eyebrow">Why us</span>
-        <h2 class="text-balance">We show up like a good neighbour.</h2>
+  <!-- ========== ABOUT ========== -->
+  <section id="about" class="section section--cream about-section">
+    <div class="container--narrow">
+      <div class="section__head reveal">
+        <span class="eyebrow">About</span>
+        <h2 class="text-balance">Hi. We&rsquo;re Jared and Abigail.</h2>
         <span class="bar"></span>
-        <div class="prose">
-          <p>We listen before we pitch. We ask about the people you serve before we talk about deliverables. And we stay honest &mdash; about what things cost, what will work, and whether we&rsquo;re the right fit.</p>
-          <p>You focus on your people. We&rsquo;ll handle the rest.</p>
-        </div>
-        <a href="/about" class="link" style="margin-top: 1rem; display: inline-flex; align-items: center; gap: 0.35rem;">Meet us <span class="arrow">&rarr;</span></a>
       </div>
-    </div>
+      <div class="prose reveal reveal--delay-1">
+        <p>Jared is a filmmaker and creative strategist who spent years in commercials and film learning how to tell a story that lands. Abigail is a brand strategist, photographer, and director who thinks about who a story is <em>for</em> before she thinks about how it looks.</p>
+        <p>Together we built a studio around the work that matters most to us &mdash; the helpers. The ones doing something real in the world.</p>
+        <p>When you hire us, you get us. Our full attention, start to finish. No account manager, no handoff, no stranger on the edit.</p>
+      </div>
 
-    <div class="camera-reel reveal reveal--delay-2" aria-hidden="true">
-      <div class="camera-reel__frame">
-        <img src="/images/bts/camera-reel-1.jpg" alt="" loading="lazy" class="camera-reel__img" />
-      </div>
-      <div class="camera-reel__frame">
-        <img src="/images/bts/camera-reel-2.jpg" alt="" loading="lazy" class="camera-reel__img" />
-      </div>
-      <div class="camera-reel__frame">
-        <img src="/images/bts/camera-reel-3.jpg" alt="" loading="lazy" class="camera-reel__img" />
-      </div>
-      <div class="camera-reel__frame">
-        <img src="/images/bts/camera-reel-4.jpg" alt="" loading="lazy" class="camera-reel__img" />
+      <div class="beliefs reveal reveal--delay-2">
+        <div class="belief">
+          <h3>We believe no one is born void.</h3>
+          <p>Every person and every organization has something worth bringing to the surface. Our job is to help you find it.</p>
+        </div>
+        <div class="belief">
+          <h3>We believe in moving forward with honesty.</h3>
+          <p>Upfront about costs, timelines, and fit. If something isn&rsquo;t serving you, we&rsquo;ll say so.</p>
+        </div>
+        <div class="belief">
+          <h3>We believe in the right thing for the right people.</h3>
+          <p>Not the flashiest thing. The thing that actually works &mdash; for your audience, your work, and the moment you&rsquo;re in.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== FINAL CTA ========== -->
-  <section class="section--lavender cta-band film-grain">
-    <div class="container cta-band__inner reveal">
-      <h2 class="text-balance">Tell us about your work.</h2>
-      <p>Not a pitch &mdash; just a conversation. We read every message ourselves.</p>
-      <div class="btn-group">
-        <a href="/contact" class="btn btn--solid">Start the conversation &rarr;</a>
+  <!-- ========== CONTACT ========== -->
+  <section id="contact" class="section contact-section">
+    <div class="container">
+      <div class="contact-section__head reveal">
+        <span class="eyebrow">Contact</span>
+        <h2 class="text-balance">Let&rsquo;s talk.</h2>
+        <span class="bar"></span>
+        <p class="lede">
+          You don&rsquo;t need a polished brief or a clear budget before you reach out. Just tell us what you&rsquo;re working on and where you feel stuck.
+        </p>
+      </div>
+
+      <div class="contact-layout">
+        <form
+          id="inquiry-form"
+          class="inquiry-form reveal reveal--delay-1"
+          action="https://formspree.io/f/xwvadbkl"
+          method="POST"
+          novalidate
+        >
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0;" aria-hidden="true" />
+
+          <div class="field-row">
+            <div class="field">
+              <label for="firstName">First name</label>
+              <input id="firstName" name="firstName" type="text" required autocomplete="given-name" />
+            </div>
+            <div class="field">
+              <label for="lastName">Last name</label>
+              <input id="lastName" name="lastName" type="text" required autocomplete="family-name" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">Your email</label>
+            <input id="email" name="email" type="email" required autocomplete="email" />
+          </div>
+
+          <div class="field">
+            <label for="org">Organization <span class="field__opt">(if any)</span></label>
+            <input id="org" name="organization" type="text" autocomplete="organization" />
+          </div>
+
+          <div class="field">
+            <label for="project">What are you working on?</label>
+            <textarea id="project" name="project" rows="5" required placeholder="A short paragraph is plenty."></textarea>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="projectType">Project type</label>
+              <select id="projectType" name="projectType" required>
+                <option value="" disabled selected>Pick one</option>
+                <option value="Crafting a strategy">Crafting a strategy</option>
+                <option value="Building a new brand">Building a new brand</option>
+                <option value="Launching a campaign">Launching a campaign</option>
+                <option value="Making a new website">Making a new website</option>
+                <option value="Driving sales or traffic">Driving sales or traffic</option>
+                <option value="Something not listed">Something not listed</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="timeline">Timeline</label>
+              <select id="timeline" name="timeline" required>
+                <option value="" disabled selected>Pick one</option>
+                <option value="ASAP">ASAP</option>
+                <option value="Next 1–3 months">Next 1&ndash;3 months</option>
+                <option value="3–6 months">3&ndash;6 months</option>
+                <option value="Just exploring">Just exploring</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="budget">Budget range</label>
+              <select id="budget" name="budget" required>
+                <option value="" disabled selected>Pick one</option>
+                <option value="Under $5k">Under $5k</option>
+                <option value="$5k–$15k">$5k&ndash;$15k</option>
+                <option value="$15k–$30k">$15k&ndash;$30k</option>
+                <option value="$30k+">$30k+</option>
+                <option value="Not sure yet">Not sure yet</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="referral">How&rsquo;d you find us?</label>
+              <select id="referral" name="referral" required>
+                <option value="" disabled selected>Pick one</option>
+                <option value="Referral">Referral from a friend or colleague</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Google search">Google search</option>
+                <option value="Past project">Saw a past project of ours</option>
+                <option value="Event">At an event</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn--solid">Send it over</button>
+            <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <aside class="contact-aside reveal reveal--delay-2">
+          <h3>What happens next</h3>
+          <ol class="next-list">
+            <li><span class="next-num">1</span><p>We read your inquiry (actually &mdash; it&rsquo;s just the two of us).</p></li>
+            <li><span class="next-num">2</span><p>If we think we&rsquo;re a fit, we&rsquo;ll reach out to book a call within about a week.</p></li>
+            <li><span class="next-num">3</span><p>If we&rsquo;re not the right fit, we&rsquo;ll tell you that too &mdash; and point you toward someone who might be.</p></li>
+          </ol>
+          <p class="contact-aside__email">
+            Or email us at <a href="mailto:info@neighbourprod.com">info@neighbourprod.com</a>.
+          </p>
+        </aside>
       </div>
     </div>
   </section>
@@ -217,6 +340,9 @@ const featured = featuredOrder
 </BaseLayout>
 
 <style>
+  /* ---- Smooth anchor scroll ---- */
+  :global(html) { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+
   /* ---- Hero ---- */
   .hero {
     position: relative;
@@ -242,18 +368,24 @@ const featured = featuredOrder
     max-width: 1100px;
   }
 
-  .hero__logo {
-    margin: 0;
-    line-height: 0;
-  }
-
+  .hero__logo { margin: 0; line-height: 0; }
   .hero__logo img {
     width: clamp(300px, 60vw, 760px);
     height: auto;
     display: block;
   }
 
-  /* ---- Hero scroll indicator ---- */
+  .hero__headline {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--lavender-deep);
+    font-size: clamp(1rem, 1.6vw, 1.375rem);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    max-width: 32ch;
+    margin: 0;
+  }
+
   .hero__scroll {
     position: absolute;
     left: 50%;
@@ -268,7 +400,6 @@ const featured = featuredOrder
     opacity: 0.75;
     transition: opacity var(--t-base) var(--ease);
   }
-
   .hero__scroll:hover { opacity: 1; }
 
   .hero__scroll-label {
@@ -306,37 +437,8 @@ const featured = featuredOrder
 
   @media (prefers-reduced-motion: reduce) {
     .hero__scroll-wheel { animation: none; }
+    :global(html) { scroll-behavior: auto; }
   }
-
-  .hero__headline {
-    font-family: var(--font-display);
-    font-weight: 500;
-    color: var(--lavender-deep);
-    font-size: clamp(1rem, 1.6vw, 1.375rem);
-    line-height: 1.4;
-    letter-spacing: -0.01em;
-    max-width: 32ch;
-    margin: 0;
-  }
-
-  .hero__sub {
-    font-family: var(--font-sans);
-    font-size: clamp(0.9375rem, 1.3vw, 1.0625rem);
-    line-height: 1.6;
-    color: var(--ink-soft);
-    margin: 0;
-    letter-spacing: 0.01em;
-  }
-
-  .hero__lede {
-    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
-    line-height: 1.6;
-    color: var(--ink-soft);
-    max-width: 54ch;
-    margin: 0;
-  }
-
-  .hero .btn-group { justify-content: center; margin-top: 0.75rem; }
 
   @media (max-width: 768px) {
     .hero__logo img { width: min(78vw, 480px); }
@@ -350,7 +452,6 @@ const featured = featuredOrder
     position: relative;
     background: url('/images/family-photo.jpg') center 35% / cover no-repeat;
   }
-
   .manifesto::before {
     content: '';
     position: absolute;
@@ -358,31 +459,16 @@ const featured = featuredOrder
     background: rgba(250, 249, 246, 0.86);
     z-index: 0;
   }
-
-  .manifesto .container {
-    position: relative;
-    z-index: 1;
-  }
-
-  .manifesto__inner {
-    max-width: 880px;
-    margin: 0;
-    text-align: left;
-  }
-
+  .manifesto .container { position: relative; z-index: 1; }
+  .manifesto__inner { max-width: 880px; margin: 0; text-align: left; }
   .manifesto .section__head { max-width: none; }
-
-  .prose--justify p {
-    text-align: justify;
-    hyphens: auto;
-  }
+  .prose--justify p { text-align: justify; hyphens: auto; }
 
   /* ---- Section heads ---- */
   .section__head {
     margin-bottom: 3rem;
     max-width: 720px;
   }
-
   .section__head .eyebrow { margin-bottom: 1rem; }
   .section__head h2 { margin-bottom: 1.25rem; }
   .section__lede {
@@ -393,21 +479,12 @@ const featured = featuredOrder
     margin-top: 1.25rem;
   }
 
-  .section__head--row {
-    max-width: none;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-  }
-
   /* ---- Services bento ---- */
   .services-bento-section { border-top: 1px solid var(--rule); }
 
   .bento {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-auto-rows: minmax(220px, auto);
     gap: 1rem;
   }
@@ -424,7 +501,7 @@ const featured = featuredOrder
     isolation: isolate;
     transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
     border: 1px solid var(--rule);
-    min-height: 220px;
+    min-height: 240px;
     background-size: cover;
     background-position: center;
   }
@@ -439,34 +516,17 @@ const featured = featuredOrder
   }
 
   .bento__card > * { position: relative; z-index: 1; }
-
-  .bento__card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lift);
-  }
-
-  .bento__card--lg {
-    grid-column: span 3;
-    grid-row: span 2;
-    min-height: 460px;
-  }
-
-  .bento__card--md { grid-column: span 3; }
-
-  .bento__card--wide { grid-column: 1 / -1; }
+  .bento__card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
 
   .bento__card--honey::before {
     background: linear-gradient(to top, rgba(192, 140, 57, 0.88) 0%, rgba(234, 170, 66, 0.55) 50%, rgba(0,0,0,0.2) 100%);
   }
-
   .bento__card--teal::before {
     background: linear-gradient(to top, rgba(42, 100, 115, 0.92) 0%, rgba(85, 156, 173, 0.6) 50%, rgba(0,0,0,0.25) 100%);
   }
-
   .bento__card--lavender::before {
     background: linear-gradient(to top, rgba(59, 53, 72, 0.95) 0%, rgba(106, 98, 120, 0.65) 50%, rgba(0,0,0,0.3) 100%);
   }
-
   .bento__card--sage::before {
     background: linear-gradient(to top, rgba(60, 100, 70, 0.88) 0%, rgba(85, 136, 100, 0.55) 50%, rgba(0,0,0,0.2) 100%);
   }
@@ -482,16 +542,12 @@ const featured = featuredOrder
     margin-bottom: 0.5rem;
   }
 
-  .bento__card--lg .bento__title { font-size: clamp(1.75rem, 3vw, 2.25rem); }
-
   .bento__blurb {
     color: rgba(250, 249, 246, 0.88);
     font-size: 0.9375rem;
     line-height: 1.6;
     max-width: 36ch;
   }
-
-  .bento__card--lg .bento__blurb { font-size: 1rem; max-width: 42ch; }
 
   .bento__cta {
     margin-top: 1.25rem;
@@ -504,7 +560,6 @@ const featured = featuredOrder
     text-transform: uppercase;
     color: rgba(250, 249, 246, 0.9);
   }
-
   .bento__cta .arrow { transition: transform var(--t-base) var(--ease); display: inline-block; }
   .bento__card:hover .bento__cta .arrow { transform: translateX(4px); }
 
@@ -517,121 +572,475 @@ const featured = featuredOrder
   }
 
   @media (max-width: 960px) {
-    .bento { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
-    .bento__card--lg, .bento__card--md, .bento__card--wide {
-      grid-column: span 1;
-      grid-row: auto;
-      min-height: 240px;
-    }
+    .bento { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .bento { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================== */
+  /* ============ WORK (REF-style grid) =========== */
+  /* ============================================== */
+
+  .work-grid-section {
+    padding: clamp(4rem, 8vw, 6rem) 0 0;
+    background: var(--paper);
+    border-top: 1px solid var(--rule);
+  }
+
+  .work-grid__head {
+    padding: 0 clamp(1.5rem, 4vw, 3rem);
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    max-width: 1200px;
+  }
+
+  .work-grid__headline {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.25rem, 5.5vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .work-grid__bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem clamp(1.5rem, 4vw, 3rem);
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .work-grid__count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .work-grid__folder { color: var(--ink); flex-shrink: 0; }
+
+  .work-grid__views {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .work-grid__view {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: var(--ink-mute, #999);
+    transition: color var(--t-fast) ease;
+  }
+
+  .work-grid__view:hover { color: var(--ink); }
+
+  .work-grid__view.is-active { color: var(--ink); }
+
+  /* ---- Grid layout (flush tiles) ---- */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .work-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    color: var(--ink);
+    text-decoration: none;
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    background: var(--paper);
+    overflow: hidden;
+    transition: background var(--t-base) ease;
+  }
+
+  .work-tile:nth-child(3n) { border-right: 0; }
+
+  .work-tile__image {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #efece6;
+    position: relative;
+  }
+
+  .work-tile__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .work-tile:hover .work-tile__image img {
+    transform: scale(1.03);
+  }
+
+  .work-tile__caption {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 1rem;
+    padding: 1rem clamp(1rem, 2vw, 1.5rem) 1.25rem;
+    align-items: start;
+  }
+
+  .work-tile__client {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .work-tile__sub {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ---- List view ---- */
+  .work-grid[data-view="list"] {
+    display: block;
+  }
+
+  .work-grid[data-view="list"] .work-tile {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    gap: 1.5rem;
+    border-right: 0;
+    align-items: center;
+    padding: 1rem clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .work-grid[data-view="list"] .work-tile__image {
+    aspect-ratio: 1 / 1;
+    width: 140px;
+  }
+
+  .work-grid[data-view="list"] .work-tile__caption {
+    display: contents;
+  }
+
+  @media (max-width: 900px) {
+    .work-grid { grid-template-columns: repeat(2, 1fr); }
+    .work-tile:nth-child(3n) { border-right: 1px solid var(--ink); }
+    .work-tile:nth-child(2n) { border-right: 0; }
   }
 
   @media (max-width: 560px) {
-    .bento { grid-template-columns: 1fr; }
-    .bento__card--lg, .bento__card--md, .bento__card--wide { grid-column: span 1; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-tile,
+    .work-tile:nth-child(3n),
+    .work-tile:nth-child(2n) { border-right: 0; }
+    .work-tile__caption {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
+    .work-grid__headline { font-size: clamp(2rem, 9vw, 3rem); }
+    .work-grid[data-view="list"] .work-tile {
+      grid-template-columns: 90px 1fr;
+    }
+    .work-grid[data-view="list"] .work-tile__image { width: 90px; }
   }
 
-  /* ---- Work grid ---- */
-  .work__grid {
+  /* ============================================== */
+  /* ================== ABOUT ===================== */
+  /* ============================================== */
+  .about-section { border-top: 1px solid var(--rule); }
+
+  .beliefs {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+  }
+
+  .belief {
+    padding: 1.75rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .belief:last-child { border-bottom: 1px solid var(--rule); }
+
+  .belief h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--lavender-deep);
+  }
+
+  .belief p { font-size: 1rem; line-height: 1.75; }
+
+  /* ============================================== */
+  /* ================= CONTACT ==================== */
+  /* ============================================== */
+  .contact-section {
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(234, 170, 66, 0.18) 0%, transparent 55%),
+      var(--paper);
+    border-top: 1px solid var(--rule);
+  }
+
+  .contact-section__head {
+    max-width: 780px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+
+  .contact-section__head .bar { margin-left: auto; margin-right: auto; display: block; }
+
+  .contact-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
-    justify-content: center;
-    gap: 1.5rem;
-    max-width: 960px;
+    grid-template-columns: 1.4fr 1fr;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: start;
+    max-width: 1100px;
     margin: 0 auto;
   }
 
-  .work__grid :global(.project-card__title) { font-size: 0.9375rem; }
-  .work__grid :global(.project-card__category) { font-size: 0.6875rem; }
-  .work__grid :global(.project-card__caption) { margin-top: 0.75rem; }
-
-  .work__see-all { white-space: nowrap; }
-
-  @media (max-width: 820px) {
-    .work__grid { gap: 1rem; }
+  @media (max-width: 860px) {
+    .contact-layout { grid-template-columns: 1fr; }
   }
 
-  /* ---- Why us ---- */
-  .why-us {
-    padding-bottom: 0;
-  }
-
-  .why-us__copy {
-    max-width: 680px;
-  }
-
-  .why-us__copy .bar { margin-bottom: 1.5rem; }
-
-  /* ---- Camera reel ---- */
-  .camera-reel {
-    display: flex;
-    width: 100%;
-    margin-top: 3rem;
-    overflow: hidden;
-  }
-
-  .camera-reel__frame {
-    flex: 1;
-    min-width: 0;
-    line-height: 0;
-    overflow: hidden;
-  }
-
-  .camera-reel__frame:not(:last-child) {
-    border-right: 2px solid var(--sage-soft, #BCD8C1);
-  }
-
-  .camera-reel__img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    display: block;
-    filter: contrast(1.02) saturate(0.9);
-    transition: transform 0.5s ease, filter 0.5s ease;
-  }
-
-  .camera-reel__frame:hover .camera-reel__img {
-    transform: scale(1.03);
-    filter: contrast(1.05) saturate(1);
-  }
-
-  @media (max-width: 640px) {
-    .camera-reel {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x mandatory;
-    }
-    .camera-reel__frame {
-      flex: 0 0 80vw;
-      scroll-snap-align: start;
-    }
-  }
-
-  /* ---- CTA band ---- */
-  .cta-band {
-    padding: clamp(5rem, 10vw, 8rem) 0;
-    text-align: center;
-    background:
-      radial-gradient(circle at 80% 20%, rgba(234, 170, 66, 0.15), transparent 50%),
-      var(--lavender-deep);
-  }
-
-  .cta-band__inner {
+  .inquiry-form {
     display: flex;
     flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+
+  .field label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--lavender-deep);
+  }
+
+  .field__opt {
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--ink-mute);
+    font-size: 0.75rem;
+  }
+
+  .field input[type="text"],
+  .field input[type="email"],
+  .field textarea,
+  .field select {
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--paper);
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius);
+    transition: border-color var(--t-fast) ease, box-shadow var(--t-fast) ease;
+    width: 100%;
+  }
+
+  .field textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    outline: none;
+    border-color: var(--honey);
+    box-shadow: 0 0 0 3px rgba(234, 170, 66, 0.22);
+  }
+
+  .form-actions {
+    display: flex;
     align-items: center;
     gap: 1.25rem;
-    max-width: 640px;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
   }
 
-  .cta-band h2 {
-    color: var(--paper);
-    font-size: clamp(1.875rem, 3.6vw, 2.75rem);
-    margin: 0.5rem 0 0.5rem;
+  .form-status { font-size: 0.875rem; color: var(--ink-soft); margin: 0; }
+  .form-status.is-error { color: #a23a3a; }
+  .form-status.is-success { color: var(--teal-deep); }
+
+  .contact-aside {
+    background: var(--paper-cream);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    position: sticky;
+    top: 7rem;
   }
 
-  .cta-band p {
-    color: rgba(250, 249, 246, 0.82);
-    font-size: 1.0625rem;
-    margin-bottom: 1rem;
+  .contact-aside h3 { font-size: 1.25rem; margin-bottom: 1.5rem; }
+
+  .next-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .next-list li {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .next-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: var(--honey);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+  }
+
+  .next-list p { font-size: 0.9375rem; line-height: 1.65; margin: 0; }
+
+  .contact-aside__email {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.9375rem;
+    color: var(--ink-soft);
+  }
+
+  .contact-aside__email a { color: var(--teal-deep); font-weight: 600; }
+
+  @media (max-width: 860px) {
+    .contact-aside { position: static; }
+  }
+
+  @media (max-width: 520px) {
+    .field input[type="text"],
+    .field input[type="email"],
+    .field textarea,
+    .field select {
+      font-size: 16px;
+      padding: 0.85rem 0.9rem;
+    }
+    .form-actions { flex-direction: column; align-items: stretch; gap: 0.85rem; }
+    .form-actions .btn { justify-content: center; }
   }
 </style>
+
+<script>
+  function initWorkViewToggle() {
+    const grid = document.querySelector('.work-grid') as HTMLElement | null;
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.work-grid__view');
+    if (!grid || buttons.length === 0) return;
+
+    buttons.forEach((btn) => {
+      if ((btn as any).__bound) return;
+      (btn as any).__bound = true;
+      btn.addEventListener('click', () => {
+        const view = btn.dataset.view || 'grid';
+        grid.dataset.view = view;
+        buttons.forEach((b) => {
+          const isActive = b === btn;
+          b.classList.toggle('is-active', isActive);
+          b.setAttribute('aria-selected', String(isActive));
+        });
+      });
+    });
+  }
+
+  function initInquiryForm() {
+    const form = document.getElementById('inquiry-form') as HTMLFormElement | null;
+    const status = document.getElementById('form-status');
+    if (!form || !status) return;
+    if (form.dataset.fsBound === '1') return;
+    form.dataset.fsBound = '1';
+
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      status.classList.remove('is-error', 'is-success');
+      status.textContent = 'Sending…';
+      if (submitBtn) submitBtn.disabled = true;
+
+      const fd = new FormData(form);
+      const firstName = String(fd.get('firstName') || '');
+      const lastName = String(fd.get('lastName') || '');
+      const fullName = `${firstName} ${lastName}`.trim();
+
+      fd.set('_subject', `New inquiry from ${fullName}`);
+      const emailVal = String(fd.get('email') || '');
+      if (emailVal) fd.set('_replyto', emailVal);
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: fd,
+          headers: { Accept: 'application/json' },
+        });
+
+        if (res.ok) {
+          status.classList.add('is-success');
+          status.textContent = 'Thanks — we got your note and will be in touch soon.';
+          form.reset();
+        } else {
+          const data = await res.json().catch(() => null);
+          const msg = data?.errors?.map((err: { message: string }) => err.message).join(', ');
+          throw new Error(msg || 'Submission failed');
+        }
+      } catch (err) {
+        status.classList.add('is-error');
+        status.textContent = 'Something went wrong sending your inquiry. Please email info@neighbourprod.com directly.';
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  }
+
+  initWorkViewToggle();
+  initInquiryForm();
+  document.addEventListener('astro:page-load', () => {
+    initWorkViewToggle();
+    initInquiryForm();
+  });
+</script>

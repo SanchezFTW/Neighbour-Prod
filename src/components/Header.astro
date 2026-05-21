@@ -2,17 +2,16 @@
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
-  { label: 'Home',     href: '/',         isCta: false },
-  { label: 'About',    href: '/about',    isCta: false },
-  { label: 'Work',     href: '/work',     isCta: false },
-  { label: 'Services', href: '/services', isCta: false },
-  { label: 'Contact',  href: '/contact',  isCta: true  },
+  { label: 'Work',     href: '/#work',     isCta: false },
+  { label: 'Services', href: '/#services', isCta: false },
+  { label: 'About',    href: '/#about',    isCta: false },
+  { label: 'Contact',  href: '/#contact',  isCta: true  },
 ];
 
 const isHome = currentPath === '/';
 ---
 
-<header id="site-header" class:list={['header', { 'header--home': isHome, 'is-at-top': isHome }]}>
+<header id="site-header" class="header">
   <div class="container header__inner">
     <a href="/" class="header__logo" aria-label="Neighbour — home">
       <img
@@ -35,7 +34,6 @@ const isHome = currentPath === '/';
               href={link.href}
               class:list={[
                 'header__nav-link',
-                { 'is-active': currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) },
                 { 'header__nav-link--cta': link.isCta },
               ]}
             >
@@ -81,14 +79,6 @@ const isHome = currentPath === '/';
   .header.is-scrolled {
     border-bottom-color: var(--rule);
     padding: 0.7rem 0;
-  }
-
-  .header--home.is-at-top {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-100%);
-    pointer-events: none;
-    transition: opacity 0.4s var(--ease), visibility 0.4s, transform 0.4s var(--ease);
   }
 
   /* When the mobile menu is open, the header is fully opaque and always visible */
@@ -365,7 +355,6 @@ const isHome = currentPath === '/';
     if (!header) return;
     const handleScroll = () => {
       header.classList.toggle('is-scrolled', window.scrollY > 24);
-      header.classList.toggle('is-at-top', window.scrollY < 8);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
