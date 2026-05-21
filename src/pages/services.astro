@@ -1,80 +1,79 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
 
 const services = [
   {
     id: 'photography',
     name: 'Photography',
-    body: 'Portraits, campaigns, editorial. Images that feel like the people in them — not posed, not performed. Just true. We create space for people to be themselves in front of a camera. The result is work your audience recognizes as real.',
-    goodForItems: [
-      'The people on your website don’t look anything like the people you actually serve',
-      'Your images feel cold when your work is anything but',
-      'You’ve never had photos that truly captured what it feels like to be part of what you do',
+    body: "Portraits, campaigns, editorial. Images that feel like the people in them — not posed, not performed. Just true. We create space for people to be themselves in front of a camera. The result is work your audience recognizes as real.",
+    problems: [
+      "The people on your website don't look anything like the people you actually serve",
+      "Your images feel cold when your work is anything but",
+      "You've never had photos that truly captured what it feels like to be part of what you do",
     ],
     color: 'honey',
     comingSoon: false,
-    preview: {
-      title: 'Confluence Portraits',
-      meta: 'Photography',
-      href: '/projects/confluence',
-      image: '/images/projects/confluence/Elly (Web)-10.jpg',
-    },
+    relatedSlugs: ['confluence'],
   },
   {
     id: 'video-film',
     name: 'Video & Film',
-    body: 'Brand films, documentaries, commercials. The kind of storytelling that earns trust before it asks for anything. We think about pacing, character, and emotional arc — not just shots. Whether we’re in a boardroom or hiking into the backcountry, we go where the story is.',
-    goodForItems: [
-      'You know your story is powerful but can’t figure out how to show it',
-      'You’ve had videos made that inform people but don’t move them',
-      'The impact you create deserves to be felt, not just explained',
+    body: "Brand films, documentaries, commercials. The kind of storytelling that earns trust before it asks for anything. We think about pacing, character, and emotional arc — not just shots. Whether we're in a boardroom or hiking into the backcountry, we go where the story is.",
+    problems: [
+      "You know your story is powerful but can't figure out how to show it",
+      "You've had videos made that inform people but don't move them",
+      "The impact you create deserves to be felt, not just explained",
     ],
     color: 'teal',
     comingSoon: false,
-    preview: {
-      title: 'Documentary Production',
-      meta: 'Video & Film',
-      href: '/work',
-      image: '/images/bts/bts-portrait.jpg',
-    },
+    relatedSlugs: ['voh'],
   },
   {
     id: 'brand-strategy',
     name: 'Brand Strategy',
-    body: 'Who you are, who you’re for, and how to say it in a way that actually reaches them. When your story is clear, the photo, the film, the site — all of it becomes intention instead of guesswork.',
-    goodForItems: [
-      'You say something different depending on who’s asking',
-      'You know your value but lose people before they get it',
-      'You’ve outgrown the words you started with and need new ones',
+    body: "Who you are, who you're for, and how to say it in a way that actually reaches them. When your story is clear, the photo, the film, the site — all of it becomes intention instead of guesswork.",
+    problems: [
+      "You say something different depending on who's asking",
+      "You know your value but lose people before they get it",
+      "You've outgrown the words you started with and need new ones",
     ],
     color: 'lavender',
     comingSoon: true,
-    preview: {
-      title: 'Coming soon',
-      meta: 'Brand Strategy',
-      href: '/work',
-      image: null,
-    },
+    relatedSlugs: [],
   },
   {
     id: 'website-development',
     name: 'Website Development',
-    body: 'A site that matches your brand — and works as hard as you do. Clean, considered, and built to last longer than a trend cycle.',
-    goodForItems: [
-      'Your site no longer reflects who you’ve become',
-      'People land on your page and don’t know what to do next',
-      'Your brand and your website feel like two different organizations',
+    body: "A site that matches your brand — and works as hard as you do. Clean, considered, and built to last longer than a trend cycle. We don't hand you a template and call it done. We build something that actually sounds like you.",
+    problems: [
+      "Your site no longer reflects who you've become",
+      "People land on your page and don't know what to do next",
+      "Your brand and your website feel like two different organizations",
     ],
     color: 'sage',
     comingSoon: false,
-    preview: {
-      title: 'Coming soon',
-      meta: 'Website Development',
-      href: '/work',
-      image: null,
-    },
+    relatedSlugs: ['confluence-website'],
   },
 ];
+
+const servicesWithProjects = services.map(s => ({
+  ...s,
+  projects: s.relatedSlugs
+    .map(slug => allProjects.find(p => p.id === slug))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p))
+    .map(p => ({
+      slug: p.id,
+      title: p.data.title,
+      client: p.data.client,
+      category: p.data.category,
+      image: p.data.featuredImage
+        ? encodeURI(p.data.featuredImage).replace(/#/g, '%23')
+        : undefined,
+    })),
+}));
 ---
 
 <BaseLayout
@@ -93,44 +92,59 @@ const services = [
   </section>
 
   <!-- ========== SERVICES ========== -->
-  {services.map((s) => (
+  {servicesWithProjects.map((s) => (
     <section id={s.id} class:list={['section', 'svc-block', `svc-block--${s.color}`]}>
       <div class="container svc-block__grid">
-        <aside class="svc-block__aside reveal">
-          {s.comingSoon && <span class="svc-block__coming-soon">Coming soon</span>}
-          <h2 class="svc-block__name text-balance">{s.name}</h2>
-          <span class:list={['svc-block__bar', `svc-block__bar--${s.color}`]} aria-hidden="true"></span>
-        </aside>
 
-        <div class="svc-block__cards">
+        <!-- Left: project cards -->
+        <div class="svc-projects reveal">
+          {s.projects.map((p) => (
+            <a href={`/projects/${p.slug}`} class:list={['svc-proj-card', `svc-proj-card--${s.color}`]}>
+              <div class="svc-proj-card__thumb">
+                {p.image
+                  ? <img src={p.image} alt={p.title} class="svc-proj-card__img" loading="lazy" />
+                  : null
+                }
+              </div>
+              <div class="svc-proj-card__meta">
+                <span class="svc-proj-card__client">{p.client}</span>
+                <span class="svc-proj-card__title">{p.title}</span>
+                <span class="svc-proj-card__link">View project <span class="arrow">&rarr;</span></span>
+              </div>
+            </a>
+          ))}
+          {Array.from({ length: Math.max(0, 3 - s.projects.length) }).map(() => (
+            <div class:list={['svc-proj-card', 'svc-proj-card--placeholder', `svc-proj-card--${s.color}`]}>
+              <div class="svc-proj-card__thumb svc-proj-card__thumb--empty">
+                <span class="svc-proj-card__soon">Coming soon</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Right: service info -->
+        <div class="svc-block__content">
+          <div class="svc-block__aside">
+            {s.comingSoon && <span class="svc-block__coming-soon">Coming soon</span>}
+            <h2 class="svc-block__name text-balance">{s.name}</h2>
+            <span class:list={['svc-block__bar', `svc-block__bar--${s.color}`]} aria-hidden="true"></span>
+          </div>
+
           <article class="svc-card reveal reveal--delay-1">
             <h3 class="svc-card__label">Overview</h3>
             <p class="svc-card__body">{s.body}</p>
           </article>
 
-          <article class:list={['svc-card', 'svc-card--good', `svc-card--${s.color}`]}>
+          <article class:list={['svc-card', 'svc-card--good', `svc-card--${s.color}`, 'reveal', 'reveal--delay-2']}>
             <h3 class="svc-card__label">This is for you if&hellip;</h3>
             <ul class="svc-card__list">
-              {s.goodForItems.map((item) => (
+              {s.problems.map((item) => (
                 <li>{item}</li>
               ))}
             </ul>
           </article>
-
-          <a href={s.preview.href} class="svc-preview reveal reveal--delay-2" aria-label={`See recent ${s.name.toLowerCase()} work`}>
-            <div class:list={['svc-preview__thumb', `svc-preview__thumb--${s.color}`]} aria-hidden="true">
-              {s.preview.image
-                ? <img src={encodeURI(s.preview.image)} alt={s.preview.title} class="svc-preview__thumb-img" />
-                : <span class="svc-preview__thumb-label">Recent work</span>
-              }
-            </div>
-            <div class="svc-preview__meta">
-              <span class="svc-preview__kind">{s.preview.meta}</span>
-              <span class="svc-preview__title">{s.preview.title}</span>
-              <span class="svc-preview__link">See project <span class="arrow">&rarr;</span></span>
-            </div>
-          </a>
         </div>
+
       </div>
     </section>
   ))}
@@ -164,6 +178,7 @@ const services = [
 
   .svc-hero h1 { font-size: clamp(2.5rem, 6vw, 4.25rem); }
 
+  /* ---- Service block ---- */
   .svc-block {
     padding: clamp(3.5rem, 7vw, 6rem) 0;
     border-top: 1px solid var(--rule);
@@ -178,12 +193,126 @@ const services = [
     align-items: start;
   }
 
-  .svc-block__aside {
-    position: sticky;
-    top: 6rem;
+  /* ---- Left: project cards ---- */
+  .svc-projects {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    position: sticky;
+    top: 6rem;
+  }
+
+  .svc-proj-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease), border-color var(--t-base) var(--ease);
+  }
+
+  .svc-proj-card:not(.svc-proj-card--placeholder):hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+    border-color: var(--rule-strong);
+  }
+
+  .svc-proj-card__thumb {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .svc-proj-card--honey .svc-proj-card__thumb  { background: linear-gradient(135deg, #C08C39, #F5D38A); }
+  .svc-proj-card--teal .svc-proj-card__thumb   { background: linear-gradient(135deg, #2A6473, #8FC0CB); }
+  .svc-proj-card--lavender .svc-proj-card__thumb { background: linear-gradient(135deg, #3B3548, #8A8299); }
+  .svc-proj-card--sage .svc-proj-card__thumb   { background: linear-gradient(135deg, #3C6446, #BCD8C1); }
+
+  .svc-proj-card__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .svc-proj-card:hover .svc-proj-card__img { transform: scale(1.04); }
+
+  .svc-proj-card__thumb--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .svc-proj-card__soon {
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(250, 249, 246, 0.7);
+  }
+
+  .svc-proj-card--placeholder { cursor: default; }
+
+  .svc-proj-card__meta {
+    padding: 0.9rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .svc-proj-card__client {
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .svc-proj-card__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--lavender-deep);
+    letter-spacing: -0.01em;
+  }
+
+  .svc-proj-card__link {
+    margin-top: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--teal-deep);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .svc-proj-card__link .arrow {
+    display: inline-block;
+    transition: transform var(--t-base) var(--ease);
+  }
+
+  .svc-proj-card:hover .svc-proj-card__link .arrow { transform: translateX(4px); }
+
+  /* ---- Right: service info ---- */
+  .svc-block__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .svc-block__aside {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
   }
 
   .svc-block__coming-soon {
@@ -198,6 +327,7 @@ const services = [
     border: 1px solid rgba(106, 98, 120, 0.25);
     border-radius: 999px;
     padding: 0.25rem 0.75rem;
+    align-self: flex-start;
   }
 
   .svc-block__name {
@@ -222,12 +352,7 @@ const services = [
   .svc-block__bar--lavender { background: var(--lavender); }
   .svc-block__bar--sage     { background: var(--sage); }
 
-  .svc-block__cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-  }
-
+  /* ---- Cards ---- */
   .svc-card {
     background: var(--paper);
     border: 1px solid var(--rule);
@@ -239,11 +364,6 @@ const services = [
   .svc-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-soft);
-  }
-
-  .svc-card:first-child,
-  .svc-card--good {
-    grid-column: span 2;
   }
 
   .svc-card__label {
@@ -293,119 +413,11 @@ const services = [
   }
 
   .svc-card--good { background: var(--paper-cream); }
-  .svc-card--good.svc-card--teal { background: rgba(85, 156, 173, 0.10); }
+  .svc-card--good.svc-card--teal     { background: rgba(85, 156, 173, 0.10); }
   .svc-card--good.svc-card--lavender { background: rgba(106, 98, 120, 0.10); }
-  .svc-card--good.svc-card--sage { background: var(--sage-soft); }
+  .svc-card--good.svc-card--sage     { background: var(--sage-soft, rgba(188, 216, 193, 0.2)); }
 
-  /* Preview card */
-  .svc-preview {
-    grid-column: span 2;
-    display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 1.25rem;
-    padding: 1rem;
-    background: var(--paper);
-    border: 1px solid var(--rule);
-    border-radius: var(--radius-lg);
-    color: var(--ink);
-    transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease), border-color var(--t-base) var(--ease);
-  }
-
-  .svc-preview:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-soft);
-    border-color: var(--rule-strong);
-    color: var(--ink);
-  }
-
-  .svc-preview__thumb {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    border-radius: var(--radius);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--paper-warm);
-  }
-
-  .svc-preview__thumb--honey {
-    background: linear-gradient(135deg, var(--honey-soft), var(--honey));
-  }
-  .svc-preview__thumb--teal {
-    background: linear-gradient(135deg, #8FC0CB, var(--teal));
-  }
-  .svc-preview__thumb--lavender {
-    background: linear-gradient(135deg, #8A8299, var(--lavender-deep));
-  }
-  .svc-preview__thumb--sage {
-    background: linear-gradient(135deg, var(--sage-soft), var(--sage));
-  }
-
-  .svc-preview__thumb-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .svc-preview__thumb-label {
-    font-family: var(--font-display);
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: rgba(26, 26, 26, 0.55);
-  }
-
-  .svc-preview__thumb--lavender .svc-preview__thumb-label {
-    color: rgba(250, 249, 246, 0.7);
-  }
-
-  .svc-preview__meta {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.35rem;
-    padding: 0.25rem 0.5rem 0.25rem 0;
-  }
-
-  .svc-preview__kind {
-    font-size: 0.6875rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    font-weight: 600;
-  }
-
-  .svc-preview__title {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.125rem;
-    color: var(--lavender-deep);
-    letter-spacing: -0.01em;
-  }
-
-  .svc-preview__link {
-    margin-top: 0.35rem;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--teal-deep);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-
-  .svc-preview__link .arrow {
-    display: inline-block;
-    transition: transform var(--t-base) var(--ease);
-  }
-
-  .svc-preview:hover .svc-preview__link .arrow { transform: translateX(4px); }
-
-  /* Closing */
+  /* ---- Closing ---- */
   .closing-line {
     font-family: var(--font-display);
     font-size: clamp(1.375rem, 2.5vw, 1.875rem);
@@ -415,20 +427,26 @@ const services = [
     margin: 0;
   }
 
+  /* ---- Responsive ---- */
   @media (max-width: 900px) {
-    .svc-block__grid { grid-template-columns: 1fr; }
-    .svc-block__aside { position: static; }
-    .svc-block__cards { grid-template-columns: 1fr; }
-    .svc-card:first-child { grid-column: span 1; }
-    .svc-preview { grid-column: span 1; grid-template-columns: 120px 1fr; }
+    .svc-block__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .svc-projects {
+      position: static;
+      flex-direction: row;
+      overflow-x: auto;
+      gap: 0.75rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .svc-proj-card {
+      flex: 0 0 220px;
+    }
   }
 
   @media (max-width: 520px) {
-    .svc-preview { grid-template-columns: 1fr; }
-    .svc-preview__thumb { aspect-ratio: 16 / 9; }
+    .svc-proj-card { flex: 0 0 180px; }
   }
-
-  .section__head { margin-bottom: 2rem; max-width: 720px; }
-  .section__head .eyebrow { margin-bottom: 1rem; }
-  .section__head h2 { margin-bottom: 1.25rem; }
 </style>
