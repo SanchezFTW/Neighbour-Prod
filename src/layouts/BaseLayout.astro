@@ -13,7 +13,7 @@ interface Props {
 const {
   title,
   description = "Neighbour is a husband-and-wife creative studio working in photo, video, brand strategy, and website development. We help mission-driven brands tell the truth about who they are, and who they're for.",
-  ogImage = "/images/logos/Neighbour Productions Color.png"
+  ogImage = "/images/logos/Neighbour%20Logo%20Color.png"
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, 'https://neighbourprod.com');
@@ -70,6 +70,18 @@ const siteTitle = "Neighbour — A creative studio helping the helpers.";
     <meta name="twitter:image" content={ogImage} />
 
     <ClientRouter fallback="swap" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Neighbour Productions",
+      "url": "https://neighbourprod.com",
+      "logo": "https://neighbourprod.com/images/logos/Neighbour%20Logo%20Color.png",
+      "email": "info@neighbourprod.com",
+      "description": "A creative studio helping the helpers. Photo, video, brand strategy, and website development for mission-driven organizations."
+    }
+    </script>
   </head>
   <body>
     <div id="loading-screen" class="loading-screen" aria-hidden="true" transition:persist>
@@ -78,7 +90,7 @@ const siteTitle = "Neighbour — A creative studio helping the helpers.";
         src="/images/logos/Neighbour Logo Color.png"
         alt=""
         fetchpriority="high"
-        decoding="sync"
+        decoding="async"
       />
     </div>
 

@@ -50,16 +50,17 @@ const projects = allProjects
 
   <section class="section section--filters">
     <div class="container">
-      <div class="filter-bar reveal" role="tablist" aria-label="Filter by service">
+      <div class="filter-bar-wrap">
+      <div class="filter-bar reveal" role="group" aria-label="Filter by service">
         {filters.map((f, i) => (
           <button
             type="button"
             class:list={['filter-chip', { 'is-active': i === 0 }]}
             data-filter={f.value}
-            role="tab"
-            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-pressed={i === 0 ? 'true' : 'false'}
           >{f.label}</button>
         ))}
+      </div>
       </div>
 
       <div class="work-grid" id="work-grid">
@@ -111,12 +112,16 @@ const projects = allProjects
 
   .section--filters { padding-top: clamp(2rem, 5vw, 3rem); }
 
+  .filter-bar-wrap {
+    position: relative;
+  }
+
   .filter-bar {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--rule);
   }
@@ -137,6 +142,19 @@ const projects = allProjects
     }
     .filter-bar::-webkit-scrollbar { display: none; }
     .filter-chip { flex: 0 0 auto; }
+
+    .filter-bar-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 1.25rem;
+      width: 3rem;
+      background: linear-gradient(to left, var(--paper), transparent);
+      pointer-events: none;
+      transition: opacity var(--t-fast) ease;
+    }
+    .filter-bar-wrap.is-end::after { opacity: 0; }
   }
 
   .filter-chip {
@@ -218,8 +236,14 @@ const projects = allProjects
       let visible = 0;
       items.forEach(item => {
         const match = filter === 'all' || item.dataset.category === filter;
-        item.hidden = !match;
-        if (match) visible++;
+        if (match) {
+          item.removeAttribute('inert');
+          item.style.display = '';
+          visible++;
+        } else {
+          item.setAttribute('inert', '');
+          item.style.display = 'none';
+        }
       });
       if (empty) empty.hidden = visible > 0;
     };
@@ -228,10 +252,10 @@ const projects = allProjects
       chip.addEventListener('click', () => {
         chips.forEach(c => {
           c.classList.remove('is-active');
-          c.setAttribute('aria-selected', 'false');
+          c.setAttribute('aria-pressed', 'false');
         });
         chip.classList.add('is-active');
-        chip.setAttribute('aria-selected', 'true');
+        chip.setAttribute('aria-pressed', 'true');
         apply(chip.dataset.filter ?? 'all');
       });
     });
@@ -239,6 +263,23 @@ const projects = allProjects
     const initial = document.querySelector<HTMLButtonElement>('.filter-chip.is-active');
     apply(initial?.dataset.filter ?? 'all');
   }
+
+  function setupScrollFade() {
+    const bar = document.querySelector<HTMLElement>('.filter-bar');
+    const wrap = document.querySelector<HTMLElement>('.filter-bar-wrap');
+    if (!bar || !wrap) return;
+    const update = () => {
+      const atEnd = bar.scrollLeft + bar.clientWidth >= bar.scrollWidth - 4;
+      wrap.classList.toggle('is-end', atEnd);
+    };
+    bar.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
   setupFilters();
-  document.addEventListener('astro:page-load', setupFilters);
+  setupScrollFade();
+  document.addEventListener('astro:page-load', () => {
+    setupFilters();
+    setupScrollFade();
+  });
 </script>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://neighbourprod.com/sitemap-index.xml

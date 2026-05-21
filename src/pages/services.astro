@@ -15,6 +15,19 @@ const services = [
       "Your images feel cold when your work is anything but",
       "You've never had photos that truly captured what it feels like to be part of what you do",
     ],
+    process: [
+      { step: 1, title: 'Discovery Call', time: '30 min', desc: 'We learn your goals, audience, and what the images need to do.' },
+      { step: 2, title: 'Planning', time: '1–2 days', desc: 'Shot list, locations, and logistics locked — no surprises on shoot day.' },
+      { step: 3, title: 'Shoot Day', time: '1–2 days', desc: 'We create space for people to be themselves on location.' },
+      { step: 4, title: 'Edit & Deliver', time: '1–2 weeks', desc: 'Curated, retouched, and ready to use across every format you need.' },
+      { step: 5, title: 'Handoff', time: 'Same day', desc: 'All files, full perpetual licence — yours to keep and use forever.' },
+    ],
+    differentiators: [
+      { title: 'Fast Turnaround', desc: 'Most galleries delivered within two weeks of shoot day.' },
+      { title: 'One Fair Price', desc: 'Clear quotes upfront — no surprise add-ons or licensing fees.' },
+      { title: 'Full Ownership', desc: 'You get every file and a perpetual licence. No recurring costs.' },
+      { title: 'Direct Access', desc: 'You work directly with us — no coordinators, no handoffs.' },
+    ],
     color: 'honey',
     comingSoon: false,
     relatedSlugs: ['confluence'],
@@ -29,23 +42,22 @@ const services = [
       "You've had videos made that inform people but don't move them",
       "The impact you create deserves to be felt, not just explained",
     ],
+    process: [
+      { step: 1, title: 'Discovery Call', time: '30 min', desc: 'We learn your story, your audience, and what you want people to feel.' },
+      { step: 2, title: 'Pre-Production', time: '1–2 weeks', desc: 'Script, storyboard, and schedule — every detail locked before we roll.' },
+      { step: 3, title: 'Production', time: '1–3 days', desc: 'We go where the story is — on location, in studio, wherever it needs to be.' },
+      { step: 4, title: 'Post-Production', time: '2–4 weeks', desc: 'Edit, colour grade, and sound mix until it feels exactly right.' },
+      { step: 5, title: 'Delivery', time: 'Same day', desc: 'All formats, full rights, ready to publish wherever your audience is.' },
+    ],
+    differentiators: [
+      { title: 'Story-First', desc: 'We lead with narrative and emotional arc — the gear follows the story.' },
+      { title: 'One Fair Price', desc: 'Clear quotes upfront — no surprise add-ons or agency overhead.' },
+      { title: 'Full Ownership', desc: 'All footage and a perpetual licence. No recurring fees, ever.' },
+      { title: 'Direct Access', desc: 'You work with the director — no account managers in between.' },
+    ],
     color: 'teal',
     comingSoon: false,
     relatedSlugs: ['voh'],
-  },
-  {
-    id: 'brand-strategy',
-    name: 'Brand Strategy',
-    price: '$350 – $12,000',
-    body: "Who you are, who you're for, and how to say it in a way that actually reaches them. When your story is clear, the photo, the film, the site — all of it becomes intention instead of guesswork.",
-    problems: [
-      "You say something different depending on who's asking",
-      "You know your value but lose people before they get it",
-      "You've outgrown the words you started with and need new ones",
-    ],
-    color: 'lavender',
-    comingSoon: true,
-    relatedSlugs: [],
   },
   {
     id: 'website-development',
@@ -57,9 +69,49 @@ const services = [
       "People land on your page and don't know what to do next",
       "Your brand and your website feel like two different organizations",
     ],
+    process: [
+      { step: 1, title: 'Discovery Call', time: '30 min', desc: 'We discuss your goals, timeline, and budget.' },
+      { step: 2, title: 'Proposal', time: '1–2 days', desc: 'Clear scope, fixed price, delivery date.' },
+      { step: 3, title: 'Design Phase', time: '1 week', desc: 'I design your site, you review and approve.' },
+      { step: 4, title: 'Development', time: '1–2 weeks', desc: 'I build it with clean, modern code.' },
+      { step: 5, title: 'Launch', time: 'Same day', desc: 'Site goes live, you get all files and training.' },
+    ],
+    differentiators: [
+      { title: 'Fast Delivery', desc: 'Most projects done in 3–4 weeks, not months.' },
+      { title: 'One Fair Price', desc: 'Most projects fall between $1,600 and $3,800, with larger builds quoted individually. No recurring charges, no surprises.' },
+      { title: 'Full Ownership', desc: 'You get all code, files, passwords. It\'s yours to keep forever.' },
+      { title: 'Direct Access', desc: 'Text, call, or email me directly. No project managers in between.' },
+    ],
     color: 'sage',
     comingSoon: false,
     relatedSlugs: ['confluence-website'],
+  },
+  {
+    id: 'brand-strategy',
+    name: 'Brand Strategy',
+    price: '$350 – $12,000',
+    body: "Who you are, who you're for, and how to say it in a way that actually reaches them. When your story is clear, the photo, the film, the site — all of it becomes intention instead of guesswork.",
+    problems: [
+      "You say something different depending on who's asking",
+      "You know your value but lose people before they get it",
+      "You've outgrown the words you started with and need new ones",
+    ],
+    process: [
+      { step: 1, title: 'Discovery Call', time: '30 min', desc: 'We learn your mission, audience, and where the current story falls short.' },
+      { step: 2, title: 'Research', time: '1–2 days', desc: 'Audience analysis, competitive landscape, and positioning opportunities.' },
+      { step: 3, title: 'Strategy Workshop', time: '2–3 hours', desc: 'A collaborative session to name your voice, values, and who you\'re for.' },
+      { step: 4, title: 'Deliverables', time: '1–2 weeks', desc: 'Brand guide, messaging framework, and talking points you can use immediately.' },
+      { step: 5, title: 'Handoff', time: 'Same day', desc: 'All documents and templates, fully yours — no retainer required to use them.' },
+    ],
+    differentiators: [
+      { title: 'Mission-Driven', desc: 'Built specifically for organizations doing meaningful work in the world.' },
+      { title: 'One Fair Price', desc: 'Fixed-fee engagements — no hourly billing, no surprises.' },
+      { title: 'Full Ownership', desc: 'Every document and asset is yours. No vendor lock-in, no ongoing fees.' },
+      { title: 'Direct Access', desc: 'Strategy sessions directly with us — no junior consultants.' },
+    ],
+    color: 'lavender',
+    comingSoon: true,
+    relatedSlugs: [],
   },
 ];
 
@@ -95,20 +147,32 @@ const servicesWithProjects = services.map(s => ({
     </div>
   </section>
 
+  <!-- ========== QUICK NAV ========== -->
+  <nav class="svc-nav" aria-label="Jump to service">
+    <div class="container svc-nav__inner">
+      {servicesWithProjects.map((s) => (
+        <a href={`#${s.id}`} class:list={['svc-nav__link', `svc-nav__link--${s.color}`]} data-svc-nav={s.id}>
+          {s.name}
+        </a>
+      ))}
+    </div>
+  </nav>
+
   <!-- ========== SERVICES ========== -->
   {servicesWithProjects.map((s) => (
     <section id={s.id} class:list={['section', 'svc-block', `svc-block--${s.color}`]}>
       <div class="container svc-block__grid">
 
-        <!-- Left: service info -->
-        <div class="svc-block__content">
-          <div class="svc-block__aside">
-            {s.comingSoon && <span class="svc-block__coming-soon">Coming soon</span>}
-            <h2 class="svc-block__name text-balance">{s.name}</h2>
-            <span class:list={['svc-block__bar', `svc-block__bar--${s.color}`]} aria-hidden="true"></span>
-            <p class="svc-block__price"><span class="svc-block__price-label">Starting from</span> {s.price}</p>
-          </div>
+        <!-- Col 1: sticky title -->
+        <div class="svc-block__aside">
+          {s.comingSoon && <span class="svc-block__coming-soon">Coming soon</span>}
+          <h2 class="svc-block__name text-balance">{s.name}</h2>
+          <span class:list={['svc-block__bar', `svc-block__bar--${s.color}`]} aria-hidden="true"></span>
+          <p class="svc-block__price"><span class="svc-block__price-label">Starting from</span> {s.price}</p>
+        </div>
 
+        <!-- Col 2: scrolling cards -->
+        <div class="svc-block__content">
           <article class="svc-card reveal reveal--delay-1">
             <h3 class="svc-card__label">Overview</h3>
             <p class="svc-card__body">{s.body}</p>
@@ -122,15 +186,16 @@ const servicesWithProjects = services.map(s => ({
               ))}
             </ul>
           </article>
+
         </div>
 
-        <!-- Right: project cards -->
-        <div class="svc-projects reveal">
-          {s.projects.map((p) => (
-            <a href={`/projects/${p.slug}`} class:list={['svc-proj-card', `svc-proj-card--${s.color}`]}>
+        <!-- Col 3: single project card -->
+        <div class="svc-deck reveal">
+          {s.projects.slice(0, 1).map((p) => (
+            <a href={`/projects/${p.slug}`} class:list={['svc-deck__item', 'svc-proj-card', `svc-proj-card--${s.color}`]}>
               <div class="svc-proj-card__thumb">
                 {p.image
-                  ? <img src={p.image} alt={p.title} class="svc-proj-card__img" loading="lazy" />
+                  ? <img src={p.image} alt={p.title} class="svc-proj-card__img" loading="eager" />
                   : null
                 }
               </div>
@@ -141,16 +206,50 @@ const servicesWithProjects = services.map(s => ({
               </div>
             </a>
           ))}
-          {Array.from({ length: Math.max(0, 3 - s.projects.length) }).map(() => (
-            <div class:list={['svc-proj-card', 'svc-proj-card--placeholder', `svc-proj-card--${s.color}`]}>
+          {s.projects.length === 0 && (
+            <div class:list={['svc-deck__item', 'svc-proj-card', 'svc-proj-card--placeholder', `svc-proj-card--${s.color}`]}>
               <div class="svc-proj-card__thumb svc-proj-card__thumb--empty">
                 <span class="svc-proj-card__soon">Coming soon</span>
               </div>
             </div>
-          ))}
+          )}
         </div>
 
       </div>
+
+      <!-- Process -->
+      <div class="container svc-process reveal">
+        <div class="svc-process__header">
+          <span class="eyebrow eyebrow--no-bar">The Process</span>
+          <h3 class="svc-process__heading">From first call to launch</h3>
+        </div>
+        <ol class="svc-process__steps">
+          {s.process.map((step) => (
+            <li class="svc-process__step">
+              <div class="svc-process__num">{step.step}</div>
+              <strong class="svc-process__title">{step.title}</strong>
+              <span class="svc-process__time">{step.time}</span>
+              <p class="svc-process__desc">{step.desc}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <!-- Differentiators -->
+      <div class="container svc-diff reveal">
+        <div class="svc-diff__header">
+          <h3 class="svc-diff__heading">What sets us apart</h3>
+        </div>
+        <ul class="svc-diff__grid">
+          {s.differentiators.map((item) => (
+            <li class="svc-diff__item">
+              <strong class="svc-diff__title">{item.title}</strong>
+              <p class="svc-diff__desc">{item.desc}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+
     </section>
   ))}
 
@@ -191,20 +290,55 @@ const servicesWithProjects = services.map(s => ({
 
   .svc-block:first-of-type { border-top: 0; }
 
+  /* Section background tints matched to home bento gradients */
+  .svc-block--honey {
+    background:
+      radial-gradient(ellipse at 0% 45%, rgba(234, 170, 66, 0.18) 0%, transparent 55%),
+      var(--paper);
+  }
+  .svc-block--teal {
+    background:
+      radial-gradient(ellipse at 0% 45%, rgba(85, 156, 173, 0.14) 0%, transparent 55%),
+      var(--paper);
+  }
+  .svc-block--lavender {
+    background:
+      radial-gradient(ellipse at 0% 45%, rgba(106, 98, 120, 0.13) 0%, transparent 55%),
+      var(--paper);
+  }
+  .svc-block--sage {
+    background:
+      radial-gradient(ellipse at 0% 45%, rgba(188, 216, 193, 0.24) 0%, transparent 55%),
+      var(--paper);
+  }
+
   .svc-block__grid {
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
-    gap: clamp(2rem, 5vw, 4rem);
+    grid-template-columns: 240px minmax(0, 1fr) 280px;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
     align-items: start;
   }
 
-  /* ---- Right: project cards ---- */
-  .svc-projects {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  /* ---- Col 1: sticky aside ---- */
+  .svc-block__aside {
     position: sticky;
     top: 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+
+  /* ---- Col 3: stacked project deck ---- */
+  .svc-deck {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 6rem;
+  }
+
+  .svc-deck__item {
+    flex-shrink: 0;
   }
 
   .svc-proj-card {
@@ -306,18 +440,11 @@ const servicesWithProjects = services.map(s => ({
 
   .svc-proj-card:hover .svc-proj-card__link .arrow { transform: translateX(4px); }
 
-  /* ---- Right: service info ---- */
+  /* ---- Col 2: scrolling content ---- */
   .svc-block__content {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-  }
-
-  .svc-block__aside {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding-bottom: 0.5rem;
   }
 
   .svc-block__coming-soon {
@@ -338,8 +465,8 @@ const servicesWithProjects = services.map(s => ({
   .svc-block__name {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(2rem, 4.5vw, 3.25rem);
-    line-height: 1.05;
+    font-size: clamp(1.625rem, 2.5vw, 2.25rem);
+    line-height: 1.1;
     letter-spacing: -0.02em;
     color: var(--lavender-deep);
     margin: 0;
@@ -433,6 +560,35 @@ const servicesWithProjects = services.map(s => ({
     flex-shrink: 0;
   }
 
+  .svc-details__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .svc-details__list li {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .svc-details__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sage);
+    flex-shrink: 0;
+  }
+
   .svc-card--good { background: var(--paper-cream); }
   .svc-card--good.svc-card--teal     { background: rgba(85, 156, 173, 0.10); }
   .svc-card--good.svc-card--lavender { background: rgba(106, 98, 120, 0.10); }
@@ -449,30 +605,260 @@ const servicesWithProjects = services.map(s => ({
   }
 
   /* ---- Responsive ---- */
-  @media (max-width: 900px) {
+  @media (max-width: 1100px) {
+    .svc-block__grid {
+      grid-template-columns: 210px minmax(0, 1fr) 240px;
+    }
+  }
+
+  @media (max-width: 860px) {
     .svc-block__grid {
       grid-template-columns: 1fr;
     }
 
-    .svc-projects {
+    .svc-block__aside {
       position: static;
-      flex-direction: row;
-      overflow-x: auto;
-      gap: 0.75rem;
-      padding-bottom: 0.5rem;
-      order: 1;
-    }
-
-    .svc-block__content {
       order: 0;
     }
 
-    .svc-proj-card {
-      flex: 0 0 220px;
+    .svc-block__content {
+      order: 1;
+    }
+
+    .svc-deck {
+      position: static;
+      order: 2;
     }
   }
 
-  @media (max-width: 520px) {
-    .svc-proj-card { flex: 0 0 180px; }
+  /* ---- Process ---- */
+  .svc-process,
+  .svc-diff {
+    padding-top: clamp(2rem, 4vw, 3rem);
+    padding-bottom: clamp(1rem, 2vw, 1.5rem);
   }
+
+  .svc-process__header,
+  .svc-diff__header {
+    margin-bottom: 1.5rem;
+  }
+
+  .svc-process__heading,
+  .svc-diff__heading {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.375rem, 2.5vw, 1.875rem);
+    letter-spacing: -0.02em;
+    color: var(--lavender-deep);
+    margin: 0.35rem 0 0;
+  }
+
+  .svc-process__steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border: 1px dashed var(--rule-strong);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .svc-process__step {
+    padding: 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    border-right: 1px dashed var(--rule-strong);
+  }
+
+  .svc-process__step:last-child { border-right: 0; }
+
+  .svc-process__num {
+    width: 2rem;
+    height: 2rem;
+    border: 1px dashed var(--rule-strong);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+  }
+
+  .svc-process__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    letter-spacing: -0.01em;
+    color: var(--lavender-deep);
+  }
+
+  .svc-process__time {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .svc-process__desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0.25rem 0 0;
+  }
+
+  /* ---- Differentiators ---- */
+  .svc-diff__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px dashed var(--rule-strong);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .svc-diff__item {
+    padding: 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-right: 1px dashed var(--rule-strong);
+  }
+
+  .svc-diff__item:last-child { border-right: 0; }
+
+  .svc-diff__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    letter-spacing: -0.01em;
+    color: var(--lavender-deep);
+  }
+
+  .svc-diff__desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .svc-process__steps {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .svc-process__step:nth-child(3) { border-right: 0; }
+    .svc-process__step:nth-child(4),
+    .svc-process__step:nth-child(5) {
+      border-top: 1px dashed var(--rule-strong);
+    }
+
+    .svc-diff__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .svc-diff__item:nth-child(2) { border-right: 0; }
+    .svc-diff__item:nth-child(3),
+    .svc-diff__item:nth-child(4) {
+      border-top: 1px dashed var(--rule-strong);
+    }
+    .svc-diff__item:nth-child(4) { border-right: 0; }
+  }
+
+  @media (max-width: 520px) {
+    .svc-process__steps {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .svc-process__step:nth-child(odd) { border-right: 1px dashed var(--rule-strong); }
+    .svc-process__step:nth-child(even) { border-right: 0; }
+    .svc-process__step:nth-child(n+3) { border-top: 1px dashed var(--rule-strong); }
+    .svc-process__step:nth-child(3) { border-right: 1px dashed var(--rule-strong); }
+    .svc-process__step:nth-child(5) { border-right: 0; }
+
+    .svc-diff__grid { grid-template-columns: 1fr; }
+    .svc-diff__item { border-right: 0; border-top: 1px dashed var(--rule-strong); }
+    .svc-diff__item:first-child { border-top: 0; }
+  }
+
+  /* ---- Quick nav ---- */
+  .svc-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(250, 249, 246, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .svc-nav__inner {
+    display: flex;
+    gap: 0.25rem;
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .svc-nav__inner::-webkit-scrollbar { display: none; }
+
+  .svc-nav__link {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 0.375rem 0.875rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition: color var(--t-base) var(--ease), background var(--t-base) var(--ease), border-color var(--t-base) var(--ease);
+  }
+
+  .svc-nav__link:hover {
+    color: var(--ink);
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  .svc-nav__link--honey.is-active  { background: rgba(234, 170, 66, 0.14);  border-color: rgba(234, 170, 66, 0.4);  color: var(--honey-deep); }
+  .svc-nav__link--teal.is-active   { background: rgba(85, 156, 173, 0.12);  border-color: rgba(85, 156, 173, 0.35); color: var(--teal-deep); }
+  .svc-nav__link--sage.is-active   { background: rgba(188, 216, 193, 0.25); border-color: rgba(188, 216, 193, 0.5); color: #3C6446; }
+  .svc-nav__link--lavender.is-active { background: rgba(106, 98, 120, 0.12); border-color: rgba(106, 98, 120, 0.35); color: var(--lavender-deep); }
 </style>
+
+<script>
+  function initSvcNav() {
+    const links = document.querySelectorAll<HTMLAnchorElement>('[data-svc-nav]');
+    if (!links.length) return;
+
+    const ids = Array.from(links).map(l => l.dataset.svcNav!);
+    const sections = ids.map(id => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          const link = document.querySelector(`[data-svc-nav="${entry.target.id}"]`);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            links.forEach(l => l.classList.remove('is-active'));
+            link.classList.add('is-active');
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -60% 0px', threshold: 0 }
+    );
+
+    sections.forEach(s => observer.observe(s));
+  }
+
+  document.addEventListener('astro:page-load', initSvcNav);
+</script>

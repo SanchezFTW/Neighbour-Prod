@@ -69,7 +69,7 @@ const isHome = currentPath === '/';
     right: 0;
     z-index: 100;
     padding: 1.1rem 0;
-    background-color: rgba(250, 249, 246, 0.86);
+    background-color: rgba(var(--paper-rgb), 0.86);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid transparent;
@@ -340,6 +340,22 @@ const isHome = currentPath === '/';
       if (e.key === 'Escape' && isOpen()) {
         setOpen(false);
         toggle.focus();
+        return;
+      }
+      if (e.key === 'Tab' && isOpen()) {
+        const focusable = Array.from(
+          nav.querySelectorAll<HTMLElement>('a, button, [tabindex]:not([tabindex="-1"])')
+        ).filter(el => !el.closest('[inert]'));
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     });
 

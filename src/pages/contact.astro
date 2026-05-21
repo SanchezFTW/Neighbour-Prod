@@ -66,53 +66,57 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <textarea id="project" name="project" rows="5" required placeholder="A short paragraph is plenty."></textarea>
         </div>
 
-        <div class="field">
-          <label for="projectType">What are you working on?</label>
-          <select id="projectType" name="projectType" required>
-            <option value="" disabled selected>Pick one</option>
-            <option value="Crafting a strategy">Crafting a strategy</option>
-            <option value="Building a new brand">Building a new brand</option>
-            <option value="Launching a campaign">Launching a campaign</option>
-            <option value="Making a new website">Making a new website</option>
-            <option value="Driving sales or traffic">Driving sales or traffic</option>
-            <option value="Something not listed">Something not listed</option>
-          </select>
+        <div class="field-row">
+          <div class="field">
+            <label for="projectType">Project type</label>
+            <select id="projectType" name="projectType" required>
+              <option value="" disabled selected>Pick one</option>
+              <option value="Crafting a strategy">Crafting a strategy</option>
+              <option value="Building a new brand">Building a new brand</option>
+              <option value="Launching a campaign">Launching a campaign</option>
+              <option value="Making a new website">Making a new website</option>
+              <option value="Driving sales or traffic">Driving sales or traffic</option>
+              <option value="Something not listed">Something not listed</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="timeline">Timeline</label>
+            <select id="timeline" name="timeline" required>
+              <option value="" disabled selected>Pick one</option>
+              <option value="ASAP">ASAP</option>
+              <option value="Next 1–3 months">Next 1&ndash;3 months</option>
+              <option value="3–6 months">3&ndash;6 months</option>
+              <option value="Just exploring">Just exploring</option>
+            </select>
+          </div>
         </div>
 
-        <div class="field">
-          <label for="timeline">Timeline</label>
-          <select id="timeline" name="timeline" required>
-            <option value="" disabled selected>Pick one</option>
-            <option value="ASAP">ASAP</option>
-            <option value="Next 1–3 months">Next 1&ndash;3 months</option>
-            <option value="3–6 months">3&ndash;6 months</option>
-            <option value="Just exploring">Just exploring</option>
-          </select>
-        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="budget">Budget range</label>
+            <select id="budget" name="budget" required>
+              <option value="" disabled selected>Pick one</option>
+              <option value="Under $5k">Under $5k</option>
+              <option value="$5k–$15k">$5k&ndash;$15k</option>
+              <option value="$15k–$30k">$15k&ndash;$30k</option>
+              <option value="$30k+">$30k+</option>
+              <option value="Not sure yet">Not sure yet</option>
+            </select>
+          </div>
 
-        <div class="field">
-          <label for="budget">Budget range</label>
-          <select id="budget" name="budget" required>
-            <option value="" disabled selected>Pick one</option>
-            <option value="Under $5k">Under $5k</option>
-            <option value="$5k–$15k">$5k&ndash;$15k</option>
-            <option value="$15k–$30k">$15k&ndash;$30k</option>
-            <option value="$30k+">$30k+</option>
-            <option value="Not sure yet">Not sure yet</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="referral">How&rsquo;d you find us?</label>
-          <select id="referral" name="referral" required>
-            <option value="" disabled selected>Pick one</option>
-            <option value="Referral">Referral from a friend or colleague</option>
-            <option value="Instagram">Instagram</option>
-            <option value="Google search">Google search</option>
-            <option value="Past project">Saw a past project of ours</option>
-            <option value="Event">At an event</option>
-            <option value="Other">Other</option>
-          </select>
+          <div class="field">
+            <label for="referral">How&rsquo;d you find us?</label>
+            <select id="referral" name="referral" required>
+              <option value="" disabled selected>Pick one</option>
+              <option value="Referral">Referral from a friend or colleague</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Google search">Google search</option>
+              <option value="Past project">Saw a past project of ours</option>
+              <option value="Event">At an event</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
         </div>
 
         <fieldset class="field field--group">
@@ -123,8 +127,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             data-url="https://calendly.com/neighbourprod-info/30min?primary_color=c9d11b"
             style="min-width:320px;height:700px;"
           ></div>
-          <input id="bookedTime" name="bookedTime" type="hidden" required aria-hidden="true" />
+          <input id="bookedTime" name="bookedTime" type="hidden" tabindex="-1" aria-label="Selected meeting time" />
           <p id="booking-status" class="booking-status" role="status" aria-live="polite">No time selected yet.</p>
+          <p id="calendly-fallback" class="calendly-fallback" hidden>
+            Can&rsquo;t load the scheduler right now. <a href="https://calendly.com/neighbourprod-info/30min" target="_blank" rel="noopener">Book directly on Calendly</a> or skip this step &mdash; we&rsquo;ll set up a call when we reply.
+          </p>
         </fieldset>
 
         <div class="form-actions">
@@ -295,6 +302,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .booking-status.is-booked { color: var(--teal-deep); font-weight: 600; }
 
+  .calendly-fallback {
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    margin: 0.5rem 0 0;
+    padding: 0.75rem 1rem;
+    background: var(--paper-cream);
+    border-left: 3px solid var(--honey);
+    border-radius: var(--radius-sm);
+    line-height: 1.6;
+  }
+  .calendly-fallback a { color: var(--teal-deep); font-weight: 600; }
+
   /* What happens next */
   .next-steps {
     background: var(--paper-cream);
@@ -422,6 +441,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </style>
 
 <script>
+  function setupCalendlyFallback() {
+    const widget = document.querySelector<HTMLElement>('.calendly-inline-widget');
+    const fallback = document.getElementById('calendly-fallback');
+    if (!widget || !fallback) return;
+    setTimeout(() => {
+      if (!widget.querySelector('iframe') && fallback) {
+        fallback.hidden = false;
+      }
+    }, 6000);
+  }
+
   function setupCalendlyListener() {
     if ((window as any).__calendlyBound === true) return;
     (window as any).__calendlyBound = true;
@@ -457,7 +487,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       e.preventDefault();
 
       const hidden = document.getElementById('bookedTime') as HTMLInputElement | null;
-      if (!hidden || !hidden.value) {
+      const fallback = document.getElementById('calendly-fallback');
+      const fallbackVisible = fallback && !fallback.hidden;
+      if (!fallbackVisible && (!hidden || !hidden.value)) {
         status.classList.remove('is-success');
         status.classList.add('is-error');
         status.textContent = 'Please pick a time for the discovery call before sending.';
@@ -511,8 +543,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   setupInquiryForm();
   setupCalendlyListener();
+  setupCalendlyFallback();
   document.addEventListener('astro:page-load', () => {
     setupInquiryForm();
     setupCalendlyListener();
+    setupCalendlyFallback();
   });
 </script>
