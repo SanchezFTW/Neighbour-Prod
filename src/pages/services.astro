@@ -8,6 +8,7 @@ const services = [
   {
     id: 'photography',
     name: 'Photography',
+    price: '$250 – $1,500',
     body: "Portraits, campaigns, editorial. Images that feel like the people in them — not posed, not performed. Just true. We create space for people to be themselves in front of a camera. The result is work your audience recognizes as real.",
     problems: [
       "The people on your website don't look anything like the people you actually serve",
@@ -21,6 +22,7 @@ const services = [
   {
     id: 'video-film',
     name: 'Video & Film',
+    price: '$750 – $20,000',
     body: "Brand films, documentaries, commercials. The kind of storytelling that earns trust before it asks for anything. We think about pacing, character, and emotional arc — not just shots. Whether we're in a boardroom or hiking into the backcountry, we go where the story is.",
     problems: [
       "You know your story is powerful but can't figure out how to show it",
@@ -34,6 +36,7 @@ const services = [
   {
     id: 'brand-strategy',
     name: 'Brand Strategy',
+    price: '$350 – $12,000',
     body: "Who you are, who you're for, and how to say it in a way that actually reaches them. When your story is clear, the photo, the film, the site — all of it becomes intention instead of guesswork.",
     problems: [
       "You say something different depending on who's asking",
@@ -47,6 +50,7 @@ const services = [
   {
     id: 'website-development',
     name: 'Website Development',
+    price: '$1,350 – $5,000',
     body: "A site that matches your brand — and works as hard as you do. Clean, considered, and built to last longer than a trend cycle. We don't hand you a template and call it done. We build something that actually sounds like you.",
     problems: [
       "Your site no longer reflects who you've become",
@@ -96,7 +100,31 @@ const servicesWithProjects = services.map(s => ({
     <section id={s.id} class:list={['section', 'svc-block', `svc-block--${s.color}`]}>
       <div class="container svc-block__grid">
 
-        <!-- Left: project cards -->
+        <!-- Left: service info -->
+        <div class="svc-block__content">
+          <div class="svc-block__aside">
+            {s.comingSoon && <span class="svc-block__coming-soon">Coming soon</span>}
+            <h2 class="svc-block__name text-balance">{s.name}</h2>
+            <span class:list={['svc-block__bar', `svc-block__bar--${s.color}`]} aria-hidden="true"></span>
+            <p class="svc-block__price"><span class="svc-block__price-label">Starting from</span> {s.price}</p>
+          </div>
+
+          <article class="svc-card reveal reveal--delay-1">
+            <h3 class="svc-card__label">Overview</h3>
+            <p class="svc-card__body">{s.body}</p>
+          </article>
+
+          <article class:list={['svc-card', 'svc-card--good', `svc-card--${s.color}`, 'reveal', 'reveal--delay-2']}>
+            <h3 class="svc-card__label">This is for you if&hellip;</h3>
+            <ul class="svc-card__list">
+              {s.problems.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </article>
+        </div>
+
+        <!-- Right: project cards -->
         <div class="svc-projects reveal">
           {s.projects.map((p) => (
             <a href={`/projects/${p.slug}`} class:list={['svc-proj-card', `svc-proj-card--${s.color}`]}>
@@ -120,29 +148,6 @@ const servicesWithProjects = services.map(s => ({
               </div>
             </div>
           ))}
-        </div>
-
-        <!-- Right: service info -->
-        <div class="svc-block__content">
-          <div class="svc-block__aside">
-            {s.comingSoon && <span class="svc-block__coming-soon">Coming soon</span>}
-            <h2 class="svc-block__name text-balance">{s.name}</h2>
-            <span class:list={['svc-block__bar', `svc-block__bar--${s.color}`]} aria-hidden="true"></span>
-          </div>
-
-          <article class="svc-card reveal reveal--delay-1">
-            <h3 class="svc-card__label">Overview</h3>
-            <p class="svc-card__body">{s.body}</p>
-          </article>
-
-          <article class:list={['svc-card', 'svc-card--good', `svc-card--${s.color}`, 'reveal', 'reveal--delay-2']}>
-            <h3 class="svc-card__label">This is for you if&hellip;</h3>
-            <ul class="svc-card__list">
-              {s.problems.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </article>
         </div>
 
       </div>
@@ -188,12 +193,12 @@ const servicesWithProjects = services.map(s => ({
 
   .svc-block__grid {
     display: grid;
-    grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr);
+    grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
     gap: clamp(2rem, 5vw, 4rem);
     align-items: start;
   }
 
-  /* ---- Left: project cards ---- */
+  /* ---- Right: project cards ---- */
   .svc-projects {
     display: flex;
     flex-direction: column;
@@ -352,6 +357,22 @@ const servicesWithProjects = services.map(s => ({
   .svc-block__bar--lavender { background: var(--lavender); }
   .svc-block__bar--sage     { background: var(--sage); }
 
+  .svc-block__price {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 0.25rem;
+  }
+
+  .svc-block__price-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-right: 0.25rem;
+  }
+
   /* ---- Cards ---- */
   .svc-card {
     background: var(--paper);
@@ -439,6 +460,11 @@ const servicesWithProjects = services.map(s => ({
       overflow-x: auto;
       gap: 0.75rem;
       padding-bottom: 0.5rem;
+      order: 1;
+    }
+
+    .svc-block__content {
+      order: 0;
     }
 
     .svc-proj-card {

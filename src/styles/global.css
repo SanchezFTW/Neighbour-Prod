@@ -30,8 +30,8 @@
   --bg: var(--paper);
   --fg: var(--ink);
 
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Poppins', sans-serif;
 
   --container: 1240px;
   --container-narrow: 760px;
