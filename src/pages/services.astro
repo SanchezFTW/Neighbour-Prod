@@ -9,7 +9,7 @@ const services = [
     id: 'photography',
     name: 'Photography',
     price: '$250 – $1,500',
-    body: "Portraits, campaigns, editorial. Images that feel like the people in them — not posed, not performed. Just true. We create space for people to be themselves in front of a camera. The result is work your audience recognizes as real.",
+    body: "Portraits, campaigns, editorial. Images that feel like the people in them. We create space for people to be themselves in front of a camera. The result is work your audience recognizes as real.",
     problems: [
       "The people on your website don't look anything like the people you actually serve",
       "Your images feel cold when your work is anything but",
@@ -36,7 +36,7 @@ const services = [
     id: 'video-film',
     name: 'Video & Film',
     price: '$750 – $20,000',
-    body: "Brand films, documentaries, commercials. The kind of storytelling that earns trust before it asks for anything. We think about pacing, character, and emotional arc — not just shots. Whether we're in a boardroom or hiking into the backcountry, we go where the story is.",
+    body: "Brand films, documentaries, commercials. The kind of storytelling that earns trust before it asks for anything. We think about pacing, character, and emotional arc — not just shots.",
     problems: [
       "You know your story is powerful but can't figure out how to show it",
       "You've had videos made that inform people but don't move them",
@@ -63,7 +63,7 @@ const services = [
     id: 'website-development',
     name: 'Website Development',
     price: '$1,350 – $5,000',
-    body: "A site that matches your brand — and works as hard as you do. Clean, considered, and built to last longer than a trend cycle. We don't hand you a template and call it done. We build something that actually sounds like you.",
+    body: "A site that matches your brand — and works as hard as you do. Clean, considered, and built to last longer than a trend cycle.",
     problems: [
       "Your site no longer reflects who you've become",
       "People land on your page and don't know what to do next",
@@ -72,12 +72,12 @@ const services = [
     process: [
       { step: 1, title: 'Discovery Call', time: '30 min', desc: 'We discuss your goals, timeline, and budget.' },
       { step: 2, title: 'Proposal', time: '1–2 days', desc: 'Clear scope, fixed price, delivery date.' },
-      { step: 3, title: 'Design Phase', time: '1 week', desc: 'I design your site, you review and approve.' },
-      { step: 4, title: 'Development', time: '1–2 weeks', desc: 'I build it with clean, modern code.' },
+      { step: 3, title: 'Design Phase', time: '2 weeks', desc: 'I design your site, you review and approve.' },
+      { step: 4, title: 'Development', time: '2 weeks', desc: 'I build it with clean, modern code.' },
       { step: 5, title: 'Launch', time: 'Same day', desc: 'Site goes live, you get all files and training.' },
     ],
     differentiators: [
-      { title: 'Fast Delivery', desc: 'Most projects done in 3–4 weeks, not months.' },
+      { title: 'Clear Timeline', desc: 'Most projects done in about a month, start to finish.' },
       { title: 'One Fair Price', desc: 'Most projects fall between $1,600 and $3,800, with larger builds quoted individually. No recurring charges, no surprises.' },
       { title: 'Full Ownership', desc: 'You get all code, files, passwords. It\'s yours to keep forever.' },
       { title: 'Direct Access', desc: 'Text, call, or email me directly. No project managers in between.' },
@@ -160,97 +160,105 @@ const servicesWithProjects = services.map(s => ({
 
   <!-- ========== SERVICES ========== -->
   {servicesWithProjects.map((s) => (
-    <section id={s.id} class:list={['section', 'svc-block', `svc-block--${s.color}`]}>
-      <div class="container svc-block__grid">
-
-        <!-- Col 1: sticky title -->
-        <div class="svc-block__aside">
-          {s.comingSoon && <span class="svc-block__coming-soon">Coming soon</span>}
-          <h2 class="svc-block__name text-balance">{s.name}</h2>
-          <span class:list={['svc-block__bar', `svc-block__bar--${s.color}`]} aria-hidden="true"></span>
-          <p class="svc-block__price"><span class="svc-block__price-label">Starting from</span> {s.price}</p>
+    s.comingSoon ? (
+      <section id={s.id} class:list={['section', 'svc-block', `svc-block--${s.color}`]}>
+        <div class="container svc-coming-soon reveal">
+          <span class="svc-block__coming-soon">Coming soon</span>
+          <h2 class="svc-block__name text-balance" style="margin-top: 1rem;">{s.name}</h2>
+          <span class:list={['svc-block__bar', `svc-block__bar--${s.color}`]} aria-hidden="true" style="margin-top: 0.5rem;"></span>
         </div>
+      </section>
+    ) : (
+      <section id={s.id} class:list={['section', 'svc-block', `svc-block--${s.color}`]}>
+        <div class="container svc-block__grid">
 
-        <!-- Col 2: scrolling cards -->
-        <div class="svc-block__content">
-          <article class="svc-card reveal reveal--delay-1">
-            <h3 class="svc-card__label">Overview</h3>
-            <p class="svc-card__body">{s.body}</p>
-          </article>
+          <!-- Col 1: sticky title -->
+          <div class="svc-block__aside">
+            <h2 class="svc-block__name text-balance">{s.name}</h2>
+            <span class:list={['svc-block__bar', `svc-block__bar--${s.color}`]} aria-hidden="true"></span>
+            <p class="svc-block__price"><span class="svc-block__price-label">Starting from</span> {s.price}</p>
+          </div>
 
-          <article class:list={['svc-card', 'svc-card--good', `svc-card--${s.color}`, 'reveal', 'reveal--delay-2']}>
-            <h3 class="svc-card__label">This is for you if&hellip;</h3>
-            <ul class="svc-card__list">
-              {s.problems.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </article>
+          <!-- Col 2: scrolling cards -->
+          <div class="svc-block__content">
+            <article class="svc-card reveal reveal--delay-1">
+              <h3 class="svc-card__label">Overview</h3>
+              <p class="svc-card__body">{s.body}</p>
+            </article>
 
-        </div>
+            <article class:list={['svc-card', 'svc-card--good', `svc-card--${s.color}`, 'reveal', 'reveal--delay-2']}>
+              <h3 class="svc-card__label">This is for you if&hellip;</h3>
+              <ul class="svc-card__list">
+                {s.problems.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </article>
+          </div>
 
-        <!-- Col 3: single project card -->
-        <div class="svc-deck reveal">
-          {s.projects.slice(0, 1).map((p) => (
-            <a href={`/projects/${p.slug}`} class:list={['svc-deck__item', 'svc-proj-card', `svc-proj-card--${s.color}`]}>
-              <div class="svc-proj-card__thumb">
-                {p.image
-                  ? <img src={p.image} alt={p.title} class="svc-proj-card__img" loading="eager" />
-                  : null
-                }
+          <!-- Col 3: single project card -->
+          <div class="svc-deck reveal">
+            {s.projects.slice(0, 1).map((p) => (
+              <a href={`/projects/${p.slug}`} class:list={['svc-deck__item', 'svc-proj-card', `svc-proj-card--${s.color}`]}>
+                <div class="svc-proj-card__thumb">
+                  {p.image
+                    ? <img src={p.image} alt={p.title} class="svc-proj-card__img" loading="eager" />
+                    : null
+                  }
+                </div>
+                <div class="svc-proj-card__meta">
+                  <span class="svc-proj-card__client">{p.client}</span>
+                  <span class="svc-proj-card__title">{p.title}</span>
+                  <span class="svc-proj-card__link">View project <span class="arrow">&rarr;</span></span>
+                </div>
+              </a>
+            ))}
+            {s.projects.length === 0 && (
+              <div class:list={['svc-deck__item', 'svc-proj-card', 'svc-proj-card--placeholder', `svc-proj-card--${s.color}`]}>
+                <div class="svc-proj-card__thumb svc-proj-card__thumb--empty">
+                  <span class="svc-proj-card__soon">Coming soon</span>
+                </div>
               </div>
-              <div class="svc-proj-card__meta">
-                <span class="svc-proj-card__client">{p.client}</span>
-                <span class="svc-proj-card__title">{p.title}</span>
-                <span class="svc-proj-card__link">View project <span class="arrow">&rarr;</span></span>
-              </div>
-            </a>
-          ))}
-          {s.projects.length === 0 && (
-            <div class:list={['svc-deck__item', 'svc-proj-card', 'svc-proj-card--placeholder', `svc-proj-card--${s.color}`]}>
-              <div class="svc-proj-card__thumb svc-proj-card__thumb--empty">
-                <span class="svc-proj-card__soon">Coming soon</span>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
+
         </div>
 
-      </div>
-
-      <!-- Process -->
-      <div class="container svc-process reveal">
-        <div class="svc-process__header">
-          <span class="eyebrow eyebrow--no-bar">The Process</span>
-          <h3 class="svc-process__heading">From first call to launch</h3>
+        <!-- Process -->
+        <div class="container svc-process reveal">
+          <div class="svc-process__header">
+            <span class="eyebrow eyebrow--no-bar">The Process</span>
+            <h3 class="svc-process__heading">From first call to launch</h3>
+          </div>
+          <ol class="svc-process__steps">
+            {s.process.map((step) => (
+              <li class="svc-process__step">
+                <div class="svc-process__num">{step.step}</div>
+                <strong class="svc-process__title">{step.title}</strong>
+                <span class="svc-process__time">{step.time}</span>
+                <p class="svc-process__desc">{step.desc}</p>
+              </li>
+            ))}
+          </ol>
         </div>
-        <ol class="svc-process__steps">
-          {s.process.map((step) => (
-            <li class="svc-process__step">
-              <div class="svc-process__num">{step.step}</div>
-              <strong class="svc-process__title">{step.title}</strong>
-              <span class="svc-process__time">{step.time}</span>
-              <p class="svc-process__desc">{step.desc}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
 
-      <!-- Differentiators -->
-      <div class="container svc-diff reveal">
-        <div class="svc-diff__header">
-          <h3 class="svc-diff__heading">What sets us apart</h3>
+        <!-- Differentiators -->
+        <div class="container svc-diff reveal">
+          <div class="svc-diff__header">
+            <h3 class="svc-diff__heading">What sets us apart</h3>
+          </div>
+          <ul class="svc-diff__grid">
+            {s.differentiators.map((item) => (
+              <li class="svc-diff__item">
+                <strong class="svc-diff__title">{item.title}</strong>
+                <p class="svc-diff__desc">{item.desc}</p>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul class="svc-diff__grid">
-          {s.differentiators.map((item) => (
-            <li class="svc-diff__item">
-              <strong class="svc-diff__title">{item.title}</strong>
-              <p class="svc-diff__desc">{item.desc}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
 
-    </section>
+      </section>
+    )
   ))}
 
   <!-- ========== CLOSING CTA ========== -->
@@ -283,6 +291,13 @@ const servicesWithProjects = services.map(s => ({
   .svc-hero h1 { font-size: clamp(2.5rem, 6vw, 4.25rem); }
 
   /* ---- Service block ---- */
+  .svc-coming-soon {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: clamp(2rem, 4vw, 3rem) 0;
+  }
+
   .svc-block {
     padding: clamp(3.5rem, 7vw, 6rem) 0;
     border-top: 1px solid var(--rule);

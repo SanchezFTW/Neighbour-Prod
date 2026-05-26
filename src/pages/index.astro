@@ -110,8 +110,7 @@ const bento = [
             <span class="bar"></span>
             <div class="prose">
               <p>Jared is a filmmaker and creative strategist who spent years in commercials and film learning how to tell a story that lands. Abigail is a brand strategist, photographer, and director who thinks about who a story is <em>for</em> before she thinks about how it looks.</p>
-              <p>Together we built a studio around the work that matters most to us &mdash; the helpers. The ones doing something real in the world.</p>
-              <p>When you hire us, you get us. Our full attention, start to finish. No account manager, no handoff, no stranger on the edit.</p>
+              <p>Together we built a studio around the work that matters most to us &mdash; the helpers.</p>
             </div>
           </div>
         </div>
@@ -187,11 +186,10 @@ const bento = [
               <label for="projectType">Project type</label>
               <select id="projectType" name="projectType" required>
                 <option value="" disabled selected>Pick one</option>
-                <option value="Crafting a strategy">Crafting a strategy</option>
-                <option value="Building a new brand">Building a new brand</option>
-                <option value="Launching a campaign">Launching a campaign</option>
-                <option value="Making a new website">Making a new website</option>
-                <option value="Driving sales or traffic">Driving sales or traffic</option>
+                <option value="Photography">Photography</option>
+                <option value="Video & Film">Video &amp; Film</option>
+                <option value="Website Development">Website Development</option>
+                <option value="Brand Strategy">Brand Strategy</option>
                 <option value="Something not listed">Something not listed</option>
               </select>
             </div>
@@ -384,19 +382,9 @@ const bento = [
 
   .bento {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 200px 200px 180px;
-    grid-template-areas:
-      "photo photo video"
-      "photo photo brand"
-      "web   web   web  ";
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
   }
-
-  .bento__card--photo { grid-area: photo; }
-  .bento__card--video { grid-area: video; }
-  .bento__card--brand { grid-area: brand; }
-  .bento__card--web   { grid-area: web; }
 
   .bento__card {
     position: relative;
@@ -408,6 +396,7 @@ const bento = [
     color: var(--paper);
     overflow: hidden;
     isolation: isolate;
+    min-height: 240px;
     transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
     border: 1px solid var(--rule);
   }
@@ -480,23 +469,12 @@ const bento = [
   @media (max-width: 860px) {
     .bento {
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 180px 180px 180px;
-      grid-template-areas:
-        "photo photo"
-        "video brand"
-        "web   web  ";
     }
   }
 
   @media (max-width: 540px) {
     .bento {
       grid-template-columns: 1fr;
-      grid-template-rows: 200px 160px 160px 160px;
-      grid-template-areas:
-        "photo"
-        "video"
-        "brand"
-        "web";
     }
   }
 
