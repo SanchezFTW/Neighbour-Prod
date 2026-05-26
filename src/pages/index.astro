@@ -84,9 +84,9 @@ const bento = [
               `reveal--delay-${(i % 4) + 1}`,
             ]}
           >
+            <p class="bento__blurb">{b.blurb}</p>
             <div class="bento__body">
               <h3 class="bento__title">{b.title}</h3>
-              <p class="bento__blurb">{b.blurb}</p>
             </div>
             <span class="bento__cta" aria-hidden="true">
               Explore <span class="arrow">&rarr;</span>
@@ -426,7 +426,9 @@ const bento = [
     background: linear-gradient(135deg, #3C6446 0%, #5E9467 60%, #BCD8C1 100%);
   }
 
-  .bento__body { margin-top: auto; }
+  .bento__blurb { margin-top: auto; }
+
+  .bento__body { margin-top: 0; }
 
   .bento__title {
     font-family: var(--font-display);
@@ -434,7 +436,7 @@ const bento = [
     letter-spacing: -0.02em;
     color: var(--paper);
     font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .bento__blurb {
@@ -442,6 +444,7 @@ const bento = [
     font-size: 0.9375rem;
     line-height: 1.6;
     max-width: 36ch;
+    margin-bottom: 0.75rem;
   }
 
   .bento__cta {
