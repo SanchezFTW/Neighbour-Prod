@@ -26,6 +26,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             alt="Jared on location in the mountains during a shoot"
             class="about-hero__img"
             loading="eager"
+            onerror="this.style.display='none'"
           />
           <div class="about-hero__monitor-badge" aria-hidden="true">
             <span class="monitor-badge__dot"></span>
@@ -62,30 +63,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
       <div class="behind-lens__grid">
         <div class="behind-lens__card reveal reveal--delay-1">
-          <img
-            src="/images/bts/bts-mountains-snow.jpg"
-            alt="Production crew hiking to a remote mountain location in winter conditions"
-            class="behind-lens__img"
-            loading="lazy"
-          />
+          <div class="behind-lens__img-wrap">
+            <img
+              src="/images/bts/bts-mountains-snow.jpg"
+              alt="Production crew hiking to a remote mountain location in winter conditions"
+              class="behind-lens__img"
+              loading="lazy"
+              onerror="this.style.display='none'"
+            />
+          </div>
           <p class="behind-lens__caption">Rocky Mountains — documentary production</p>
         </div>
         <div class="behind-lens__card reveal reveal--delay-2">
-          <img
-            src="/images/bts/bts-wheelchair.jpg"
-            alt="Camera monitor frame: athlete in wheelchair during documentary shoot"
-            class="behind-lens__img"
-            loading="lazy"
-          />
+          <div class="behind-lens__img-wrap">
+            <img
+              src="/images/bts/bts-wheelchair.jpg"
+              alt="Camera monitor frame: athlete in wheelchair during documentary shoot"
+              class="behind-lens__img"
+              loading="lazy"
+              onerror="this.style.display='none'"
+            />
+          </div>
           <p class="behind-lens__caption">Athlete portrait — mission-driven storytelling</p>
         </div>
         <div class="behind-lens__card reveal reveal--delay-3">
-          <img
-            src="/images/bts/bts-portrait.jpg"
-            alt="Camera monitor frame: documentary subject in a community space"
-            class="behind-lens__img"
-            loading="lazy"
-          />
+          <div class="behind-lens__img-wrap">
+            <img
+              src="/images/bts/bts-portrait.jpg"
+              alt="Camera monitor frame: documentary subject in a community space"
+              class="behind-lens__img"
+              loading="lazy"
+              onerror="this.style.display='none'"
+            />
+          </div>
           <p class="behind-lens__caption">Community documentary — portrait session</p>
         </div>
       </div>
@@ -195,6 +205,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     overflow: hidden;
     aspect-ratio: 16 / 10;
     box-shadow: 0 24px 64px rgba(26, 26, 26, 0.18), 0 4px 16px rgba(26, 26, 26, 0.1);
+    background: linear-gradient(135deg, rgba(234, 170, 66, 0.22) 0%, rgba(85, 156, 173, 0.14) 100%);
   }
 
   .about-hero__img {
@@ -265,19 +276,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     gap: 0.75rem;
   }
 
-  .behind-lens__img {
+  .behind-lens__img-wrap {
     width: 100%;
     aspect-ratio: 16 / 10;
-    object-fit: cover;
     border-radius: var(--radius-lg);
-    display: block;
-    filter: contrast(1.04) saturate(0.88);
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(234, 170, 66, 0.14) 0%, rgba(85, 156, 173, 0.10) 100%);
     transition: transform var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
   }
 
-  .behind-lens__card:hover .behind-lens__img {
+  .behind-lens__card:hover .behind-lens__img-wrap {
     transform: translateY(-3px);
     box-shadow: var(--shadow-lift);
+  }
+
+  .behind-lens__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: contrast(1.04) saturate(0.88);
   }
 
   .behind-lens__caption {
@@ -291,7 +309,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   @media (max-width: 820px) {
     .behind-lens__grid { grid-template-columns: 1fr; gap: 2rem; }
-    .behind-lens__img { aspect-ratio: 16 / 9; }
+    .behind-lens__img-wrap { aspect-ratio: 16 / 9; }
   }
 
   /* ---- Section heads ---- */

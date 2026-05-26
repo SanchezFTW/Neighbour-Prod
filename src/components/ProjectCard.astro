@@ -20,13 +20,18 @@ const {
 
 <a href={href} class:list={['project-card', `project-card--${size}`]} aria-label={`${title} — ${category}`}>
   <div class="project-card__frame card-img" style={`aspect-ratio: ${ratio};`}>
-    {image ? (
-      <img src={image} alt={title} loading="lazy" decoding="async" />
-    ) : (
-      <div class="project-card__placeholder" aria-hidden="true">
-        <span>{category}</span>
-      </div>
+    {image && (
+      <img
+        src={image}
+        alt={title}
+        loading="lazy"
+        decoding="async"
+        onerror="this.style.display='none';var ph=this.parentElement.querySelector('.project-card__placeholder');if(ph)ph.style.display='flex'"
+      />
     )}
+    <div class="project-card__placeholder" style={image ? 'display:none' : undefined} aria-hidden="true">
+      <span>{category}</span>
+    </div>
     <div class="card-img__overlay">
       <div>
         <p class="card-img__meta">{category}</p>
