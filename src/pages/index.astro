@@ -133,121 +133,17 @@ const bento = [
     </div>
   </section>
 
-  <!-- ========== CONTACT ========== -->
-  <section id="contact" class="section contact-section">
-    <div class="container">
-      <div class="contact-section__head reveal">
-        <span class="eyebrow">Contact</span>
-        <h2 class="text-balance">Let&rsquo;s talk.</h2>
+  <!-- ========== CONTACT CTA ========== -->
+  <section id="contact" class="section section--warm contact-cta-section">
+    <div class="container--narrow">
+      <div class="contact-cta reveal">
+        <span class="eyebrow">Work with us</span>
+        <h2 class="text-balance">Let&rsquo;s work together.</h2>
         <span class="bar"></span>
         <p class="lede">
-          You don&rsquo;t need a polished brief or a clear budget before you reach out. Just tell us what you&rsquo;re working on and where you feel stuck.
+          You don&rsquo;t need a polished brief before reaching out. Just tell us what you&rsquo;re working on &mdash; we&rsquo;ll take it from there.
         </p>
-      </div>
-
-      <div class="contact-layout">
-        <form
-          id="inquiry-form"
-          class="inquiry-form reveal reveal--delay-1"
-          action="https://formspree.io/f/xwvadbkl"
-          method="POST"
-          novalidate
-        >
-          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0;" aria-hidden="true" />
-
-          <div class="field-row">
-            <div class="field">
-              <label for="firstName">First name</label>
-              <input id="firstName" name="firstName" type="text" required autocomplete="given-name" />
-            </div>
-            <div class="field">
-              <label for="lastName">Last name</label>
-              <input id="lastName" name="lastName" type="text" required autocomplete="family-name" />
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="email">Your email</label>
-            <input id="email" name="email" type="email" required autocomplete="email" />
-          </div>
-
-          <div class="field">
-            <label for="org">Organization <span class="field__opt">(if any)</span></label>
-            <input id="org" name="organization" type="text" autocomplete="organization" />
-          </div>
-
-          <div class="field">
-            <label for="project">What are you working on?</label>
-            <textarea id="project" name="project" rows="5" required placeholder="A short paragraph is plenty."></textarea>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="projectType">Project type</label>
-              <select id="projectType" name="projectType" required>
-                <option value="" disabled selected>Pick one</option>
-                <option value="Photography">Photography</option>
-                <option value="Video & Film">Video &amp; Film</option>
-                <option value="Website Development">Website Development</option>
-                <option value="Brand Strategy">Brand Strategy</option>
-                <option value="Something not listed">Something not listed</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="timeline">Timeline</label>
-              <select id="timeline" name="timeline" required>
-                <option value="" disabled selected>Pick one</option>
-                <option value="ASAP">ASAP</option>
-                <option value="Next 1–3 months">Next 1&ndash;3 months</option>
-                <option value="3–6 months">3&ndash;6 months</option>
-                <option value="Just exploring">Just exploring</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="budget">Budget range</label>
-              <select id="budget" name="budget" required>
-                <option value="" disabled selected>Pick one</option>
-                <option value="Under $5k">Under $5k</option>
-                <option value="$5k–$15k">$5k&ndash;$15k</option>
-                <option value="$15k–$30k">$15k&ndash;$30k</option>
-                <option value="$30k+">$30k+</option>
-                <option value="Not sure yet">Not sure yet</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="referral">How&rsquo;d you find us?</label>
-              <select id="referral" name="referral" required>
-                <option value="" disabled selected>Pick one</option>
-                <option value="Referral">Referral from a friend or colleague</option>
-                <option value="Instagram">Instagram</option>
-                <option value="Google search">Google search</option>
-                <option value="Past project">Saw a past project of ours</option>
-                <option value="Event">At an event</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="btn btn--solid">Send it over</button>
-            <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-          </div>
-        </form>
-
-        <aside class="contact-aside reveal reveal--delay-2">
-          <h3>What happens next</h3>
-          <ol class="next-list">
-            <li><span class="next-num">1</span><p>We read your inquiry (actually &mdash; it&rsquo;s just the two of us).</p></li>
-            <li><span class="next-num">2</span><p>If we think we&rsquo;re a fit, we&rsquo;ll reach out to book a call within about a week.</p></li>
-            <li><span class="next-num">3</span><p>If we&rsquo;re not the right fit, we&rsquo;ll tell you that too &mdash; and point you toward someone who might be.</p></li>
-          </ol>
-          <p class="contact-aside__email">
-            Or email us at <a href="mailto:info@neighbourprod.com">info@neighbourprod.com</a>.
-          </p>
-        </aside>
+        <a href="/contact" class="btn btn--solid reveal reveal--delay-1">Get in touch</a>
       </div>
     </div>
   </section>
@@ -538,230 +434,24 @@ const bento = [
   }
 
   /* ============================================== */
-  /* ================= CONTACT ==================== */
+  /* ================= CONTACT CTA ================ */
   /* ============================================== */
-  .contact-section {
-    background:
-      radial-gradient(ellipse at 50% 0%, rgba(234, 170, 66, 0.18) 0%, transparent 55%),
-      var(--paper);
+  .contact-cta-section {
     border-top: 1px solid var(--rule);
   }
 
-  .contact-section__head {
-    max-width: 780px;
-    margin: 0 auto 3rem;
+  .contact-cta {
     text-align: center;
-  }
-
-  .contact-section__head .bar { margin-left: auto; margin-right: auto; display: block; }
-
-  .contact-layout {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: clamp(2.5rem, 5vw, 4rem);
-    align-items: start;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  @media (max-width: 860px) {
-    .contact-layout { grid-template-columns: 1fr; }
-  }
-
-  .inquiry-form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .field { display: flex; flex-direction: column; gap: 0.5rem; }
-
-  .field-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-
-  @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
-
-  .field label {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--lavender-deep);
-  }
-
-  .field__opt {
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    text-transform: none;
-    color: var(--ink-mute);
-    font-size: 0.75rem;
-  }
-
-  .field input[type="text"],
-  .field input[type="email"],
-  .field textarea,
-  .field select {
-    font-family: inherit;
-    font-size: 1rem;
-    color: var(--ink);
-    background: var(--paper);
-    padding: 0.85rem 1rem;
-    border: 1px solid var(--rule-strong);
-    border-radius: var(--radius);
-    transition: border-color var(--t-fast) ease, box-shadow var(--t-fast) ease;
-    width: 100%;
-  }
-
-  .field textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
-
-  .field input:focus,
-  .field textarea:focus,
-  .field select:focus {
-    outline: none;
-    border-color: var(--honey);
-    box-shadow: 0 0 0 3px rgba(234, 170, 66, 0.22);
-  }
-
-  .form-actions {
-    display: flex;
     align-items: center;
     gap: 1.25rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
   }
 
-  .form-status { font-size: 0.875rem; color: var(--ink-soft); margin: 0; }
-  .form-status.is-error { color: #a23a3a; }
-  .form-status.is-success { color: var(--teal-deep); }
+  .contact-cta .bar { margin-left: auto; margin-right: auto; display: block; }
 
-  .contact-aside {
-    background: var(--paper-cream);
-    border-radius: var(--radius-lg);
-    padding: clamp(1.75rem, 3vw, 2.5rem);
-    position: sticky;
-    top: 7rem;
-  }
+  .contact-cta .lede { max-width: 560px; }
 
-  .contact-aside h3 { font-size: 1.25rem; margin-bottom: 1.5rem; }
-
-  .next-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .next-list li {
-    display: grid;
-    grid-template-columns: 36px 1fr;
-    gap: 1rem;
-    align-items: start;
-  }
-
-  .next-num {
-    width: 32px;
-    height: 32px;
-    border-radius: 999px;
-    background: var(--honey);
-    color: var(--ink);
-    font-family: var(--font-display);
-    font-weight: 700;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.875rem;
-  }
-
-  .next-list p { font-size: 0.9375rem; line-height: 1.65; margin: 0; }
-
-  .contact-aside__email {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--rule);
-    font-size: 0.9375rem;
-    color: var(--ink-soft);
-  }
-
-  .contact-aside__email a { color: var(--teal-deep); font-weight: 600; }
-
-  @media (max-width: 860px) {
-    .contact-aside { position: static; }
-  }
-
-  @media (max-width: 520px) {
-    .field input[type="text"],
-    .field input[type="email"],
-    .field textarea,
-    .field select {
-      font-size: 16px;
-      padding: 0.85rem 0.9rem;
-    }
-    .form-actions { flex-direction: column; align-items: stretch; gap: 0.85rem; }
-    .form-actions .btn { justify-content: center; }
-  }
+  .contact-cta .btn { margin-top: 0.5rem; }
 </style>
 
-<script>
-  function initInquiryForm() {
-    const form = document.getElementById('inquiry-form') as HTMLFormElement | null;
-    const status = document.getElementById('form-status');
-    if (!form || !status) return;
-    if (form.dataset.fsBound === '1') return;
-    form.dataset.fsBound = '1';
-
-    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-
-      status.classList.remove('is-error', 'is-success');
-      status.textContent = 'Sending…';
-      if (submitBtn) submitBtn.disabled = true;
-
-      const fd = new FormData(form);
-      const firstName = String(fd.get('firstName') || '');
-      const lastName = String(fd.get('lastName') || '');
-      const fullName = `${firstName} ${lastName}`.trim();
-
-      fd.set('_subject', `New inquiry from ${fullName}`);
-      const emailVal = String(fd.get('email') || '');
-      if (emailVal) fd.set('_replyto', emailVal);
-
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: fd,
-          headers: { Accept: 'application/json' },
-        });
-
-        if (res.ok) {
-          status.classList.add('is-success');
-          status.textContent = 'Thanks — we got your note and will be in touch soon.';
-          form.reset();
-        } else {
-          const data = await res.json().catch(() => null);
-          const msg = data?.errors?.map((err: { message: string }) => err.message).join(', ');
-          throw new Error(msg || 'Submission failed');
-        }
-      } catch (err) {
-        status.classList.add('is-error');
-        status.textContent = 'Something went wrong sending your inquiry. Please email info@neighbourprod.com directly.';
-      } finally {
-        if (submitBtn) submitBtn.disabled = false;
-      }
-    });
-  }
-
-  initInquiryForm();
-  document.addEventListener('astro:page-load', initInquiryForm);
-</script>
